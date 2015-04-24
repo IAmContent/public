@@ -4,7 +4,7 @@ package com.iamcontent.robotics.arm.edge.action;
  * {@link Action}s of the gripper.
  * @author Greg Elderfield
  */
-public enum GripperAction implements Action {
+public enum GripperAction implements BitControlledAction {
 	CLOSE {
 		public byte getActionBits() {
 			return (byte) 0x01;

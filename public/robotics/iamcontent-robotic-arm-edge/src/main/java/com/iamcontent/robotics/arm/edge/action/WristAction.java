@@ -4,7 +4,7 @@ package com.iamcontent.robotics.arm.edge.action;
  * {@link Action}s of the wrist.
  * @author Greg Elderfield
  */
-public enum WristAction implements Action {
+public enum WristAction implements BitControlledAction {
 	EXTEND {
 		public byte getActionBits() {
 			return (byte) 0x04;

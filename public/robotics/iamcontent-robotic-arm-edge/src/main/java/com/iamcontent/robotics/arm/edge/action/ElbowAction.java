@@ -4,7 +4,7 @@ package com.iamcontent.robotics.arm.edge.action;
  * {@link Action}s of the elbow.
  * @author Greg Elderfield
  */
-public enum ElbowAction implements Action {
+public enum ElbowAction implements BitControlledAction {
 	EXTEND {
 		public byte getActionBits() {
 			return (byte) 0x10;

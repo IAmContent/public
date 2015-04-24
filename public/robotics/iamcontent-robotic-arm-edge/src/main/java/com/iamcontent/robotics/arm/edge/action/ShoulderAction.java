@@ -4,7 +4,7 @@ package com.iamcontent.robotics.arm.edge.action;
  * {@link Action}s of the shoulder.
  * @author Greg Elderfield
  */
-public enum ShoulderAction implements Action {
+public enum ShoulderAction implements BitControlledAction {
 	BACKWARDS {
 		public byte getActionBits() {
 			return (byte) 0x40;

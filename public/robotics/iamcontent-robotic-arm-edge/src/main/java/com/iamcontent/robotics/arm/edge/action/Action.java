@@ -7,11 +7,6 @@ package com.iamcontent.robotics.arm.edge.action;
  */
 public interface Action {
 	/**
-	 * @return The bits that cause the device to perform the action represented by the implementing class.
-	 */
-	byte getActionBits();
-	
-	/**
 	 * Causes the action represented by the implementing class to be performed by the given {@link Actor}. 
 	 */
 	void applyTo(Actor actor);

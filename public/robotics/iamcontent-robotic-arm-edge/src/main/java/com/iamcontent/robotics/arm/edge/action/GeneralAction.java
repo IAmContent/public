@@ -11,9 +11,4 @@ public enum GeneralAction implements Action {
 			actor.stopAllMovement();
 		}
 	};
-
-	@Override
-	public byte getActionBits() {
-		throw new UnsupportedOperationException("Action " + this + " has no corresponding action bits.");
-	}
 }

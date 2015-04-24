@@ -4,7 +4,7 @@ package com.iamcontent.robotics.arm.edge.action;
  * {@link Action}s to rotate the base of the arm.
  * @author Greg Elderfield
  */
-public enum BaseAction implements Action {
+public enum BaseAction implements BitControlledAction {
 	LEFT {
 		public byte getActionBits() {
 			return (byte) 0x02;
