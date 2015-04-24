@@ -19,11 +19,11 @@ import com.iamcontent.robotics.arm.edge.action.WristAction;
  * An example driver for the {@link RoboticEdgeArm}. Useful for manual testing.
  * @author Greg Elderfield
  */
-public class RoboticEdgeArmExampleDriver implements Runnable {
+public class RoboticEdgeArmCommandLineDriver implements Runnable {
 	final RoboticEdgeArm arm = new RoboticEdgeArm();
 	
 	public static void main(String[] args) {
-		final RoboticEdgeArmExampleDriver driver = new RoboticEdgeArmExampleDriver();
+		final RoboticEdgeArmCommandLineDriver driver = new RoboticEdgeArmCommandLineDriver();
 		driver.run();
 	}
 	
@@ -140,6 +140,7 @@ public class RoboticEdgeArmExampleDriver implements Runnable {
 			case "q":
 			case "quit":
 			case "exit":
+			case "bye":
 				return DriverAction.QUIT;
 			default:
 				return DriverAction.UNKNOWN_COMMAND;
