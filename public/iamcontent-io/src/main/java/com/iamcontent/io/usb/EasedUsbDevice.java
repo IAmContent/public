@@ -1,14 +1,11 @@
 package com.iamcontent.io.usb;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.usb.UsbConfiguration;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 import javax.usb.UsbDeviceDescriptor;
-import javax.usb.UsbDisconnectedException;
-import javax.usb.UsbException;
 import javax.usb.UsbPort;
 import javax.usb.UsbStringDescriptor;
 import javax.usb.event.UsbDeviceListener;
@@ -100,7 +97,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public String getManufacturerString() {
 		try {
 			return device.getManufacturerString();
-		} catch (UnsupportedEncodingException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -109,7 +106,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public String getSerialNumberString() {
 		try {
 			return device.getSerialNumberString();
-		} catch (UnsupportedEncodingException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -118,7 +115,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public String getProductString() {
 		try {
 			return device.getProductString();
-		} catch (UnsupportedEncodingException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -127,7 +124,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public UsbStringDescriptor getUsbStringDescriptor(byte index) {
 		try {
 			return device.getUsbStringDescriptor(index);
-		} catch (UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -136,7 +133,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public String getString(byte index) {
 		try {
 			return device.getString(index);
-		} catch (UnsupportedEncodingException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -145,7 +142,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public void syncSubmit(UsbControlIrp irp) {
 		try {
 			device.syncSubmit(irp);
-		} catch (IllegalArgumentException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -154,7 +151,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public void asyncSubmit(UsbControlIrp irp) {
 		try {
 			device.asyncSubmit(irp);
-		} catch (IllegalArgumentException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -163,7 +160,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public void syncSubmit(List list) {
 		try {
 			device.syncSubmit(list);
-		} catch (IllegalArgumentException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
@@ -172,7 +169,7 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	public void asyncSubmit(List list) {
 		try {
 			device.asyncSubmit(list);
-		} catch (IllegalArgumentException | UsbDisconnectedException | UsbException e) {
+		} catch (Exception e) {
 			throw new UsbRuntimeException(e);
 		}
 	}
