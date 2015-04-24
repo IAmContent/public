@@ -33,7 +33,7 @@ public class BufferedReaderIterator implements Iterator<String>, Iterable<String
 	public String next() {
 		if (!hasNext())
 			throw new NoSuchElementException();
-		return readNextLine();
+		return readLineAndCheckForEof();
 	}
 
 	@Override
@@ -46,15 +46,18 @@ public class BufferedReaderIterator implements Iterator<String>, Iterable<String
 		return this;
 	}
 
-	private String readNextLine() {
-		String result = null;
+	private String readLineAndCheckForEof() {
+		final String result = readLineQuietly();
+		eofReached |= result==null;
+		return result;
+	}
+
+	private String readLineQuietly() {
 		try {
-			result = reader.readLine();
-			return result;
+			return reader.readLine();
 		} catch (IOException e) {
+			eofReached = true;
 			throw new RuntimeException(e);
-		} finally {
-			eofReached |= result==null;
 		}
 	}
 }

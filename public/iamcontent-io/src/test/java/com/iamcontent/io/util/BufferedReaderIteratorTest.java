@@ -6,13 +6,16 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -67,6 +70,21 @@ public class BufferedReaderIteratorTest {
 		final BufferedReaderIterator iterator = bufferedReaderIterator(r);
 		assertNull(iterator.next());
 		iterator.next();
+	}
+
+	@Test
+	public void testHandlingOfIOException() throws Exception {
+		final BufferedReader r = mock(BufferedReader.class);
+		final IOException ioException = new IOException();
+		when(r.readLine()).thenThrow(ioException);
+		final BufferedReaderIterator iterator = bufferedReaderIterator(r);
+		try {
+			iterator.next();
+			fail("Expected a RuntimeException");
+		} catch (RuntimeException e) {
+			assertFalse(iterator.hasNext());
+			assertSame(ioException, e.getCause());
+		}
 	}
 
 	private void checkLines(String input, String... expected) {
