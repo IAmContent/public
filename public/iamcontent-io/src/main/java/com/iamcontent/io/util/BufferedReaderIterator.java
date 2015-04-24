@@ -1,26 +1,23 @@
 package com.iamcontent.io.util;
 
-import static com.google.common.io.Closeables.closeQuietly;
-
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An {@link Iterable} {@link Iterator} that iterates over the lines read from a {@link BufferedReader}.
+ * Note that this Iterator will return null as the last element if the EOF is reached on the reader.
  * @author Greg Elderfield
  */
-public class BufferedReaderIterator implements Iterator<String>, Iterable<String>, Closeable {
+public class BufferedReaderIterator implements Iterator<String>, Iterable<String> {
 
 	final BufferedReader reader;
 	
-	private String nextLine;
+	private boolean eofReached = false;
 	
 	public BufferedReaderIterator(BufferedReader reader) {
 		this.reader = reader;
-		advance();
 	}
 	
 	public static BufferedReaderIterator bufferedReaderIterator(BufferedReader reader) {
@@ -29,16 +26,14 @@ public class BufferedReaderIterator implements Iterator<String>, Iterable<String
 	
 	@Override
 	public boolean hasNext() {
-		return nextLine != null;
+		return !eofReached;
 	}
 
 	@Override
 	public String next() {
 		if (!hasNext())
 			throw new NoSuchElementException();
-		final String result = nextLine;
-		advance();
-		return result;
+		return readNextLine();
 	}
 
 	@Override
@@ -51,28 +46,15 @@ public class BufferedReaderIterator implements Iterator<String>, Iterable<String
 		return this;
 	}
 
-	private void advance() {
-		readNextLine();
-		closeIfEndReached();
-	}
-
-	private void readNextLine() {
+	private String readNextLine() {
+		String result = null;
 		try {
-			nextLine = reader.readLine();
+			result = reader.readLine();
+			return result;
 		} catch (IOException e) {
-			close();
 			throw new RuntimeException(e);
+		} finally {
+			eofReached |= result==null;
 		}
-	}
-
-	private void closeIfEndReached() {
-		if (!hasNext())
-			close();
-	}
-
-	@Override
-	public void close() {
-		nextLine = null;
-		closeQuietly(reader);
 	}
 }

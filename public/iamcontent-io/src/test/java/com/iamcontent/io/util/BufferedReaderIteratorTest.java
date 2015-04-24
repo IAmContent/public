@@ -5,6 +5,7 @@ import static com.iamcontent.io.util.Readers.bufferedReader;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -22,12 +23,12 @@ public class BufferedReaderIteratorTest {
 
 	@Test
 	public void testSeveralLines() {
-		checkLines("One\nTwo\nThree\n", "One", "Two", "Three");
+		checkLines("One\nTwo\nThree\n", "One", "Two", "Three", null);
 	}
 
 	@Test
 	public void testEmptyInput() {
-		checkLines("");
+		checkLines("", new String[]{null});
 	}
 
 	@Test(expected=UnsupportedOperationException.class)
@@ -36,18 +37,12 @@ public class BufferedReaderIteratorTest {
 	}
 
 	@Test
-	public void testClose() throws Exception {
-		final BufferedReader r = mock(BufferedReader.class);
-		bufferedReaderIterator(r).close();
-		verify(r, atLeastOnce()).close();
-	}
-
-	@Test
 	public void testEmptyStream() throws Exception {
 		final BufferedReader r = mock(BufferedReader.class);
 		when(r.readLine()).thenReturn(null);
 		final BufferedReaderIterator iterator = bufferedReaderIterator(r);
-		verify(r, atLeastOnce()).close();
+		assertTrue(iterator.hasNext());
+		assertNull(iterator.next());
 		assertFalse(iterator.hasNext());
 	}
 
@@ -60,8 +55,9 @@ public class BufferedReaderIteratorTest {
 		assertEquals("One", iterator.next());
 		assertTrue(iterator.hasNext());
 		assertEquals("Two", iterator.next());
+		assertTrue(iterator.hasNext());
+		assertNull(iterator.next());
 		assertFalse(iterator.hasNext());
-		verify(r, atLeastOnce()).close();
 	}
 
 	@Test(expected=NoSuchElementException.class)
@@ -69,7 +65,7 @@ public class BufferedReaderIteratorTest {
 		final BufferedReader r = mock(BufferedReader.class);
 		when(r.readLine()).thenReturn(null);
 		final BufferedReaderIterator iterator = bufferedReaderIterator(r);
-		verify(r, atLeastOnce()).close();
+		assertNull(iterator.next());
 		iterator.next();
 	}
 
