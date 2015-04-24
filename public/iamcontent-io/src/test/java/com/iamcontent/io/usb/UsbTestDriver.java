@@ -1,4 +1,4 @@
-package com.iamcontent.robotics.usb;
+package com.iamcontent.io.usb;
 
 public class UsbTestDriver {
 	public static final short VENDOR_ID = 0x1267;

@@ -1,11 +1,13 @@
 package com.iamcontent.robotics.arm.edge;
 
-import static com.iamcontent.robotics.usb.EasedUsbDevice.eased;
+import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 
 import javax.usb.UsbConst;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
+import com.iamcontent.io.usb.EasyUsbDevice;
+import com.iamcontent.io.usb.Usb;
 import com.iamcontent.robotics.arm.edge.action.Action;
 import com.iamcontent.robotics.arm.edge.action.Actor;
 import com.iamcontent.robotics.arm.edge.action.BaseAction;
@@ -14,8 +16,6 @@ import com.iamcontent.robotics.arm.edge.action.GripperAction;
 import com.iamcontent.robotics.arm.edge.action.LedAction;
 import com.iamcontent.robotics.arm.edge.action.ShoulderAction;
 import com.iamcontent.robotics.arm.edge.action.WristAction;
-import com.iamcontent.robotics.usb.EasyUsbDevice;
-import com.iamcontent.robotics.usb.Usb;
 
 /**
  * Issues {@link Action} instructions to the Maplin/OWI Robotic Edge Arm.

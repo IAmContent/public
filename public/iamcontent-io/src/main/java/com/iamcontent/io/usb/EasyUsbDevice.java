@@ -1,4 +1,4 @@
-package com.iamcontent.robotics.usb;
+package com.iamcontent.io.usb;
 
 import java.util.List;
 

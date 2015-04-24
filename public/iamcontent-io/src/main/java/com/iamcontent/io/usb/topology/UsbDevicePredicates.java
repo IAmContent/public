@@ -1,4 +1,4 @@
-package com.iamcontent.robotics.usb.topology;
+package com.iamcontent.io.usb.topology;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbDeviceDescriptor;

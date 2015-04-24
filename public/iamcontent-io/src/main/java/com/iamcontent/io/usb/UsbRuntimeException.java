@@ -1,4 +1,4 @@
-package com.iamcontent.robotics.usb;
+package com.iamcontent.io.usb;
 
 /**
  * A {@link RuntimeException} to wrap checked exceptions from USB operations.

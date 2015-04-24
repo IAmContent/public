@@ -1,7 +1,7 @@
-package com.iamcontent.robotics.usb;
+package com.iamcontent.io.usb;
 
-import static com.iamcontent.robotics.usb.topology.UsbDeviceFinder.usbDeviceFinder;
-import static com.iamcontent.robotics.usb.topology.UsbDevicePredicates.deviceHasVendorIdAndProductId;
+import static com.iamcontent.io.usb.topology.UsbDeviceFinder.usbDeviceFinder;
+import static com.iamcontent.io.usb.topology.UsbDevicePredicates.deviceHasVendorIdAndProductId;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbServices;
 
-import com.iamcontent.robotics.usb.topology.UsbDeviceFinder;
+import com.iamcontent.io.usb.topology.UsbDeviceFinder;
 
 /**
  * USB utility methods.

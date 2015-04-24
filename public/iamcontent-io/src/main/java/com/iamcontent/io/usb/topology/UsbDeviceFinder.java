@@ -1,6 +1,6 @@
-package com.iamcontent.robotics.usb.topology;
+package com.iamcontent.io.usb.topology;
 
-import static com.iamcontent.robotics.usb.EasedUsbDevice.eased;
+import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.List;
 import javax.usb.UsbDevice;
 
 import com.google.common.base.Predicate;
-import com.iamcontent.robotics.usb.EasyUsbDevice;
+import com.iamcontent.io.usb.EasyUsbDevice;
 
 /**
  * Explores a USB topology and composes a list of the devices that match the given predicate.

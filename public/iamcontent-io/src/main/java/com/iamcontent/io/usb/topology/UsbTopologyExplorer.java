@@ -1,10 +1,10 @@
-package com.iamcontent.robotics.usb.topology;
+package com.iamcontent.io.usb.topology;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
 
 import com.google.common.base.Predicate;
-import com.iamcontent.robotics.usb.Usb;
+import com.iamcontent.io.usb.Usb;
 
 /**
  * An abstract class that recursively explores the USB devices in a USB topology, starting at 
