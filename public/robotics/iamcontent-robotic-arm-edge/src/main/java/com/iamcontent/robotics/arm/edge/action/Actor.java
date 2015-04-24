@@ -11,4 +11,5 @@ public interface Actor {
 	void setWrist(WristAction wrist);
 	void setGripper(GripperAction gripper);
 	void setLed(LedAction led);
+	void stopAllMovement();
 }

@@ -53,6 +53,7 @@ public class RoboticEdgeArm implements Actor {
 		return base;
 	}
 
+	@Override
 	public void setBase(BaseAction base) {
 		if (stateChanged(this.base, base)) {
 			this.base = base;
@@ -64,6 +65,7 @@ public class RoboticEdgeArm implements Actor {
 		return shoulder;
 	}
 
+	@Override
 	public void setShoulder(ShoulderAction shoulder) {
 		if (stateChanged(this.shoulder, shoulder)) {
 			this.shoulder = shoulder;
@@ -75,6 +77,7 @@ public class RoboticEdgeArm implements Actor {
 		return elbow;
 	}
 
+	@Override
 	public void setElbow(ElbowAction elbow) {
 		if (stateChanged(this.elbow, elbow)) {
 			this.elbow = elbow;
@@ -86,6 +89,7 @@ public class RoboticEdgeArm implements Actor {
 		return wrist;
 	}
 
+	@Override
 	public void setWrist(WristAction wrist) {
 		if (stateChanged(this.wrist, wrist)) {
 			this.wrist = wrist;
@@ -97,6 +101,7 @@ public class RoboticEdgeArm implements Actor {
 		return gripper;
 	}
 
+	@Override
 	public void setGripper(GripperAction gripper) {
 		if (stateChanged(this.gripper, gripper)) {
 			this.gripper = gripper;
@@ -108,6 +113,7 @@ public class RoboticEdgeArm implements Actor {
 		return led;
 	}
 
+	@Override
 	public void setLed(LedAction led) {
 		if (stateChanged(this.led, led)) {
 			this.led = led;
@@ -150,7 +156,8 @@ public class RoboticEdgeArm implements Actor {
 		}
 	}
 
-	public void stopMovements() {
+	@Override
+	public void stopAllMovement() {
 		final LedAction leaveLedUnchanged = null;
 		setState(BaseAction.STOP, ShoulderAction.STOP, ElbowAction.STOP, WristAction.STOP, GripperAction.STOP, leaveLedUnchanged);
 	}
