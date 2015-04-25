@@ -20,17 +20,15 @@ package com.iamcontent.robotics.arm.edge;
 import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
 import static com.iamcontent.io.util.Readers.bufferedReader;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.iamcontent.robotics.arm.edge.action.Action;
 import com.iamcontent.robotics.arm.edge.action.Actor;
-import com.iamcontent.robotics.arm.edge.action.BaseAction;
-import com.iamcontent.robotics.arm.edge.action.ElbowAction;
 import com.iamcontent.robotics.arm.edge.action.GeneralAction;
-import com.iamcontent.robotics.arm.edge.action.GripperAction;
 import com.iamcontent.robotics.arm.edge.action.LedAction;
-import com.iamcontent.robotics.arm.edge.action.ShoulderAction;
-import com.iamcontent.robotics.arm.edge.action.WristAction;
 
 /**
  * An example driver for the {@link RoboticEdgeArm}. Useful for manual testing.
@@ -48,7 +46,7 @@ public class RoboticEdgeArmCommandLineDriver implements Runnable {
 	public void run() {
 		for (Action a : actions()) {
 			execute(a);
-			if (a==DriverAction.QUIT)
+			if (a==QUIT)
 				break;
 		}
 		hibernateDevice();
@@ -60,127 +58,36 @@ public class RoboticEdgeArmCommandLineDriver implements Runnable {
 	}
 
 	private Iterable<Action> actions() {
-		return Iterables.transform(commandIterator(), parseStringIntoAction());
+		return Iterables.transform(commandIterator(), PARSING_FUNCTION);
 	}
 
 	private Iterable<String> commandIterator() {
 		return bufferedReaderIterator(bufferedReader(System.in));
 	}
 
-	private Function<String, Action> parseStringIntoAction() {
-		return new ParsingFunction();
-	}
-
 	private void execute(Action action) {
 		action.applyTo(arm);
 	}
 
-	/**
-	 * A function to parse a String command into an Action.
-	 */
-	private static class ParsingFunction implements Function<String, Action> {
+	private static final Collection<String> QUIT_COMMANDS = Arrays.asList(null, "q", "quit", "exit", "bye");
 
+	private static final Function<String, Action> PARSING_FUNCTION = new ParseStringIntoActionFunction() {
 		@Override
 		public Action apply(String command) {
-			if (command==null)
-				return DriverAction.QUIT;
-			switch (tidied(command)) {
+			if (isQuit(command))
+				return QUIT;
+			return super.apply(command);
+		}
+
+		private boolean isQuit(String command) {
+			return QUIT_COMMANDS.contains(tidied(command));
+		}
+	};
 			
-			case "base left":
-			case "bl":
-				return BaseAction.LEFT;
-			case "base right":
-			case "br":
-				return BaseAction.RIGHT;
-			case "base stop":
-			case "bs":
-				return BaseAction.STOP;
-				
-			case "shoulder forward":
-			case "shoulder forwards":
-			case "sf":
-				return ShoulderAction.FORWARDS;
-			case "shoulder backward":
-			case "shoulder backwards":
-			case "sb":
-				return ShoulderAction.BACKWARDS;
-			case "shoulder stop":
-			case "ss":
-				return ShoulderAction.STOP;
-				
-			case "elbow extend":
-			case "ee":
-				return ElbowAction.EXTEND;
-			case "elbow flex":
-			case "ef":
-				return ElbowAction.FLEX;
-			case "elbow stop":
-			case "es":
-				return ElbowAction.STOP;
-				
-			case "wrist extend":
-			case "we":
-				return WristAction.EXTEND;
-			case "wrist flex":
-			case "wf":
-				return WristAction.FLEX;
-			case "wrist stop":
-			case "ws":
-				return WristAction.STOP;
-				
-				
-			case "grip open":
-			case "gripper open":
-			case "go":
-				return GripperAction.OPEN;
-			case "grip close":
-			case "gripper close":
-			case "gc":
-				return GripperAction.CLOSE;
-			case "grip stop":
-			case "gripper stop":
-			case "gs":
-				return GripperAction.STOP;
-				
-			case "led on":
-			case "light on":
-			case "l+":
-				return LedAction.ON;
-			case "led off":
-			case "light off":
-			case "l-":
-				return LedAction.OFF;
-
-			case "stop":
-			case "":
-				return GeneralAction.STOP_ALL_MOVEMENT;
-			case "q":
-			case "quit":
-			case "exit":
-			case "bye":
-				return DriverAction.QUIT;
-			default:
-				return DriverAction.UNKNOWN_COMMAND;
-			}
+	private static final Action QUIT = new Action() {
+		@Override
+		public void applyTo(Actor actor) {
+			System.out.println("Bye");
 		}
-
-		private String tidied(String command) {
-			return command.trim().toLowerCase();
-		}
-	}
-
-	private enum DriverAction implements Action {
-		UNKNOWN_COMMAND {
-			@Override
-			public void applyTo(Actor actor) {
-				System.out.println("Unknown command, please try again.");
-			}
-		},
-		QUIT {
-			@Override
-			public void applyTo(Actor actor) {
-				System.out.println("Bye");
-			}
-		}
-	}
+	};
 }
