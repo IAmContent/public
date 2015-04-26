@@ -17,201 +17,148 @@
  */
 package com.iamcontent.robotics.arm.edge;
 
-import static com.iamcontent.io.usb.EasedUsbDevice.eased;
+import java.util.EnumMap;
+import java.util.List;
 
-import javax.usb.UsbConst;
-import javax.usb.UsbControlIrp;
-import javax.usb.UsbDevice;
-
-import com.iamcontent.io.usb.EasyUsbDevice;
-import com.iamcontent.io.usb.Usb;
-import com.iamcontent.robotics.arm.edge.action.Action;
-import com.iamcontent.robotics.arm.edge.action.Actor;
-import com.iamcontent.robotics.arm.edge.action.BaseAction;
-import com.iamcontent.robotics.arm.edge.action.ElbowAction;
-import com.iamcontent.robotics.arm.edge.action.GripperAction;
-import com.iamcontent.robotics.arm.edge.action.LedAction;
-import com.iamcontent.robotics.arm.edge.action.ShoulderAction;
-import com.iamcontent.robotics.arm.edge.action.WristAction;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.iamcontent.robotics.control.hardware.owi535.Owi535UsbMotorController;
 
 /**
- * Issues {@link Action} instructions to the Maplin/OWI Robotic Edge Arm.
+ * Issues {@link Command} instructions to the Maplin/OWI Robotic Edge Arm.
+ * This class is a facade to the {@link Owi535UsbMotorController}, providing meaningful {@link Command}
+ * names.
  * 
  * @author Greg Elderfield
  */
-public class RoboticEdgeArm implements Actor {
-	public static final short VENDOR_ID = 0x1267;
-	public static final short PRODUCT_ID = 0x0;
+public class RoboticEdgeArm {
 
-	private final EasyUsbDevice device;
+	public enum Actuator {
+		GRIPPER(Owi535UsbMotorController.Actuator.MOTOR_1),
+		WRIST(Owi535UsbMotorController.Actuator.MOTOR_2),
+		ELBOW(Owi535UsbMotorController.Actuator.MOTOR_3),
+		SHOULDER(Owi535UsbMotorController.Actuator.MOTOR_4),
+		BASE(Owi535UsbMotorController.Actuator.MOTOR_5),
+		LED(Owi535UsbMotorController.Actuator.LED);
+		
+		final Owi535UsbMotorController.Actuator controllerActuator;
+
+		private Actuator(Owi535UsbMotorController.Actuator actuator) {
+			this.controllerActuator = actuator;
+		}
+		public Owi535UsbMotorController.Actuator getControllerActuator() {
+			return controllerActuator;
+		}
+	};
+
+	public enum Command {
+		GRIPPER_CLOSE(Actuator.GRIPPER, Owi535UsbMotorController.Command.MOTOR_1_FORWARD),
+		GRIPPER_OPEN(Actuator.GRIPPER, Owi535UsbMotorController.Command.MOTOR_1_BACKWARD),
+		GRIPPER_STOP(Actuator.GRIPPER, Owi535UsbMotorController.Command.MOTOR_1_STOP),
+		
+		WRIST_EXTEND(Actuator.WRIST, Owi535UsbMotorController.Command.MOTOR_2_FORWARD),
+		WRIST_FLEX(Actuator.WRIST, Owi535UsbMotorController.Command.MOTOR_2_BACKWARD),
+		WRIST_STOP(Actuator.WRIST, Owi535UsbMotorController.Command.MOTOR_2_STOP),
+		
+		ELBOW_EXTEND(Actuator.ELBOW, Owi535UsbMotorController.Command.MOTOR_3_FORWARD),
+		ELBOW_FLEX(Actuator.ELBOW, Owi535UsbMotorController.Command.MOTOR_3_BACKWARD),
+		ELBOW_STOP(Actuator.ELBOW, Owi535UsbMotorController.Command.MOTOR_3_STOP),
+		
+		SHOULDER_BACKWARD(Actuator.SHOULDER, Owi535UsbMotorController.Command.MOTOR_4_FORWARD),
+		SHOULDER_FORWARD(Actuator.SHOULDER, Owi535UsbMotorController.Command.MOTOR_4_BACKWARD),
+		SHOULDER_STOP(Actuator.SHOULDER, Owi535UsbMotorController.Command.MOTOR_4_STOP),
+		
+		BASE_RIGHT(Actuator.BASE, Owi535UsbMotorController.Command.MOTOR_5_FORWARD),
+		BASE_LEFT(Actuator.BASE, Owi535UsbMotorController.Command.MOTOR_5_BACKWARD),
+		BASE_STOP(Actuator.BASE, Owi535UsbMotorController.Command.MOTOR_5_STOP),
+		
+		LED_ON(Actuator.LED, Owi535UsbMotorController.Command.LED_ON),
+		LED_OFF(Actuator.LED, Owi535UsbMotorController.Command.LED_OFF);
+		
+		final Actuator actuator;
+		final Owi535UsbMotorController.Command controllerCommand;
+
+		private Command(Actuator actuator, Owi535UsbMotorController.Command controllerCommand) {
+			this.actuator = actuator;
+			this.controllerCommand = controllerCommand;
+		}
+		public Actuator getActuator() {
+			return actuator;
+		}
+		public Owi535UsbMotorController.Command getControllerCommand() {
+			return controllerCommand;
+		}
+	};
 	
-	private LedAction led = LedAction.OFF;
-	private BaseAction base = BaseAction.STOP;
-	private ShoulderAction shoulder = ShoulderAction.STOP;
-	private ElbowAction elbow = ElbowAction.STOP;
-	private WristAction wrist = WristAction.STOP;
-	private GripperAction gripper = GripperAction.STOP;
-
+	private final Function<Command, Owi535UsbMotorController.Command> commandTranslation = new Function<Command, Owi535UsbMotorController.Command>() {
+		@Override
+		public Owi535UsbMotorController.Command apply(Command c) {
+			return translated(c);
+		}
+	};
+	
+	private final EnumMap<Owi535UsbMotorController.Command, Command> reverseCommandTranslation = reverseCommandTranslation();
+	
+	private final Owi535UsbMotorController controller;
+	
 	/**
 	 * Creates an instance with the first Robot Arm device that is found.
 	 */
 	public RoboticEdgeArm() {
-		device = Usb.device(VENDOR_ID, PRODUCT_ID);
+		this(new Owi535UsbMotorController());
+	}
+
+	protected EnumMap<Owi535UsbMotorController.Command, Command> reverseCommandTranslation() {
+		final EnumMap<Owi535UsbMotorController.Command, Command>result = new EnumMap<Owi535UsbMotorController.Command, Command>(Owi535UsbMotorController.Command.class);
+		for (Command c : Command.values())
+			result.put(c.controllerCommand, c);
+		return result;
 	}
 
 	/**
-	 * Creates an instance with the given UsbDevice.
+	 * Creates an instance with the given controller.
 	 */
-	public RoboticEdgeArm(UsbDevice device) {
-		this.device = eased(device);
+	public RoboticEdgeArm(Owi535UsbMotorController controller) {
+		this.controller = controller;
 	}
 
-	public BaseAction getBase() {
-		return base;
+	public Command getCurrentCommand(Actuator a) {
+		return reverseTranslated(currentControllerCommand(a.controllerActuator));
 	}
 
-	@Override
-	public void setBase(BaseAction base) {
-		if (stateChanged(this.base, base)) {
-			this.base = base;
-			sendStateToDevice();
-		}
+	public boolean execute(Command command) {
+		return controller.execute(translated(command));
 	}
 
-	public ShoulderAction getShoulder() {
-		return shoulder;
-	}
-
-	@Override
-	public void setShoulder(ShoulderAction shoulder) {
-		if (stateChanged(this.shoulder, shoulder)) {
-			this.shoulder = shoulder;
-			sendStateToDevice();
-		}
-	}
-
-	public ElbowAction getElbow() {
-		return elbow;
-	}
-
-	@Override
-	public void setElbow(ElbowAction elbow) {
-		if (stateChanged(this.elbow, elbow)) {
-			this.elbow = elbow;
-			sendStateToDevice();
-		}
-	}
-
-	public WristAction getWrist() {
-		return wrist;
-	}
-
-	@Override
-	public void setWrist(WristAction wrist) {
-		if (stateChanged(this.wrist, wrist)) {
-			this.wrist = wrist;
-			sendStateToDevice();
-		}
-	}
-
-	public GripperAction getGripper() {
-		return gripper;
-	}
-
-	@Override
-	public void setGripper(GripperAction gripper) {
-		if (stateChanged(this.gripper, gripper)) {
-			this.gripper = gripper;
-			sendStateToDevice();
-		}
-	}
-
-	public LedAction getLed() {
-		return led;
-	}
-
-	@Override
-	public void setLed(LedAction led) {
-		if (stateChanged(this.led, led)) {
-			this.led = led;
-			sendStateToDevice();
-		}
+	public boolean execute(List<Command> commands) {
+		return controller.execute(translated(commands));
 	}
 	
-	/**
-	 * Sets the state of the device according to the given parameters, each of
-	 * which may be null, indicating 'do not change'.
-	 */
-	public void setState(BaseAction base, ShoulderAction shoulder, ElbowAction elbow, WristAction wrist, GripperAction gripper, LedAction led) {
-		boolean stateHasChanged = false;
-		if (stateChanged(this.base, base)) {
-			this.base = base;
-			stateHasChanged = true;
-		}
-		if (stateChanged(this.shoulder, shoulder)) {
-			this.shoulder = shoulder;
-			stateHasChanged = true;
-		}
-		if (stateChanged(this.elbow, elbow)) {
-			this.elbow = elbow;
-			stateHasChanged = true;
-		}
-		if (stateChanged(this.wrist, wrist)) {
-			this.wrist = wrist;
-			stateHasChanged = true;
-		}
-		if (stateChanged(this.gripper, gripper)) {
-			this.gripper = gripper;
-			stateHasChanged = true;
-		}
-		if (stateChanged(this.led, led)) {
-			this.led = led;
-			stateHasChanged = true;
-		}
-		if (stateHasChanged) {
-			sendStateToDevice();
-		}
+	public boolean stopAllMovement() {
+		return controller.stopAllMovement();
 	}
 
-	@Override
-	public void stopAllMovement() {
-		final LedAction leaveLedUnchanged = null;
-		setState(BaseAction.STOP, ShoulderAction.STOP, ElbowAction.STOP, WristAction.STOP, GripperAction.STOP, leaveLedUnchanged);
+	public boolean turnOffEverything() {
+		return controller.turnOffEverything();
+	}
+
+	public Owi535UsbMotorController getController() {
+		return controller;
 	}
 	
-	/**
-	 * Sends a control message to the device. The message that is sent is the
-	 * message that is required to synchronize the device's state with the state
-	 * of this instance.
-	 */
-	protected void sendStateToDevice() {
-		final UsbControlIrp controlRequest = controlRequest();
-		controlRequest.setData(currentState());
-		device.syncSubmit(controlRequest);
+	protected Owi535UsbMotorController.Command translated(Command c) {
+		return c.controllerCommand;
 	}
 
-	protected UsbControlIrp controlRequest() {
-		final byte requestType = UsbConst.REQUESTTYPE_TYPE_VENDOR;
-		final byte request = UsbConst.REQUEST_GET_DESCRIPTOR;
-		final short value = 0x100;
-		final short index = 0;
-		return device.createUsbControlIrp(requestType, request, value, index);
+	protected List<Owi535UsbMotorController.Command> translated(List<Command> commands) {
+		return Lists.transform(commands, commandTranslation);
 	}
 
-	/**
-	 * Indicates whether the new state represents a state change from the current state. 
-	 * A null value for the new state indicates that the state should not be changed.
-	 * 
-	 * @return true if the new state represents a state change from the current state, false otherwise.
-	 */
-	private boolean stateChanged(Action currentState, Action newState) {
-		return (newState != null) && (currentState != newState);
+	protected Command reverseTranslated(Owi535UsbMotorController.Command c) {
+		return reverseCommandTranslation.get(c);
 	}
 
-	private byte[] currentState() {
-		return new byte[] {
-				(byte) (shoulder.getActionBits() | getElbow().getActionBits() | getWrist().getActionBits() | getGripper().getActionBits()), 
-						getBase().getActionBits(), 
-						getLed().getActionBits() };
+	protected Owi535UsbMotorController.Command currentControllerCommand(Owi535UsbMotorController.Actuator controllerActuator) {
+		return controller.getCurrentCommand(controllerActuator);
 	}
 }

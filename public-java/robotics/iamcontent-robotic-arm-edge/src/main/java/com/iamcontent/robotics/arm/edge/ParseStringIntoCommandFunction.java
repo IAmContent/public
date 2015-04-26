@@ -18,95 +18,88 @@
 package com.iamcontent.robotics.arm.edge;
 
 import com.google.common.base.Function;
-import com.iamcontent.robotics.arm.edge.action.Action;
-import com.iamcontent.robotics.arm.edge.action.Actor;
-import com.iamcontent.robotics.arm.edge.action.BaseAction;
-import com.iamcontent.robotics.arm.edge.action.ElbowAction;
-import com.iamcontent.robotics.arm.edge.action.GeneralAction;
-import com.iamcontent.robotics.arm.edge.action.GripperAction;
-import com.iamcontent.robotics.arm.edge.action.LedAction;
-import com.iamcontent.robotics.arm.edge.action.ShoulderAction;
-import com.iamcontent.robotics.arm.edge.action.WristAction;
+import com.iamcontent.robotics.arm.edge.RoboticEdgeArm.Command;
 
 /**
- * A function to parse a String command into an Action.
+ * A function to parse a String command into a {@link Command}.
  */
-public class ParseStringIntoActionFunction implements Function<String, Action> {
+public class ParseStringIntoCommandFunction implements Function<String, Command> {
 
 	@Override
-	public Action apply(String command) {
+	public Command apply(String command) {
 		switch (tidied(command)) {
 		
 		case "base left":
 		case "bl":
-			return BaseAction.LEFT;
+			return Command.BASE_LEFT;
 		case "base right":
 		case "br":
-			return BaseAction.RIGHT;
+			return Command.BASE_RIGHT;
 		case "base stop":
 		case "bs":
-			return BaseAction.STOP;
+			return Command.BASE_STOP;
 			
 		case "shoulder forward":
 		case "shoulder forwards":
 		case "sf":
-			return ShoulderAction.FORWARDS;
+			return Command.SHOULDER_FORWARD;
 		case "shoulder backward":
 		case "shoulder backwards":
 		case "sb":
-			return ShoulderAction.BACKWARDS;
+			return Command.SHOULDER_BACKWARD;
 		case "shoulder stop":
 		case "ss":
-			return ShoulderAction.STOP;
+			return Command.SHOULDER_STOP;
 			
 		case "elbow extend":
 		case "ee":
-			return ElbowAction.EXTEND;
+			return Command.ELBOW_EXTEND;
 		case "elbow flex":
 		case "ef":
-			return ElbowAction.FLEX;
+			return Command.ELBOW_FLEX;
 		case "elbow stop":
 		case "es":
-			return ElbowAction.STOP;
+			return Command.ELBOW_STOP;
 			
 		case "wrist extend":
 		case "we":
-			return WristAction.EXTEND;
+			return Command.WRIST_EXTEND;
 		case "wrist flex":
 		case "wf":
-			return WristAction.FLEX;
+			return Command.WRIST_FLEX;
 		case "wrist stop":
 		case "ws":
-			return WristAction.STOP;
+			return Command.WRIST_STOP;
 			
 			
 		case "grip open":
 		case "gripper open":
 		case "go":
-			return GripperAction.OPEN;
+			return Command.GRIPPER_OPEN;
 		case "grip close":
 		case "gripper close":
 		case "gc":
-			return GripperAction.CLOSE;
+			return Command.GRIPPER_CLOSE;
 		case "grip stop":
 		case "gripper stop":
 		case "gs":
-			return GripperAction.STOP;
+			return Command.GRIPPER_STOP;
 			
 		case "led on":
 		case "light on":
 		case "l+":
-			return LedAction.ON;
+			return Command.LED_ON;
 		case "led off":
 		case "light off":
 		case "l-":
-			return LedAction.OFF;
+			return Command.LED_OFF;
 
 		case "stop":
 		case "":
-			return GeneralAction.STOP_ALL_MOVEMENT;
+			return null;
+
 		default:
-			return UNKNOWN_COMMAND;
+			throw new UnknownCommandException(command);
 		}
 	}
 
@@ -114,10 +107,11 @@ public class ParseStringIntoActionFunction implements Function<String, Action> {
 		return command.trim().toLowerCase();
 	}
 	
-	protected static final Action UNKNOWN_COMMAND = new Action() {
-		@Override
-		public void applyTo(Actor actor) {
-			System.out.println("Unknown command, please try again.");
+	public static class UnknownCommandException extends RuntimeException {
+		public UnknownCommandException(String command) {
+			super("Unknown command: " + command);
 		}
-	};
+
+		private static final long serialVersionUID = 1L;
+	}
 }

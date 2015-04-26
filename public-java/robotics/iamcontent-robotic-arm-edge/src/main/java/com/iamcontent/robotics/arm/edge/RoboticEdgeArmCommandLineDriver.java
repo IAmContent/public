@@ -25,16 +25,14 @@ import java.util.Collection;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.iamcontent.robotics.arm.edge.action.Action;
-import com.iamcontent.robotics.arm.edge.action.Actor;
-import com.iamcontent.robotics.arm.edge.action.GeneralAction;
-import com.iamcontent.robotics.arm.edge.action.LedAction;
+import com.iamcontent.robotics.arm.edge.RoboticEdgeArm.Command;
 
 /**
  * An example driver for the {@link RoboticEdgeArm}. Useful for manual testing.
  * @author Greg Elderfield
  */
 public class RoboticEdgeArmCommandLineDriver implements Runnable {
+	private static final Command TURN_OFF_EVERYTHING = null;
 	final RoboticEdgeArm arm = new RoboticEdgeArm();
 	
 	public static void main(String[] args) {
@@ -44,50 +42,57 @@ public class RoboticEdgeArmCommandLineDriver implements Runnable {
 	
 	@Override
 	public void run() {
-		for (Action a : actions()) {
+		for (Command a : command())
 			execute(a);
-			if (a==QUIT)
-				break;
-		}
-		hibernateDevice();
+		turnOffEverything();
 	}
 
-	private void hibernateDevice() {
-		execute(GeneralAction.STOP_ALL_MOVEMENT);
-		execute(LedAction.OFF);
-	}
-
-	private Iterable<Action> actions() {
-		return Iterables.transform(commandIterator(), PARSING_FUNCTION);
+	private Iterable<Command> command() {
+		return Iterables.transform(commandIterator(), parsingFunction);
 	}
 
 	private Iterable<String> commandIterator() {
 		return bufferedReaderIterator(bufferedReader(System.in));
 	}
 
-	private void execute(Action action) {
-		action.applyTo(arm);
+	private void execute(Command c) {
+		if (c==TURN_OFF_EVERYTHING)
+			turnOffEverything();
+		else
+			arm.execute(c);
 	}
 
 	private static final Collection<String> QUIT_COMMANDS = Arrays.asList(null, "q", "quit", "exit", "bye");
 
-	private static final Function<String, Action> PARSING_FUNCTION = new ParseStringIntoActionFunction() {
+	private void turnOffEverything() {
+		arm.turnOffEverything();
+	}
+
+	private final Function<String, Command> parsingFunction = new ParseStringIntoCommandFunction() {
 		@Override
-		public Action apply(String command) {
+		public Command apply(String command) {
 			if (isQuit(command))
-				return QUIT;
-			return super.apply(command);
+				quit();
+			return parsed(command);
 		}
 
+		private Command parsed(String command) {
+			try {
+				return super.apply(command);
+			} catch (UnknownCommandException e) {
+				System.out.println(e.getMessage());
+				return TURN_OFF_EVERYTHING;
+			}
+		}
+		
 		private boolean isQuit(String command) {
 			return QUIT_COMMANDS.contains(tidied(command));
 		}
-	};
-			
-	private static final Action QUIT = new Action() {
-		@Override
-		public void applyTo(Actor actor) {
+
+		private void quit() {
+			turnOffEverything();
 			System.out.println("Bye");
+			System.exit(0);
 		}
 	};
 }
