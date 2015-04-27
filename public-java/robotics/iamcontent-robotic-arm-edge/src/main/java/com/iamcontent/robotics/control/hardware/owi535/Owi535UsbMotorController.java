@@ -20,6 +20,7 @@ package com.iamcontent.robotics.control.hardware.owi535;
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -99,14 +100,14 @@ public class Owi535UsbMotorController {
 		return stateHasChanged;
 	}
 
-	public boolean execute(List<Command> commands) {
+	public boolean execute(Collection<Command> commands) {
 		boolean stateHasChanged = anyCommandUpdated(commands);
 		if (stateHasChanged)
 			sendStateToDevice();
 		return stateHasChanged;
 	}
 
-	private boolean anyCommandUpdated(List<Command> commands) {
+	private boolean anyCommandUpdated(Collection<Command> commands) {
 		boolean stateHasChanged = false;
 		for (Command c : commands)
 			stateHasChanged |= commandUpdated(c);
