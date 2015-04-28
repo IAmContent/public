@@ -65,7 +65,7 @@ public class LicenseWriter {
 		return new LicenseWriter();
 	}
 	
-	public void printInstructions() {
+	public void printInteractiveInstructions() {
 		printWithHeader(INSTRUCTIONS);
 	}
 

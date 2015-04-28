@@ -1,4 +1,4 @@
-This software comes with ABSOLUTELY NO WARRANTY; for details type 'show w'.
+This software comes with ABSOLUTELY NO WARRANTY; for details type 'warranty'.
 This is free software, and you are welcome to redistribute it
 under the terms of the GNU GENERAL PUBLIC LICENSE Version 2;
-type 'show c' for details.
+type 'license' for details.

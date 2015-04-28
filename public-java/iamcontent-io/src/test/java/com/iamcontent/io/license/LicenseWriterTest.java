@@ -45,9 +45,9 @@ public class LicenseWriterTest {
 	
 	@Test
 	public void testPrintInstructions() {
-		licenseWriter.printInstructions();
-		verifyOutput("This software comes with ABSOLUTELY NO WARRANTY; for details type 'show w'.",
-				     "type 'show c' for details.");
+		licenseWriter.printInteractiveInstructions();
+		verifyOutput("This software comes with ABSOLUTELY NO WARRANTY; for details type 'warranty'.",
+				     "type 'license' for details.");
 	}
 	
 	@Test
