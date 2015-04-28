@@ -51,6 +51,13 @@ public class LicenseWriterTest {
 	}
 	
 	@Test
+	public void testPrintNonInteractiveInstructions() {
+		licenseWriter.printNonInteractiveInstructions();
+		verifyHeader();
+		verifyOutput(LicenseWriter.MINIMAL_TERMS);
+	}
+	
+	@Test
 	public void testPrintTermsAndConditions() {
 		licenseWriter.printTermsAndConditions();
 		verifyOutput("GNU GENERAL PUBLIC LICENSE",
@@ -75,10 +82,15 @@ public class LicenseWriterTest {
 		verifyHeader();
 		for (String s : expected)
 			assertStringWritten(s);
+		verifyFooter();
 	}
 
 	private void verifyHeader() {
 		assertStringWritten("PROD, Copyright (C) 2099, 2100 M. Mouse.\n");
+	}
+	
+	private void verifyFooter() {
+		assertStringWritten(LicenseWriter.FOOTER);
 	}
 	
 	private void assertStringWritten(String s) {

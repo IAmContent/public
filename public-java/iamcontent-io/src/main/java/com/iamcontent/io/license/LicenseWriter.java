@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Writes out the license.
+ * Writes out various forms of the license.
  * @author Greg Elderfield
  */
 public class LicenseWriter {
@@ -33,10 +33,11 @@ public class LicenseWriter {
 	private static final String INSTRUCTIONS = FOLDER + "LICENSE_INSTRUCTIONS.TXT";
 	private static final String TERMS_AND_CONDITIONS = FOLDER + "LICENSE_TERMS_AND_CONDITIONS.TXT";
 	private static final String WARRANTY = FOLDER + "LICENSE_WARRANTY.TXT";
+	protected static final String FOOTER = "-----------------\n";
 	
 	private static final String PRODUCT_NAME = "IAmContent Public Software";
 	private static final String YEARS = "2015";
-	private static final String COPYRIGHT_HOLDER = "G. Elderfield.";
+	private static final String COPYRIGHT_HOLDER = "G. Elderfield";
 	
 	static final String[] MINIMAL_TERMS = {
 		"This software comes with ABSOLUTELY NO WARRANTY.",
@@ -60,8 +61,18 @@ public class LicenseWriter {
 		this.copyrightHolders = copyrightHolders;
 	}
 
+	public static LicenseWriter licenseWriter() {
+		return new LicenseWriter();
+	}
+	
 	public void printInstructions() {
 		printWithHeader(INSTRUCTIONS);
+	}
+
+	public void printNonInteractiveInstructions() {
+		printHeader();
+		printNonInteractiveTerms();
+		printFooter();
 	}
 
 	public void printTermsAndConditions() {
@@ -77,15 +88,20 @@ public class LicenseWriter {
 		try {
 			appendResource(file, out);
 		} catch (IOException e) {
-			printMinimalTerms();
+			printNonInteractiveTerms();
 		};
+		printFooter();
+	}
+
+	private void printFooter() {
+		append(FOOTER);
 	}
 
 	private void printHeader() {
 		append(String.format("%s, Copyright (C) %s %s.", productName, years, copyrightHolders));
 	}
 	
-	private void printMinimalTerms() {
+	private void printNonInteractiveTerms() {
 		for (String s : MINIMAL_TERMS)
 			append(s);
 	}
