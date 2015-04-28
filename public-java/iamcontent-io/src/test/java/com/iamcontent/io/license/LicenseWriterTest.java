@@ -38,8 +38,8 @@ public class LicenseWriterTest {
 	}
 
 	@Test
-	public void testPrintFile_nonExistingFile() {
-		licenseWriter.printFile("/NON_EXISTENT_FILE");
+	public void testPrintFile_nonExistentFile() {
+		licenseWriter.printWithHeader("/NON_EXISTENT_FILE");
 		verifyOutput(LicenseWriter.MINIMAL_TERMS);
 	}
 	
@@ -66,9 +66,9 @@ public class LicenseWriterTest {
 		verifyOutput("GNU GENERAL PUBLIC LICENSE",
 			         "NO WARRANTY",
 				     "Version 2, June 1991",
-//				     "0. This License applies to any program or other",
 				     "12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED",
 				     "END OF TERMS AND CONDITIONS");
+		assertTrue(out.indexOf("0. This License applies to any program or other") < 0);
 	}
 
 	private void verifyOutput(String... expected) {

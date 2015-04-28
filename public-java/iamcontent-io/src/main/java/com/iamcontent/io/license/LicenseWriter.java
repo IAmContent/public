@@ -17,12 +17,9 @@
  */
 package com.iamcontent.io.license;
 
-import static com.google.common.io.CharStreams.copy;
-import static com.iamcontent.io.util.Readers.inputStreamReader;
+import static com.iamcontent.io.util.ResourceUtils.appendResource;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +29,7 @@ import java.util.logging.Logger;
 public class LicenseWriter {
 	private static final Logger LOGGER = Logger.getLogger(LicenseWriter.class.getName());
 	
-	private static final String FOLDER = "/license/";
+	private static final String FOLDER = "license/";
 	private static final String INSTRUCTIONS = FOLDER + "LICENSE_INSTRUCTIONS.TXT";
 	private static final String TERMS_AND_CONDITIONS = FOLDER + "LICENSE_TERMS_AND_CONDITIONS.TXT";
 	private static final String WARRANTY = FOLDER + "LICENSE_WARRANTY.TXT";
@@ -64,26 +61,21 @@ public class LicenseWriter {
 	}
 
 	public void printInstructions() {
-		printFile(INSTRUCTIONS);
+		printWithHeader(INSTRUCTIONS);
 	}
 
 	public void printTermsAndConditions() {
-		printFile(TERMS_AND_CONDITIONS);
+		printWithHeader(TERMS_AND_CONDITIONS);
 	}
 	
 	public void printWarranty() {
-		printFile(WARRANTY);
+		printWithHeader(WARRANTY);
 	}
 	
-	private void printMinimalTerms() {
-		for (String s : MINIMAL_TERMS)
-			append(s);
-	}
-
-	void printFile(String file) {
+	protected void printWithHeader(String file) {
 		printHeader();
-		try(final InputStream in = getStream(file)) {
-			printInputStream(in);
+		try {
+			appendResource(file, out);
 		} catch (IOException e) {
 			printMinimalTerms();
 		};
@@ -92,9 +84,10 @@ public class LicenseWriter {
 	private void printHeader() {
 		append(String.format("%s, Copyright (C) %s %s.", productName, years, copyrightHolders));
 	}
-
-	private void printInputStream(InputStream in) throws IOException {
-		copy(inputStreamReader(in), out);
+	
+	private void printMinimalTerms() {
+		for (String s : MINIMAL_TERMS)
+			append(s);
 	}
 
 	private void append(String s) {
@@ -104,12 +97,5 @@ public class LicenseWriter {
 			} catch (IOException e) {
 				LOGGER.severe(s + "\n");
 			}
-	}
-	
-	private InputStream getStream(String file) throws FileNotFoundException {
-		final InputStream result = getClass().getResourceAsStream(file);
-		if (result==null)
-			throw new FileNotFoundException();
-		return result;
 	}
 }
