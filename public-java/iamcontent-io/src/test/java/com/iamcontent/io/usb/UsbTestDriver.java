@@ -17,6 +17,10 @@
  */
 package com.iamcontent.io.usb;
 
+import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
+
+import java.util.List;
+
 /**
  * Searches for a USB device with a given vendor id and product id.
  * @author Greg Elderfield
@@ -25,7 +29,8 @@ public class UsbTestDriver {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println(seekDevice(args));
+			licenseWriter().printNonInteractiveInstructions();
+			seekAndDisplay(args(args));
 		} catch (ArrayIndexOutOfBoundsException e) {
 			usage("Too few parameters.");
 		} catch (NumberFormatException e) {
@@ -33,14 +38,23 @@ public class UsbTestDriver {
 		}
 	}
 
-	private static EasyUsbDevice seekDevice(String[] args) {
-		return seekDevice(args(args));
+	private static void seekAndDisplay(Args args) {
+		display(seekDevices(args));
 	}
 
-	private static EasyUsbDevice seekDevice(final Args a) {
-		return Usb.device(a.vendorId, a.productId);
+	private static List<EasyUsbDevice> seekDevices(final Args a) {
+		return Usb.devices(a.vendorId, a.productId);
 	}
 	
+	private static void display(final List<EasyUsbDevice> devices) {
+		final String message = devices.isEmpty() 
+				? "No matching USB devices found." 
+				: String.format("Found %d matching USB devices:", devices.size());
+		System.out.println(message);
+		for (EasyUsbDevice d : devices)
+			System.out.println("  " + d);
+	}
+
 	private static Args args(String[] args) {
 		return new Args(args);
 	}
