@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.iamcontent.public</groupId>
+	<groupId>com.iamcontent.public-java</groupId>
 	<artifactId>robotics</artifactId>
 	<packaging>pom</packaging>
 	<description>IAmContent Robotics Experiments.</description>
@@ -16,7 +16,7 @@
 
 	<parent>
 		<groupId>com.iamcontent</groupId>
-		<artifactId>public</artifactId>
+		<artifactId>public-java</artifactId>
         <version>0.0.1-SNAPSHOT</version>
 	</parent>
 
