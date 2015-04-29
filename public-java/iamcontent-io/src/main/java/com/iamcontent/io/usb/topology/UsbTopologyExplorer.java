@@ -73,7 +73,7 @@ public abstract class UsbTopologyExplorer {
 	 */
 	public abstract void visit(UsbDevice usbDevice);
 
-    private void exploreDescendants(UsbHub hub) {
+    protected void exploreDescendants(UsbHub hub) {
         for (Object d : hub.getAttachedUsbDevices())
         	explore((UsbDevice) d);
     }
