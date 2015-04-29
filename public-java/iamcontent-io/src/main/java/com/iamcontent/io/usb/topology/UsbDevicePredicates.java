@@ -43,4 +43,7 @@ public class UsbDevicePredicates {
 			}
         };
     }
+    
+    private UsbDevicePredicates() {
+    }
 }

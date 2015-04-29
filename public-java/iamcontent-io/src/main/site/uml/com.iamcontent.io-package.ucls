@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <package id="1" language="java" name="com.iamcontent.io.usb.topology" project="iamcontent-io" 
+    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/topology" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="176" y="181"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="javax.usb" project="iamcontent-io" 
+    file="C:/mvn-repo/javax/usb/usb-api/1.0.2/usb-api-1.0.2.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="455" y="91"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="org.usb4java.javax" project="iamcontent-io" 
+    file="C:/mvn-repo/org/usb4java/usb4java-javax/1.2.0/usb4java-javax-1.2.0.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="473" y="174"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="com.iamcontent.io.usb" project="iamcontent-io" 
+    file="/iamcontent-io/src/test/java/com/iamcontent/io/usb" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="171" y="73"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <dependency id="5">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

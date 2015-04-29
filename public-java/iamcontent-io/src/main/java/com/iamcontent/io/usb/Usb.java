@@ -30,7 +30,6 @@ import com.iamcontent.io.usb.topology.UsbDeviceFinder;
 
 /**
  * USB utility methods.
- * 
  * @author Greg Elderfield
  */
 public class Usb {
@@ -71,5 +70,8 @@ public class Usb {
         } catch (IndexOutOfBoundsException e) {
             throw new UsbRuntimeException("No suitable USB Device found.");
         }
+    }
+    
+    private Usb() {
     }
 }
