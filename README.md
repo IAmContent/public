@@ -1,5 +1,5 @@
 # public
-Publicly available Java from Greg Elderfield
+Publicly available software from Greg Elderfield
 
 IAmContent Public Libraries.
 Copyright (C) 2015 Greg Elderfield
