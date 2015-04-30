@@ -4,7 +4,7 @@ Provides a mechanism for searching a USB topology for devices.
 
 ![Class Diagram](../uml/com.iamcontent.io.usb.topology.png)
 
-The abstract class _UsbTopologyExplorer_ recursively explores the USB topology. Concrete implementations determine which _UsbDevice_ to visit and what to do when a _UsbDevice_ is visited.
+The abstract class _UsbTopologyExplorer_ recursively explores the USB topology, visiting any _UsbDevice_ that satisfies a given _Predicate_. Concrete implementations determine what to do when a _UsbDevice_ is visited.
 
 The _UsbDeviceFinder_ searches for devices that satisfy a given _Predicate_. An example of its use can be seen in the _Usb.Devices_ method, of the [usb](usb.md) package.
 
