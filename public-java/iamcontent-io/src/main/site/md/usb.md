@@ -14,3 +14,8 @@ The most common use case is to find USB devices from the root USB hub by invokin
 For testing, this can be done from the command line by running the _UsbTestDriver_ class and providing the vendor id and product id as command line arguments.
 
 The returned objects implement the _EasyUsbDevice_ interface, which extends the standard _java.usb.UsbDevice_ interface but throws _UsbRuntimeExceptions_ instead of checked exceptions.
+
+---
+
+This software comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it
+under the terms of the [GNU GENERAL PUBLIC LICENSE Version 2](https://www.gnu.org/licenses/gpl-2.0.html).
