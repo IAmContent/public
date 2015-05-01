@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.iamcontent.robotics.control.hardware.owi535.Owi535UsbMotorController;
+import com.iamcontent.robot.controller.owi.Owi535UsbMotorController;
 
 /**
  * Issues {@link Command} instructions to the Maplin/OWI Robotic Edge Arm.

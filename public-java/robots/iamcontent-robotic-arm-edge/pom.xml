@@ -20,8 +20,8 @@
     
 	<dependencies>
 		<dependency>
-			<groupId>com.iamcontent.public-java</groupId>
-			<artifactId>iamcontent-io</artifactId>
+			<groupId>com.iamcontent.public-java.devices</groupId>
+			<artifactId>iamcontent-owi-motor-controllers</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
