@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iamcontent.public-java</groupId>
+	<artifactId>devices</artifactId>
+	<packaging>pom</packaging>
+	<description>IAmContent Device-Specific Control Software.</description>
+	<parent>
+		<groupId>com.iamcontent</groupId>
+		<artifactId>public-java</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+	</parent>
+    <licenses>
+        <license>
+            <name>GNU General Public License v2.0</name>
+            <url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+            <comments>A copyleft license that requires anyone who distributes this code or a derivative work to make the source available under the same terms.</comments>
+        </license>
+    </licenses>
+
+	<modules>
+		<module>iamcontent-owi-motor-controllers</module>
+		<module>iamcontent-pololu-servo-controllers</module>
+	</modules>
+</project>

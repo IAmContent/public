@@ -17,7 +17,8 @@
     
 	<modules>
 		<module>iamcontent-io</module>
-		<module>robotics</module>
+		<module>devices</module>
+		<module>robots</module>
 	</modules>
 
 	<dependencyManagement>
