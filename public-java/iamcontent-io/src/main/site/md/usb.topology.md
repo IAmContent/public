@@ -8,7 +8,7 @@ The abstract class _UsbTopologyExplorer_ recursively explores the USB topology, 
 
 The _UsbDeviceFinder_ searches for devices that satisfy a given _Predicate_. An example of its use can be seen in the _Usb.Devices_ method, of the [usb](usb.md) package.
 
-The _UsbTopologyTreePrinter_ can be run from the command line to print the USB topology to System.out in a simple  tree format.
+The _UsbTopologyTreePrinter_ can be run from the command line to print the USB topology to _System.out_ in a simple tree format.
 
 ---
 
