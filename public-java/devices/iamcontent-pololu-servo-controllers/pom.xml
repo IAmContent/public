@@ -16,4 +16,11 @@
             <comments>A copyleft license that requires anyone who distributes this code or a derivative work to make the source available under the same terms.</comments>
         </license>
     </licenses>
+    <dependencies>
+    	<dependency>
+    		<groupId>com.iamcontent.public-java</groupId>
+    		<artifactId>iamcontent-io</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
 </project>

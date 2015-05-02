@@ -74,7 +74,7 @@ public class Owi535UsbMotorController {
 	private final Map<Actuator, Command> currentCommands = everythingTurnedOff();
 
 	/**
-	 * Creates an instance with the first Robot Arm device that is found.
+	 * Creates an instance with the first OWI 535 device that is found.
 	 */
 	public Owi535UsbMotorController() {
 		final short defaultVendorId = 0x1267;
