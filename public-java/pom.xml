@@ -16,7 +16,8 @@
     </licenses>
     
 	<modules>
-		<module>iamcontent-io</module>
+        <module>iamcontent-core</module>
+        <module>iamcontent-io</module>
 		<module>devices</module>
 		<module>robots</module>
 	</modules>

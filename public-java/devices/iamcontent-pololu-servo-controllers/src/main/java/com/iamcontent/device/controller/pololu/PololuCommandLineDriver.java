@@ -1,4 +1,4 @@
-package com.iamcontent.robot.controller.pololu;
+package com.iamcontent.device.controller.pololu;
 
 import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
 import static com.iamcontent.io.util.Readers.bufferedReader;
@@ -13,22 +13,19 @@ import com.iamcontent.io.util.BufferedReaderIterator;
 public class PololuCommandLineDriver {
 
 	public static void main(String[] args) {
-		final PololuMicroMaestro6ChannelUsbServoController device = new PololuMicroMaestro6ChannelUsbServoController();
-		
+		final PololuMaestroUsbServoController device = new PololuMaestroUsbServoController();
 		for (String s : commandStrings())
-			device.setServoPosition(0, parse(s));
+			device.getServo(0).setPosition(parse(s));
 	}
 
-
-	private static int parse(String s) {
+	private static double parse(String s) {
 		try {
-			return Integer.parseInt(s);
+			return Double.parseDouble(s);
 		} catch(NumberFormatException e) {
 			System.err.println("Ooops");
 			return 0;
 		}
 	}
-
 
 	private static Iterable<String> commandStrings() {
 		return Iterables.filter(inputLines(), driverCommandHandler());
@@ -69,5 +66,4 @@ public class PololuCommandLineDriver {
 			}
 		};
 	}
-
 }
