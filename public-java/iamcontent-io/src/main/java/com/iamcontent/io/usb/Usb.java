@@ -22,10 +22,12 @@ import static com.iamcontent.io.usb.topology.UsbDevicePredicates.deviceHasVendor
 
 import java.util.List;
 
+import javax.usb.UsbDevice;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbServices;
 
+import com.google.common.base.Predicate;
 import com.iamcontent.io.usb.topology.UsbDeviceFinder;
 
 /**
@@ -38,8 +40,16 @@ public class Usb {
         return first(devices(vendorId, productId));
     }
 
+    public static EasyUsbDevice device(Predicate<UsbDevice> shouldIncludeDevice) {
+        return first(devices(shouldIncludeDevice));
+    }
+
     public static List<EasyUsbDevice> devices(short vendorId, short productId) {
-        final UsbDeviceFinder deviceFinder = deviceByVendorIdAndProductIdFinder(vendorId, productId);
+    	return devices(deviceHasVendorIdAndProductId(vendorId, productId));
+    }
+
+    public static List<EasyUsbDevice> devices(Predicate<UsbDevice> shouldIncludeDevice) {
+        final UsbDeviceFinder deviceFinder = usbDeviceFinder(shouldIncludeDevice);
         deviceFinder.exploreRootUsbHub();
 		return deviceFinder.getDevices();
     }
@@ -59,10 +69,6 @@ public class Usb {
             throw new UsbRuntimeException(e);
         }
     }
-
-	private static UsbDeviceFinder deviceByVendorIdAndProductIdFinder(short vendorId, short productId) {
-		return usbDeviceFinder(deviceHasVendorIdAndProductId(vendorId, productId));
-	}
 
     private static <T> T first(List<T> l) {
         try {
