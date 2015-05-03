@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robotics.arm.edge;
+package com.iamcontent.robot.arm.edge;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.iamcontent.robot.controller.owi.Owi535UsbMotorController;
+import com.iamcontent.device.controller.owi.Owi535UsbMotorController;
 
 /**
  * Issues {@link Command} instructions to the Maplin/OWI Robotic Edge Arm.

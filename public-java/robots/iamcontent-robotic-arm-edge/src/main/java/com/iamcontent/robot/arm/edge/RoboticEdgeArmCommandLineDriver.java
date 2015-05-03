@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robotics.arm.edge;
+package com.iamcontent.robot.arm.edge;
 
 import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
 import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
@@ -29,7 +29,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.iamcontent.io.license.LicenseWriter;
 import com.iamcontent.io.util.BufferedReaderIterator;
-import com.iamcontent.robotics.arm.edge.RoboticEdgeArm.Command;
+import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 
 /**
  * An example driver for the {@link RoboticEdgeArm}. Useful for manual testing.

@@ -15,10 +15,10 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robotics.arm.edge;
+package com.iamcontent.robot.arm.edge;
 
 import com.google.common.base.Function;
-import com.iamcontent.robotics.arm.edge.RoboticEdgeArm.Command;
+import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 
 /**
  * A function to parse a String command into a {@link Command}.
