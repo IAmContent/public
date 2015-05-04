@@ -23,4 +23,7 @@ package com.iamcontent.device.servo.raw;
  */
 public interface ServoController {
 	void setPosition(int channel, double value);
+	double getPosition(int channel);
+	void setSpeed(int channel, double speed);
+	void setAcceleration(int channel, double acceleration);
 }

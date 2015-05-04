@@ -25,7 +25,7 @@
     project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/raw/ServoController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="591" y="90"/>    
+    <position height="-1" width="-1" x="597" y="90"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      

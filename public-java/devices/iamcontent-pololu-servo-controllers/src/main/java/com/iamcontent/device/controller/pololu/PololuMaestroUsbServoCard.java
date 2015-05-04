@@ -38,6 +38,7 @@ public class PololuMaestroUsbServoCard implements ServoController {
 	public static final short VENDOR_ID = 0x1ffb;
 	public static final short MICRO_MAESTRO_PRODUCT_ID = 0x0089;
 	
+	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	
 	private final EasyUsbDevice device;
@@ -70,21 +71,40 @@ public class PololuMaestroUsbServoCard implements ServoController {
 		this.device = eased(device);
 	}
 
-	/**
-	 * Sets the raw position value of a specific servo.
-	 * @param channel The channel number of the servo.
-	 * @param value The raw position value.
-	 */
-	public void setTarget(short channel, short value) {
-		device.syncSubmit(request(REQUEST_SET_TARGET, channel, value));
+	@Override
+	public void setPosition(int channel, double value) {
+		setRawPosition((short)channel, (short)value);
 	}
-
-	protected UsbControlIrp request(byte request, short index, short value) {
-		return device.createUsbControlIrp(REQUESTTYPE_TYPE_VENDOR, request, value, index);
+	
+	public void setRawPosition(short channel, short position) {
+		device.syncSubmit(request(REQUEST_SET_TARGET, channel, position));
 	}
 
 	@Override
-	public void setPosition(int channel, double value) {
-		setTarget((short)channel, (short)value);
+	public double getPosition(int channel) {
+		// TODO getPosition() not implemented yet
+		return 0;
+	}
+
+	@Override
+	public void setSpeed(int channel, double speed) {
+		setRawSpeed((short)channel, (short)speed);
+	}
+
+	public void setRawSpeed(short channel, short speed) {
+		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, channel, speed));
+	}
+	
+	@Override
+	public void setAcceleration(int channel, double acceleration) {
+		setRawAcceleration((short)channel, (short)acceleration);
+	}
+	
+	public void setRawAcceleration(short channel, short acceleration) {
+		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, channel, (short)(acceleration | 0x80)));
+	}
+	
+	protected UsbControlIrp request(byte request, short index, short value) {
+		return device.createUsbControlIrp(REQUESTTYPE_TYPE_VENDOR, request, value, index);
 	}
 }

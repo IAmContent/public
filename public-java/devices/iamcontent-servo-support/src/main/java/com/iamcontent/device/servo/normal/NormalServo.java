@@ -32,7 +32,7 @@ public class NormalServo implements Servo {
 	public static final double MIN = 0.0;
 	public static final double MAX = 1.0;
 	
-	private static final double MIN_TARGET = 4000;
+	private static final double MIN_TARGET = 4000; // TODO min/max range should be per servo.
 	private static final double MAX_TARGET = 8000;
 	
 
@@ -58,8 +58,7 @@ public class NormalServo implements Servo {
 
 	@Override
 	public double getPosition() {
-		// TODO Auto-generated method stub
-		return 0;
+		return fromDelegateValue(servo.getPosition(), MIN_TARGET, MAX_TARGET);
 	}
 	
 	@Override
@@ -72,8 +71,12 @@ public class NormalServo implements Servo {
 		// TODO Auto-generated method stub
 	}
 	
-	private double toDelegateValue(double value, final double delegateMin, final double delegateMax) {
+	private double toDelegateValue(double value, double delegateMin, double delegateMax) {
 		return linearConvert(normal(value), MIN, MAX, delegateMin, delegateMax);
+	}
+	
+	private double fromDelegateValue(double value, double delegateMin, double delegateMax) {
+		return normal(linearConvert(value, delegateMin, delegateMax, MIN, MAX));
 	}
 
 	private static double normal(double value) {
