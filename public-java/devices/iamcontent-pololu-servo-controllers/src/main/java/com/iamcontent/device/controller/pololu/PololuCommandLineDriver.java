@@ -17,10 +17,16 @@
  */
 package com.iamcontent.device.controller.pololu;
 
+import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
+import static com.iamcontent.device.servo.normal.NormalServoSource.normalized;
+
 import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
 import com.iamcontent.device.servo.command.ServoCommand;
+import com.iamcontent.device.servo.command.ServoCommandExecutor;
+import com.iamcontent.device.servo.normal.NormalServoSource;
 import com.iamcontent.io.cli.CommandLineDriver;
+import com.iamcontent.io.cli.UnknownCommandException;
 
 /**
  * An example driver for the {@link PololuMaestroUsbServoController}. Useful for manual testing.
@@ -28,9 +34,7 @@ import com.iamcontent.io.cli.CommandLineDriver;
  */
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
-	private final PololuMaestroUsbServoController device = new PololuMaestroUsbServoController();
-	
-	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction();
+	private final ServoCommandExecutor executor = executor(device());
 
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
@@ -44,10 +48,27 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	}
 	
 	private void execute(ServoCommand c) {
-		device.execute(c);
+		if (c!=null)
+			executor.execute(c);
 	}
 
 	private Iterable<ServoCommand> commands() {
 		return Iterables.transform(commandStrings(), parsingFunction);
+	}
+
+	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction() {
+		@Override
+		public ServoCommand apply(String command) {
+			try {
+				return super.apply(command);
+			} catch (UnknownCommandException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+	};
+
+	private NormalServoSource device() {
+		return normalized(PololuMaestroUsbServoCard.defaultServoSource());
 	}
 }

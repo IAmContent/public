@@ -15,41 +15,68 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.servo.normal;
 
 import static com.iamcontent.core.MathUtils.limit;
+import static com.iamcontent.core.MathUtils.linearConvert;
+
+import com.iamcontent.device.servo.Servo;
 
 /**
- * A {@link Servo} that normalizes all of its values to the range 0.0..1.0.
- * Implementations should invoke the abstract setLimited*() methods, which are invoked by the set*() methods
- * with the parameter value limited to the range 0.0..1.0.
+ * A {@link Servo} that normalizes all of its values to the range 0.0..1.0 and invokes a delegate {@link Servo},
+ * scaling values linearly.
  * @author Greg Elderfield
  */
-public abstract class NormalizingServo implements Servo {
+public class NormalServo implements Servo {
 	
 	public static final double MIN = 0.0;
 	public static final double MAX = 1.0;
+	
+	private static final double MIN_TARGET = 4000;
+	private static final double MAX_TARGET = 8000;
+	
 
-	@Override
-	public void setPosition(double position) {
-		setLimitedPosition(limited(position));
+	final Servo servo;
+	
+	public NormalServo(Servo servo) {
+		this.servo = servo;
 	}
 
 	@Override
+	public int getChannel() {
+		return servo.getChannel();
+	}
+	
+	@Override
+	public void setPosition(double position) {
+		servo.setPosition(toDelegatePosition(position));
+	}
+
+	private double toDelegatePosition(double position) {
+		return toDelegateValue(position, MIN_TARGET, MAX_TARGET);
+	}
+
+	@Override
+	public double getPosition() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
 	public void setSpeed(double speed) {
-		setLimitedSpeed(limited(speed));
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setAcceleration(double acceleration) {
-		setLimitedAcceleration(limited(acceleration));
+		// TODO Auto-generated method stub
+	}
+	
+	private double toDelegateValue(double value, final double delegateMin, final double delegateMax) {
+		return linearConvert(normal(value), MIN, MAX, delegateMin, delegateMax);
 	}
 
-	public abstract void setLimitedPosition(double position);
-	public abstract void setLimitedSpeed(double speed);
-	public abstract void setLimitedAcceleration(double acceleration);
-	
-	private static double limited(double value) {
+	private static double normal(double value) {
 		return limit(value, MIN, MAX);
 	}
 }

@@ -22,28 +22,10 @@ package com.iamcontent.device.servo;
  * @author Greg Elderfield
  */
 public interface Servo {
+	int getChannel();
 	
-	/**
-	 * Sets the relative position.
-	 * @param position The relative position, between 0.0 and 1.0.
-	 */
 	void setPosition(double position);
-	
-	/**
-	 * Gets the relative position.
-	 * @return The relative position, between 0.0 and 1.0.
-	 */
 	double getPosition();
-	
-	/**
-	 * Sets the relative speed.
-	 * @param speed The relative speed, between 0.0 and 1.0. A value of zero or less, being treated the same as 1 (i.e. full speed)
-	 */
 	void setSpeed(double speed);
-	
-	/**
-	 * Sets the relative acceleration.
-	 * @param acceleration The relative acceleration, between 0.0 and 1.0. A value of zero or less, being treated the same as 1 (i.e. full acceleration)
-	 */
 	void setAcceleration(double acceleration);
 }

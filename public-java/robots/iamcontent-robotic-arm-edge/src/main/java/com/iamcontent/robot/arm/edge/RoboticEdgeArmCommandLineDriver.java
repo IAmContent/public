@@ -67,10 +67,6 @@ public class RoboticEdgeArmCommandLineDriver extends CommandLineDriver implement
 	private final Function<String, Command> parsingFunction = new ParseStringIntoCommandFunction() {
 		@Override
 		public Command apply(String command) {
-			return parsed(command);
-		}
-
-		private Command parsed(String command) {
 			try {
 				return super.apply(command);
 			} catch (UnknownCommandException e) {

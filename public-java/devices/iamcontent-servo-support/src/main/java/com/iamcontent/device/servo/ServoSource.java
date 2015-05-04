@@ -18,9 +18,9 @@
 package com.iamcontent.device.servo;
 
 /**
- * Represents a Servo controller.
+ * Represents a source of {@link Servo}s.
  * @author Greg Elderfield
  */
-public interface ServoController {
+public interface ServoSource {
 	Servo getServo(int channel);
 }

@@ -17,12 +17,15 @@
  */
 package com.iamcontent.device.controller.pololu;
 
+import static com.iamcontent.device.servo.raw.RawServoSource.rawServoSource;
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
+import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.raw.ServoController;
 import com.iamcontent.io.usb.EasyUsbDevice;
 import com.iamcontent.io.usb.Usb;
 
@@ -30,7 +33,7 @@ import com.iamcontent.io.usb.Usb;
  * Represents a Pololu Maestro card.
  * @author Greg Elderfield
  */
-public class PololuMaestroUsbServoCard {
+public class PololuMaestroUsbServoCard implements ServoController {
 
 	public static final short VENDOR_ID = 0x1ffb;
 	public static final short MICRO_MAESTRO_PRODUCT_ID = 0x0089;
@@ -38,6 +41,20 @@ public class PololuMaestroUsbServoCard {
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	
 	private final EasyUsbDevice device;
+	
+	/**
+	 * Creates a {@link ServoSource} for the first Pololu Maestro device that is found.
+	 */
+	public static ServoSource defaultServoSource() {
+		return rawServoSource(defaultInstance());
+	}
+	
+	/**
+	 * Creates an instance for the first Pololu Maestro device that is found.
+	 */
+	public static PololuMaestroUsbServoCard defaultInstance() {
+		return new PololuMaestroUsbServoCard();
+	}
 	
 	/**
 	 * Creates an instance with the first Pololu Maestro device that is found.
@@ -54,9 +71,9 @@ public class PololuMaestroUsbServoCard {
 	}
 
 	/**
-	 * Sets the target value of a specific servo.
+	 * Sets the raw position value of a specific servo.
 	 * @param channel The channel number of the servo.
-	 * @param value The target value.
+	 * @param value The raw position value.
 	 */
 	public void setTarget(short channel, short value) {
 		device.syncSubmit(request(REQUEST_SET_TARGET, channel, value));
@@ -64,5 +81,10 @@ public class PololuMaestroUsbServoCard {
 
 	protected UsbControlIrp request(byte request, short index, short value) {
 		return device.createUsbControlIrp(REQUESTTYPE_TYPE_VENDOR, request, value, index);
+	}
+
+	@Override
+	public void setPosition(int channel, double value) {
+		setTarget((short)channel, (short)value);
 	}
 }

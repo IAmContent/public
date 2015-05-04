@@ -17,31 +17,38 @@
  */
 package com.iamcontent.device.servo.command;
 
-import com.iamcontent.device.servo.Servo;
+import java.util.List;
+
 import com.iamcontent.device.servo.ServoSource;
 
 /**
- * Represents a single command that can be performed by a {@link ServoSource} on a {@link Servo}. 
+ * A {@link ServoCommandExecutor} that executes {@link ServoCommand}s sequentially.
  * @author Greg Elderfield
  */
-public interface ServoCommand {
-	/**
-	 * @return The channel number of the {@link Servo}.
-	 */
-	int getChannel();
+public class SequentialServoCommandExecutor implements ServoCommandExecutor {
 	
-	/**
-	 * @return The relative position for the {@link Servo}, between 0.0 and 1.0, or null if the position is not changed by this command
-	 */
-	Double getPosition();
+	final ServoSource servoSource;
+
+	public static SequentialServoCommandExecutor executor(ServoSource servoSource) {
+		return new SequentialServoCommandExecutor(servoSource);
+	}
+
+	public SequentialServoCommandExecutor(ServoSource servoSource) {
+		this.servoSource = servoSource;
+	}
 	
-	/**
-	 * @return The relative speed for the {@link Servo}, between 0.0 and 1.0, or null if the speed is not changed by this command
-	 */
-	Double getSpeed();
-	
-	/**
-	 * @return The relative acceleration for the {@link Servo}, between 0.0 and 1.0, or null if the acceleration is not changed by this command
-	 */
-	Double getAcceleration();
+	@Override
+	public void execute(List<? extends ServoCommand> commands) {
+		for (ServoCommand c : commands)
+			execute(c);
+	}
+
+	@Override
+	public void execute(ServoCommand command) {
+		setPosition(command.getChannel(), command.getPosition());
+	}
+
+	private void setPosition(final int channel, final Double position) {
+		servoSource.getServo(channel).setPosition(position);
+	}
 }
