@@ -131,7 +131,7 @@ public class RoboticEdgeArm {
 		return controller.execute(translated(command));
 	}
 
-	public boolean execute(List<Command> commands) {
+	public boolean execute(List<? extends Command> commands) {
 		return controller.execute(translated(commands));
 	}
 	
@@ -151,7 +151,7 @@ public class RoboticEdgeArm {
 		return c.controllerCommand;
 	}
 
-	protected Collection<Owi535UsbMotorController.Command> translated(Collection<Command> commands) {
+	protected Collection<Owi535UsbMotorController.Command> translated(Collection<? extends Command> commands) {
 		return Collections2.transform(commands, commandTranslation);
 	}
 

@@ -20,6 +20,7 @@ package com.iamcontent.robot.arm.edge;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.iamcontent.io.cli.CommandLineDriver;
+import com.iamcontent.io.cli.UnknownCommandException;
 import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 
 /**
@@ -38,8 +39,8 @@ public class RoboticEdgeArmCommandLineDriver extends CommandLineDriver implement
 	
 	@Override
 	public void run() {
-		for (Command a : commands())
-			execute(a);
+		for (Command c : commands())
+			execute(c);
 		turnOffEverything();
 	}
 

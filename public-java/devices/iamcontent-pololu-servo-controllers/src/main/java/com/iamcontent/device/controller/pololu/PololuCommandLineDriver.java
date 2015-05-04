@@ -17,6 +17,9 @@
  */
 package com.iamcontent.device.controller.pololu;
 
+import com.google.common.collect.Iterables;
+import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
+import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.io.cli.CommandLineDriver;
 
 /**
@@ -27,6 +30,8 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 
 	private final PololuMaestroUsbServoController device = new PololuMaestroUsbServoController();
 	
+	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction();
+
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
 		driver.run();
@@ -34,20 +39,15 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 
 	@Override
 	public void run() {
-		for (String c : commandStrings())
+		for (ServoCommand c : commands())
 			execute(c);
 	}
 	
-	private void execute(String c) {
-		device.getServo(0).setPosition(parse(c));
+	private void execute(ServoCommand c) {
+		device.execute(c);
 	}
 
-	private static double parse(String s) {
-		try {
-			return Double.parseDouble(s);
-		} catch(NumberFormatException e) {
-			System.err.println("Ooops");
-			return 0;
-		}
+	private Iterable<ServoCommand> commands() {
+		return Iterables.transform(commandStrings(), parsingFunction);
 	}
 }

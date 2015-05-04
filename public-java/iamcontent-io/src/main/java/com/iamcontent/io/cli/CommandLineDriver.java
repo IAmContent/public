@@ -48,6 +48,10 @@ public abstract class CommandLineDriver {
 		this.in = in;
 	}
 
+	public static String tidied(String command) {
+		return command.trim().toLowerCase();
+	}
+	
 	protected Iterable<String> commandStrings() {
 		licenseWriter.printInteractiveInstructions();
 		return Iterables.filter(inputLines(), driverCommandHandler());
@@ -96,10 +100,6 @@ public abstract class CommandLineDriver {
 	
 	protected boolean isQuit(String command) {
 		return QUIT_COMMANDS.contains(tidied(command));
-	}
-	
-	protected String tidied(String command) {
-		return command.trim().toLowerCase();
 	}
 
 	protected void onQuit() {

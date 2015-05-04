@@ -17,7 +17,10 @@
  */
 package com.iamcontent.robot.arm.edge;
 
+import static com.iamcontent.io.cli.CommandLineDriver.tidied;
+
 import com.google.common.base.Function;
+import com.iamcontent.io.cli.UnknownCommandException;
 import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 
 /**
@@ -101,17 +104,5 @@ public class ParseStringIntoCommandFunction implements Function<String, Command>
 		default:
 			throw new UnknownCommandException(command);
 		}
-	}
-
-	protected String tidied(String command) {
-		return command.trim().toLowerCase();
-	}
-	
-	public static class UnknownCommandException extends RuntimeException {
-		public UnknownCommandException(String command) {
-			super("Unknown command: " + command);
-		}
-
-		private static final long serialVersionUID = 1L;
 	}
 }
