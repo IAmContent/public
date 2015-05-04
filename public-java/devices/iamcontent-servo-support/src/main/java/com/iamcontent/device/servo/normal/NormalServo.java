@@ -36,7 +36,7 @@ public class NormalServo implements Servo {
 	private static final double MAX_TARGET = 8000;
 	
 
-	final Servo servo;
+	private final Servo servo;
 	
 	public NormalServo(Servo servo) {
 		this.servo = servo;
