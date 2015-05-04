@@ -1,21 +1,45 @@
+/**
+  IAmContent Public Libraries.
+  Copyright (C) 2015 Greg Elderfield
+  @author Greg Elderfield, iamcontent@jarchitect.co.uk
+ 
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU General Public License as published by the Free Software Foundation; either version 2 of 
+  the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with this program;
+  if not, write to the Free Software Foundation, Inc., 
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package com.iamcontent.device.controller.pololu;
 
-import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
-import static com.iamcontent.io.util.Readers.bufferedReader;
+import com.iamcontent.io.cli.CommandLineDriver;
 
-import java.util.Arrays;
-import java.util.Collection;
+/**
+ * An example driver for the {@link PololuMaestroUsbServoController}. Useful for manual testing.
+ * @author Greg Elderfield
+ */
+public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.iamcontent.io.util.BufferedReaderIterator;
-
-public class PololuCommandLineDriver {
-
+	private final PololuMaestroUsbServoController device = new PololuMaestroUsbServoController();
+	
 	public static void main(String[] args) {
-		final PololuMaestroUsbServoController device = new PololuMaestroUsbServoController();
-		for (String s : commandStrings())
-			device.getServo(0).setPosition(parse(s));
+		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
+		driver.run();
+	}
+
+	@Override
+	public void run() {
+		for (String c : commandStrings())
+			execute(c);
+	}
+	
+	private void execute(String c) {
+		device.getServo(0).setPosition(parse(c));
 	}
 
 	private static double parse(String s) {
@@ -25,45 +49,5 @@ public class PololuCommandLineDriver {
 			System.err.println("Ooops");
 			return 0;
 		}
-	}
-
-	private static Iterable<String> commandStrings() {
-		return Iterables.filter(inputLines(), driverCommandHandler());
-	}
-	private static BufferedReaderIterator inputLines() {
-		return bufferedReaderIterator(bufferedReader(System.in));
-	}
-
-	private static final Collection<String> QUIT_COMMANDS = Arrays.asList(null, "q", "quit", "exit", "bye");
-
-	private static Predicate<String> driverCommandHandler() {
-		return new Predicate<String>() {
-			@Override
-			public boolean apply(String command) {
-				return !isLicenseInstruction(command);
-			}
-
-			private boolean isLicenseInstruction(String command) {
-				switch (command) {
-				default:
-					if (isQuit(command))
-						quit();
-					return false;
-				}
-			}
-			
-			private boolean isQuit(String command) {
-				return QUIT_COMMANDS.contains(tidied(command));
-			}
-
-			protected String tidied(String command) {
-				return command.trim().toLowerCase();
-			}
-			
-			private void quit() {
-				System.out.println("Bye");
-				System.exit(0);
-			}
-		};
 	}
 }

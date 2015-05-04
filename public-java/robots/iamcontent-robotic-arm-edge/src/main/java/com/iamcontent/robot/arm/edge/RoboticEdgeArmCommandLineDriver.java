@@ -17,35 +17,20 @@
  */
 package com.iamcontent.robot.arm.edge;
 
-import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
-import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
-import static com.iamcontent.io.util.Readers.bufferedReader;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.iamcontent.io.license.LicenseWriter;
-import com.iamcontent.io.util.BufferedReaderIterator;
+import com.iamcontent.io.cli.CommandLineDriver;
 import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 
 /**
  * An example driver for the {@link RoboticEdgeArm}. Useful for manual testing.
  * @author Greg Elderfield
  */
-public class RoboticEdgeArmCommandLineDriver implements Runnable {
+public class RoboticEdgeArmCommandLineDriver extends CommandLineDriver implements Runnable {
 	private static final Command TURN_OFF_EVERYTHING = null;
 	
-	private final LicenseWriter licenseWriter = licenseWriter();
-	final RoboticEdgeArm arm;
+	private final RoboticEdgeArm arm = new RoboticEdgeArm();
 	
-	public RoboticEdgeArmCommandLineDriver() {
-		licenseWriter.printInteractiveInstructions();
-		arm = new RoboticEdgeArm();
-	}
-
 	public static void main(String[] args) {
 		final RoboticEdgeArmCommandLineDriver driver = new RoboticEdgeArmCommandLineDriver();
 		driver.run();
@@ -58,15 +43,13 @@ public class RoboticEdgeArmCommandLineDriver implements Runnable {
 		turnOffEverything();
 	}
 
-	private Iterable<Command> commands() {
-		return Iterables.transform(commandStrings(), parsingFunction);
+	@Override
+	protected void onQuit() {
+		turnOffEverything();
 	}
 
-	private Iterable<String> commandStrings() {
-		return Iterables.filter(inputLines(), driverCommandHandler());
-	}
-	private BufferedReaderIterator inputLines() {
-		return bufferedReaderIterator(bufferedReader(System.in));
+	private Iterable<Command> commands() {
+		return Iterables.transform(commandStrings(), parsingFunction);
 	}
 
 	private void execute(Command c) {
@@ -95,45 +78,4 @@ public class RoboticEdgeArmCommandLineDriver implements Runnable {
 			}
 		}
 	};
-
-	
-	private static final Collection<String> QUIT_COMMANDS = Arrays.asList(null, "q", "quit", "exit", "bye");
-
-	private Predicate<String> driverCommandHandler() {
-		return new Predicate<String>() {
-			@Override
-			public boolean apply(String command) {
-				return !isLicenseInstruction(command);
-			}
-
-			private boolean isLicenseInstruction(String command) {
-				switch (command) {
-				case "license":
-					licenseWriter.printTermsAndConditions();
-					return true;
-				case "warranty":
-					licenseWriter.printWarranty();
-					return true;
-				default:
-					if (isQuit(command))
-						quit();
-					return false;
-				}
-			}
-			
-			private boolean isQuit(String command) {
-				return QUIT_COMMANDS.contains(tidied(command));
-			}
-
-			protected String tidied(String command) {
-				return command.trim().toLowerCase();
-			}
-			
-			private void quit() {
-				turnOffEverything();
-				System.out.println("Bye");
-				System.exit(0);
-			}
-		};
-	}
 }
