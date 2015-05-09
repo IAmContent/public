@@ -69,6 +69,6 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	};
 
 	private NormalServoSource device() {
-		return normalized(PololuMaestroUsbServoCard.defaultServoSource());
+		return normalized(PololuMaestroUsbServoController.defaultServoSource());
 	}
 }

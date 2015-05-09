@@ -17,15 +17,12 @@
  */
 package com.iamcontent.device.controller.pololu;
 
-import static com.iamcontent.device.servo.raw.RawServoSource.rawServoSource;
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
-import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.raw.ServoController;
 import com.iamcontent.io.usb.EasyUsbDevice;
 import com.iamcontent.io.usb.Usb;
 
@@ -33,7 +30,7 @@ import com.iamcontent.io.usb.Usb;
  * Represents a Pololu Maestro card.
  * @author Greg Elderfield
  */
-public class PololuMaestroUsbServoCard implements ServoController {
+public class PololuMaestroUsbServoCard {
 
 	public static final short VENDOR_ID = 0x1ffb;
 	public static final short MICRO_MAESTRO_PRODUCT_ID = 0x0089;
@@ -42,13 +39,6 @@ public class PololuMaestroUsbServoCard implements ServoController {
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	
 	private final EasyUsbDevice device;
-	
-	/**
-	 * Creates a {@link ServoSource} for the first Pololu Maestro device that is found.
-	 */
-	public static ServoSource defaultServoSource() {
-		return rawServoSource(defaultInstance());
-	}
 	
 	/**
 	 * Creates an instance for the first Pololu Maestro device that is found.
@@ -71,33 +61,12 @@ public class PololuMaestroUsbServoCard implements ServoController {
 		this.device = eased(device);
 	}
 
-	@Override
-	public void setPosition(int channel, double value) {
-		setRawPosition((short)channel, (short)value);
-	}
-	
 	public void setRawPosition(short channel, short position) {
 		device.syncSubmit(request(REQUEST_SET_TARGET, channel, position));
 	}
 
-	@Override
-	public double getPosition(int channel) {
-		// TODO getPosition() not implemented yet
-		return 0;
-	}
-
-	@Override
-	public void setSpeed(int channel, double speed) {
-		setRawSpeed((short)channel, (short)speed);
-	}
-
 	public void setRawSpeed(short channel, short speed) {
 		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, channel, speed));
-	}
-	
-	@Override
-	public void setAcceleration(int channel, double acceleration) {
-		setRawAcceleration((short)channel, (short)acceleration);
 	}
 	
 	public void setRawAcceleration(short channel, short acceleration) {
