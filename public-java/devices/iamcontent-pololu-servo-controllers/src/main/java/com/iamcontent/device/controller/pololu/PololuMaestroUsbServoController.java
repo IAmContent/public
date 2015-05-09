@@ -20,7 +20,7 @@ package com.iamcontent.device.controller.pololu;
  */
 
 
-import static com.iamcontent.device.servo.raw.RawServoSource.rawServoSource;
+import static com.iamcontent.device.servo.Servos.rawServoSource;
 
 import javax.usb.UsbDevice;
 
