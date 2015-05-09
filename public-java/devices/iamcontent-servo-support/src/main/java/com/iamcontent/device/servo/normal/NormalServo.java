@@ -17,8 +17,8 @@
  */
 package com.iamcontent.device.servo.normal;
 
-import static com.iamcontent.core.MathUtils.limit;
-import static com.iamcontent.core.MathUtils.linearConvert;
+import static com.iamcontent.core.math.MathUtils.limit;
+import static com.iamcontent.core.math.MathUtils.linearConvert;
 
 import com.iamcontent.device.servo.Servo;
 

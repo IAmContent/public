@@ -7,6 +7,7 @@ public class NormalServoSource implements ServoSource {
 	
 	private final ServoSource delegate;
 	
+	// TODO: This would be better in a Servos class, rather than a separate class
 	public static NormalServoSource normalized(ServoSource source) {
 		return new NormalServoSource(source);
 	}

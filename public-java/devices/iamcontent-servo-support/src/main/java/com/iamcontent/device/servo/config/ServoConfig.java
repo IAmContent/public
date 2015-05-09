@@ -15,26 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core;
+package com.iamcontent.device.servo.config;
+
+import com.google.common.base.Converter;
+import com.google.common.base.Function;
+import com.iamcontent.device.servo.Servo;
 
 /**
- * Math utility functions.
+ * Configuration for a single {@link Servo}.
  * @author Greg Elderfield
  */
-public class MathUtils {
+public interface ServoConfig {
 
-	public static int limit(int i, int min, int max) {
-		return Math.min(max, Math.max(i, min));
-	}
+	/**
+	 * @return A converter that converts between an input position and an output position.
+	 */
+	Converter<Double, Double> getPositionConverter();
 
-	public static double limit(double i, double min, double max) {
-		return Math.min(max, Math.max(i, min));
-	}
+	/**
+	 * @return A function that converts from an input speed to an output speed.
+	 */
+	Function<Double, Double> getSpeedConverter();
 
-	public static double linearConvert(double v, double from1, double from2, double to1, double to2) {
-		final double fromRange = from2 - from1;
-		final double toRange = to2 - to1;
-		final double quotient = (v-from1)/fromRange;
-		return (quotient * toRange) + to1;
-	}
+	/**
+	 * @return A function that converts from an acceleration speed to an output acceleration.
+	 */
+	Function<Double, Double> getAccelerationConverter();
 }

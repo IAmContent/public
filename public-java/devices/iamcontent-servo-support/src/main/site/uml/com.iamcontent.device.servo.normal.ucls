@@ -4,7 +4,7 @@
   <interface id="1" language="java" name="com.iamcontent.device.servo.Servo" project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/Servo.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="433" y="58"/>    
+    <position height="-1" width="-1" x="461" y="59"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -24,7 +24,7 @@
   <class id="3" language="java" name="com.iamcontent.device.servo.normal.NormalServo" project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/normal/NormalServo.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="433" y="291"/>    
+    <position height="-1" width="-1" x="461" y="292"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -42,34 +42,42 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="5">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </realization>  
-  <association id="6">    
-    <bendpoint x="362" y="139"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="7" name="servo"/>      
-      <multiplicity id="8" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="9">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <association id="10">    
+  <association id="5">    
     <bendpoint x="82" y="156"/>    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="11" name="delegate">        
+      <attribute id="6" name="delegate">        
         <position height="18" width="49" x="57" y="121"/>      
       </attribute>      
-      <multiplicity id="12" minimum="0" maximum="1">        
+      <multiplicity id="7" minimum="0" maximum="1">        
         <position height="16" width="23" x="91" y="98"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <realization id="9">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="10">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="11">    
+    <bendpoint x="390" y="140"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="12" name="servo">        
+        <position height="0" width="0" x="28" y="1"/>      
+      </attribute>      
+      <multiplicity id="13" minimum="0" maximum="1">        
+        <position height="0" width="0" x="28" y="1"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

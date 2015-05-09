@@ -15,16 +15,18 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core;
+package com.iamcontent.core.math;
 
-import static com.iamcontent.core.MathUtils.limit;
-import static com.iamcontent.core.MathUtils.linearConvert;
+import static com.iamcontent.core.math.MathUtils.limit;
+import static com.iamcontent.core.math.MathUtils.linearConvert;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class MathUtilsTest {
 
+	private static final double TOLERANCE = 0.000001;
+	
 	@Test
 	public void testLimit_int() {
 		checkIntLimit1to3(1, 0);
@@ -48,7 +50,7 @@ public class MathUtilsTest {
 	}
 
 	private void checkDoubleLimit1to3(double expected, double in) {
-		assertEquals(expected, limit(in, 1.0, 3.0), 0.0);
+		assertExactlyEquals(expected, limit(in, 1.0, 3.0));
 	}
 
 	@Test
@@ -61,7 +63,15 @@ public class MathUtilsTest {
 	}
 
 	private void checkLinearConvert(double expected, double in) {
-		assertEquals(expected, linearConvert(in, 1.0, 2.0, 20.0, 30.0), 0.0001);
-		assertEquals(expected, linearConvert(-in, -1.0, -2.0, 20.0, 30.0), 0.0001);
+		assertCloseEnough(expected, linearConvert(in, 1.0, 2.0, 20.0, 30.0));
+		assertCloseEnough(expected, linearConvert(-in, -1.0, -2.0, 20.0, 30.0));
+	}
+
+	public static void assertExactlyEquals(double expected, double actual) {
+		assertEquals(expected, actual, 0.0);
+	}
+
+	public static void assertCloseEnough(double expected, double actual) {
+		assertEquals(expected, actual, TOLERANCE);
 	}
 }
