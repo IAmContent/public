@@ -15,30 +15,26 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.config;
+package com.iamcontent.device.servo.calibrate;
+
+import static com.iamcontent.core.math.InterRangeDoubleConverter.fromNormalRangeConverter;
 
 import com.google.common.base.Converter;
-import com.google.common.base.Function;
-import com.iamcontent.device.servo.Servo;
+import com.iamcontent.core.math.DoubleRange;
+import com.iamcontent.core.math.InterRangeDoubleConverter.Mode;
 
 /**
- * Configuration for a single {@link Servo}.
+ * A {@link ServoCalibrator} that proportionally scales its input values to create its output values.
  * @author Greg Elderfield
  */
-public interface ServoConfig {
+public class ProportionalServoCalibrator extends ImmutableServoCalibrator {
 
-	/**
-	 * @return A converter that converts between an input position and an output position.
-	 */
-	Converter<Double, Double> getPositionConverter();
+	public ProportionalServoCalibrator(DoubleRange positionOutputRange, DoubleRange speedOutputRange,
+			DoubleRange accelerationOutputRange) {
+		super(normalConverter(positionOutputRange), normalConverter(speedOutputRange), normalConverter(accelerationOutputRange));
+	}
 
-	/**
-	 * @return A function that converts from an input speed to an output speed.
-	 */
-	Function<Double, Double> getSpeedConverter();
-
-	/**
-	 * @return A function that converts from an acceleration speed to an output acceleration.
-	 */
-	Function<Double, Double> getAccelerationConverter();
+	private static Converter<Double, Double> normalConverter(DoubleRange r) {
+		return fromNormalRangeConverter(r, Mode.LIMIT_RESULT_TO_RANGE);
+	}
 }

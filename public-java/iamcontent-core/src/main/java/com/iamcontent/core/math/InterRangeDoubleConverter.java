@@ -17,6 +17,8 @@
  */
 package com.iamcontent.core.math;
 
+import static com.iamcontent.core.math.DoubleRange.NORMAL_RANGE;
+
 import com.google.common.base.Converter;
 
 /**
@@ -53,6 +55,14 @@ public final class InterRangeDoubleConverter extends Converter<Double, Double> {
 		this.mode = mode;
 	}
 
+	public static InterRangeDoubleConverter fromNormalRangeConverter(DoubleRange toRange, Mode mode) {
+		return interRangeConverter(NORMAL_RANGE, toRange, mode);
+	}
+
+	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {
+		return new InterRangeDoubleConverter(fromRange, toRange, mode);
+	}
+	
 	@Override
 	protected Double doForward(Double v) {
 		return convertAndLimit(v, fromRange, toRange);

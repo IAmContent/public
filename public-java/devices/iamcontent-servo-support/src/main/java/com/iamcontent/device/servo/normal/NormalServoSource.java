@@ -2,7 +2,7 @@ package com.iamcontent.device.servo.normal;
 
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
-
+// TODO: Calibrated or Configured might be a better description.
 public class NormalServoSource implements ServoSource {
 	
 	private final ServoSource delegate;

@@ -15,17 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.config;
+package com.iamcontent.device.servo.calibrate;
 
-import com.iamcontent.device.servo.ServoSource;
+import com.google.common.base.Converter;
+import com.google.common.base.Function;
+import com.iamcontent.device.servo.Servo;
 
 /**
- * Configuration for a single {@link ServoSource}.
+ * Calibrates a single {@link Servo}.
  * @author Greg Elderfield
  */
-public interface ServoSourceConfig {
+public interface ServoCalibrator {
+
 	/**
-	 * @return The {@link ServoConfig} for the given channel.
+	 * @return A converter that converts between input positions and output positions.
 	 */
-	ServoConfig getServoConfig(int channel);
+	Converter<Double, Double> getPositionConverter();
+
+	/**
+	 * @return A function that converts from input speed to output speed.
+	 */
+	Function<Double, Double> getSpeedConverter();
+
+	/**
+	 * @return A function that converts from input acceleration to output acceleration.
+	 */
+	Function<Double, Double> getAccelerationConverter();
 }
