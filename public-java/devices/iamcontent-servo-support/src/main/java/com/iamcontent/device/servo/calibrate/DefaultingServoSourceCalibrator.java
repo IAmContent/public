@@ -23,10 +23,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.iamcontent.device.servo.Servo;
-
 /**
- * A {@link ServoSourceCalibrator} that allows a default {@link ServoCalibrator} to be set but over-ridden on a per-{@link Servo} basis.
+ * A {@link ServoSourceCalibrator} that allows a default {@link ServoCalibrator} to be set but over-ridden on a per-channel basis.
  * @author Greg Elderfield
  */
 public class DefaultingServoSourceCalibrator implements ServoSourceCalibrator {
@@ -40,9 +38,7 @@ public class DefaultingServoSourceCalibrator implements ServoSourceCalibrator {
 		this.perServoCalibrators = perServoCalibrators;
 	}
 	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator, ServoCalibrator... perServoCalibrators) {
-		checkNotNull(defaultCalibrator, "The default calibrator cannot be null.");
-		this.defaultCalibrator = defaultCalibrator;
-		this.perServoCalibrators = asMap(perServoCalibrators);
+		this(defaultCalibrator, asMap(perServoCalibrators));
 	}
 	
 	@Override
@@ -51,7 +47,7 @@ public class DefaultingServoSourceCalibrator implements ServoSourceCalibrator {
 		return c!=null ? c : defaultCalibrator;
 	}
 
-	private Map<Integer, ServoCalibrator> asMap(ServoCalibrator[] calibrators) {
+	private static Map<Integer, ServoCalibrator> asMap(ServoCalibrator[] calibrators) {
 		final Map<Integer, ServoCalibrator> map = new HashMap<Integer, ServoCalibrator>(calibrators.length);
 		for (int i=0; i<calibrators.length; i++)
 			map.put(i, calibrators[i]);

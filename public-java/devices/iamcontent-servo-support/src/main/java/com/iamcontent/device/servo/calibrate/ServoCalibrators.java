@@ -17,12 +17,32 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
+import com.iamcontent.core.math.DoubleRange;
+
 /**
- * A source of {@link ServoCalibrator} objects.
+ * A source of {@link ServoSourceCalibrator} objects.
  * @author Greg Elderfield
  */
 public class ServoCalibrators {
+	public static ServoSourceCalibrator defaultServoSourceCalibrator() {
+		return new DefaultingServoSourceCalibrator(defaultServoCalibrator());
+	}
+	
 	public static ServoCalibrator defaultServoCalibrator() {
+		return new ProportionalServoCalibrator(defaultPositionOutputRange(), defaultSpeedOutputRange(), defaultAccelerationOutputRange());
+	}
+
+	private static DoubleRange defaultPositionOutputRange() {
+		return new DoubleRange(4000, 8000); // TODO: Remove Pololu-specific values
+	}
+	
+	private static DoubleRange defaultSpeedOutputRange() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private static DoubleRange defaultAccelerationOutputRange() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

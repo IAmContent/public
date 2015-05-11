@@ -52,5 +52,4 @@ public class ParseStringIntoServoCommandFunction implements Function<String, Ser
 			return (args.length <= i) ? null : Double.parseDouble(args[i]);
 		}
 	}
-	
 }

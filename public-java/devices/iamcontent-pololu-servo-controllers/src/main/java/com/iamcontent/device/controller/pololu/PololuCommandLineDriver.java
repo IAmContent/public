@@ -18,13 +18,13 @@
 package com.iamcontent.device.controller.pololu;
 
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
-import static com.iamcontent.device.servo.normal.NormalServoSource.normalized;
+import static com.iamcontent.device.servo.Servos.calibratedServoSource;
 
 import com.google.common.collect.Iterables;
+import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
 import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandExecutor;
-import com.iamcontent.device.servo.normal.NormalServoSource;
 import com.iamcontent.io.cli.CommandLineDriver;
 import com.iamcontent.io.cli.UnknownCommandException;
 
@@ -68,7 +68,7 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 		}
 	};
 
-	private NormalServoSource device() {
-		return normalized(PololuMaestroUsbServoController.defaultServoSource());
+	private ServoSource device() {
+		return calibratedServoSource(PololuMaestroUsbServoController.defaultServoSource());
 	}
 }
