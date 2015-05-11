@@ -18,6 +18,11 @@
 	</licenses>
 	
 	<dependencies>
+        <dependency>
+            <groupId>com.iamcontent.public-java</groupId>
+            <artifactId>iamcontent-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.usb4java</groupId>
 			<artifactId>usb4java-javax</artifactId>
@@ -26,6 +31,11 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

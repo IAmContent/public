@@ -17,6 +17,7 @@
  */
 package com.iamcontent.core.math;
 
+import static org.junit.Assert.assertEquals;
 import static com.iamcontent.core.math.DoubleRange.range;
 import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
 
@@ -54,4 +55,11 @@ public class DoubleRangeTest {
 		assertExactlyEquals(7.0, RANGE_7_TO_3.limit(7.0));
 		assertExactlyEquals(7.0, RANGE_7_TO_3.limit(8.0));
 	}
+
+	@Test
+	public void testToString() {
+		assertEquals("1.0..10.0", RANGE_1_TO_10.toString());
+		assertEquals("7.0..3.0", RANGE_7_TO_3.toString());
+	}
+
 }

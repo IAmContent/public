@@ -48,6 +48,10 @@ public final class InterRangeDoubleConverter extends Converter<Double, Double> {
 	
 	private final DoubleRange fromRange, toRange;
 	private final Mode mode;
+
+	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange) {
+		this(fromRange, toRange, Mode.LIMIT_RESULT_TO_RANGE);
+	}
 	
 	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {
 		this.fromRange = fromRange;
@@ -80,5 +84,17 @@ public final class InterRangeDoubleConverter extends Converter<Double, Double> {
 
 	private static double linearConvert(double v, DoubleRange inRange, DoubleRange outRange) {
 		return MathUtils.linearConvert(v, inRange.getLimit1(), inRange.getLimit2(), outRange.getLimit1(), outRange.getLimit2());
+	}
+
+	public DoubleRange getFromRange() {
+		return fromRange;
+	}
+
+	public DoubleRange getToRange() {
+		return toRange;
+	}
+
+	public Mode getMode() {
+		return mode;
 	}
 }

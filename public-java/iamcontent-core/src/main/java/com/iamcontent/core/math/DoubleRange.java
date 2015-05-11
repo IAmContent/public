@@ -59,5 +59,10 @@ public class DoubleRange implements Serializable {
 		return MathUtils.limit(d, min, max);
 	}
 
+	@Override
+	public String toString() {
+		return limit1 + ".." + limit2;
+	}
+
 	private static final long serialVersionUID = 1L;
 }
