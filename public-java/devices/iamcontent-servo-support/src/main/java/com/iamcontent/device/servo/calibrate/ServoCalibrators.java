@@ -33,7 +33,7 @@ public class ServoCalibrators {
 	}
 
 	private static DoubleRange defaultPositionOutputRange() {
-		return new DoubleRange(4000, 8000); // TODO: Remove Pololu-specific values
+		return new DoubleRange(4000, 8000); // TODO: Remove Pololu-specific values and add configuration mechanism.
 	}
 	
 	private static DoubleRange defaultSpeedOutputRange() {
