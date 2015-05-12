@@ -17,19 +17,18 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.customGsonBuilder;
 import static com.iamcontent.core.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.iamcontent.core.gson.InterRangeDoubleConverterDeserializer;
 import com.iamcontent.core.math.InterRangeDoubleConverter;
 import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
 
@@ -50,13 +49,12 @@ public class ProportionalServoCalibratorDeserializer implements JsonDeserializer
 		return new ProportionalServoCalibrator(positionConverter, speedConverter, accelerationConverter);
 	}
 
-
 	public static GsonBuilder register(GsonBuilder builder) {
 		builder.registerTypeAdapter(ProportionalServoCalibrator.class, INSTANCE);
 		return builder;
 	}
 	
-	public static Gson customGson() {
-		return register(customGsonBuilder()).create();
+	public static GsonBuilder customGsonBuilder() {
+		return register(InterRangeDoubleConverterDeserializer.customGsonBuilder());
 	}
 }

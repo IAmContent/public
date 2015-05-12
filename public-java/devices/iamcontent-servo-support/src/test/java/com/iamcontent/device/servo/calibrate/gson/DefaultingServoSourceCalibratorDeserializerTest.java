@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGson;
+import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
 import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializerTest.targetRange;
 import static org.junit.Assert.assertEquals;
 
@@ -42,7 +42,7 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gson = customGson();
+		gson = customGsonBuilder().create();
 	}
 
 	@Test

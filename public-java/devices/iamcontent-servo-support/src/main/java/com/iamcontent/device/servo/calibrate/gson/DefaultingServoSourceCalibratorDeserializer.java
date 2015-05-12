@@ -17,13 +17,14 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.*;
+import static com.iamcontent.core.gson.GsonUtils.getArrayMember;
+import static com.iamcontent.core.gson.GsonUtils.getMemberAsInt;
+import static com.iamcontent.core.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -67,10 +68,7 @@ public class DefaultingServoSourceCalibratorDeserializer implements JsonDeserial
 		return builder;
 	}
 	
-	public static Gson customGson() {
-		final GsonBuilder builder = customGsonBuilder();
-		ProportionalServoCalibratorDeserializer.register(builder);
-		register(builder);
-		return builder.create();
+	public static GsonBuilder customGsonBuilder() {
+		return register(ProportionalServoCalibratorDeserializer.customGsonBuilder());
 	}
 }

@@ -17,9 +17,9 @@
  */
 package com.iamcontent.core.gson;
 
-import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
 import static com.iamcontent.core.gson.DoubleRangeDeserializerTest.rangeJson;
-import static com.iamcontent.core.gson.GsonUtils.customGson;
+import static com.iamcontent.core.gson.InterRangeDoubleConverterDeserializer.customGsonBuilder;
+import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class InterRangeDoubleConverterDeserializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gson = customGson();
+		gson = customGsonBuilder().create();
 	}
 
 	@Test

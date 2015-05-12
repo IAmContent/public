@@ -30,10 +30,11 @@ import com.iamcontent.core.math.DoubleRange;
 
 /**
  * A Gson {@link JsonDeserializer} for {@link DoubleRange} objects.
+ * 
  * @author Greg Elderfield
  */
 public class DoubleRangeDeserializer implements JsonDeserializer<DoubleRange> {
-	
+
 	private static final DoubleRangeDeserializer INSTANCE = new DoubleRangeDeserializer();
 
 	public DoubleRange deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -45,5 +46,9 @@ public class DoubleRangeDeserializer implements JsonDeserializer<DoubleRange> {
 	public static GsonBuilder register(GsonBuilder builder) {
 		builder.registerTypeAdapter(DoubleRange.class, INSTANCE);
 		return builder;
+	}
+
+	public static GsonBuilder customGsonBuilder() {
+		return register(new GsonBuilder());
 	}
 }

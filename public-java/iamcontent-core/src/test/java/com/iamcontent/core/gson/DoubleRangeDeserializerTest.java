@@ -17,7 +17,7 @@
  */
 package com.iamcontent.core.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.customGson;
+import static com.iamcontent.core.gson.DoubleRangeDeserializer.customGsonBuilder;
 import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
 
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class DoubleRangeDeserializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gson = customGson();
+		gson = customGsonBuilder().create();
 	}
 
 	@Test

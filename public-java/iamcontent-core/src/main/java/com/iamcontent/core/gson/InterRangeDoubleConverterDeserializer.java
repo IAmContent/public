@@ -48,10 +48,12 @@ public class InterRangeDoubleConverterDeserializer implements JsonDeserializer<I
 		return new InterRangeDoubleConverter(fromRange, toRange, mode);
 	}
 
-
 	public static GsonBuilder register(GsonBuilder builder) {
 		builder.registerTypeAdapter(InterRangeDoubleConverter.class, INSTANCE);
 		return builder;
 	}
 
+	public static GsonBuilder customGsonBuilder() {
+		return register(DoubleRangeDeserializer.customGsonBuilder());
+	}
 }

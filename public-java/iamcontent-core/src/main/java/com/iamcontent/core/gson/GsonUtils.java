@@ -19,8 +19,6 @@ package com.iamcontent.core.gson;
 
 import java.lang.reflect.Type;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -59,25 +57,11 @@ public class GsonUtils {
 		return member==null ? defaultValue : member.getAsString();
 	}
 	
-	public static Gson customGson() {
-		return customGsonBuilder().create();
-	}
-	
-	public static GsonBuilder customGsonBuilder() {
-		return registerCustomizations(new GsonBuilder());
-	}
-	
-	public static GsonBuilder registerCustomizations(GsonBuilder builder) {
-		DoubleRangeDeserializer.register(builder);
-		InterRangeDoubleConverterDeserializer.register(builder);
-		return builder;
-	}
-
 	public static JsonArray getArrayMember(JsonElement json, String memberName) {
 		return json.getAsJsonObject().getAsJsonArray(memberName);
 	}
 
-	private static JsonElement getMember(JsonElement json, String memberName) {
+	public static JsonElement getMember(JsonElement json, String memberName) {
 		return json.getAsJsonObject().get(memberName);
 	}
 }
