@@ -33,13 +33,13 @@ import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
 public class ProportionalServoCalibratorDeserializerTest {
 
 	private static final String JSON_VALUES = "{"
-			+ converter("positionConverter", "1.1", "2.2") + ","
-			+ converter("speedConverter", "3.3", "4.4") + ","
-			+ converter("accelerationConverter", "5.5", "6.6")
+			+ converterJson("positionConverter", "1.1", "2.2") + ","
+			+ converterJson("speedConverter", "3.3", "4.4") + ","
+			+ converterJson("accelerationConverter", "5.5", "6.6")
 			+ "}";
 
 	private static final String SOME_JSON_VALUES = "{"
-			+ converter("positionConverter", "1.1", "2.2")
+			+ converterJson("positionConverter", "1.1", "2.2")
 			+ "}";
 
 	private Gson gson;
@@ -73,15 +73,11 @@ public class ProportionalServoCalibratorDeserializerTest {
 		assertNull(actual.getAccelerationConverter());
 	}
 
-	private DoubleRange targetRange(Function<Double, Double> converter) {
-		return irdc(converter).getToRange();
+	public static DoubleRange targetRange(Function<Double, Double> converter) {
+		return ((InterRangeDoubleConverter)converter).getToRange();
 	}
 
-	private InterRangeDoubleConverter irdc(Function<Double, Double> converter) {
-		return (InterRangeDoubleConverter)converter;
-	}
-	
-	public static String converter(String fieldName, String toRangeLimit1, String toRangeLimit2) {
+	public static String converterJson(String fieldName, String toRangeLimit1, String toRangeLimit2) {
 		return fieldName +":{" + toRangeJson(toRangeLimit1, toRangeLimit2) + "}";
 	}
 
@@ -96,5 +92,4 @@ public class ProportionalServoCalibratorDeserializerTest {
 	public static void assertExactlyEquals(double expected, double actual) {
 		assertEquals(expected, actual, 0.0);
 	}
-
 }

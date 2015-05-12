@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 
@@ -45,6 +46,10 @@ public class GsonUtils {
 		return getMember(json, memberName).getAsDouble();
 	}
 	
+	public static int getMemberAsInt(JsonElement json, String memberName) {
+		return getMember(json, memberName).getAsInt();
+	}
+	
 	public static String getMemberAsString(JsonElement json, String memberName) {
 		return getMember(json, memberName).getAsString();
 	}
@@ -66,6 +71,10 @@ public class GsonUtils {
 		DoubleRangeDeserializer.register(builder);
 		InterRangeDoubleConverterDeserializer.register(builder);
 		return builder;
+	}
+
+	public static JsonArray getArrayMember(JsonElement json, String memberName) {
+		return json.getAsJsonObject().getAsJsonArray(memberName);
 	}
 
 	private static JsonElement getMember(JsonElement json, String memberName) {
