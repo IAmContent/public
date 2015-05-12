@@ -29,7 +29,12 @@
     	<dependency>
     		<groupId>com.iamcontent.public-java</groupId>
     		<artifactId>iamcontent-io</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
+    		<version>${project.version}</version>
+    	</dependency>
+    	
+    	<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
     	</dependency>
     </dependencies>
 </project>

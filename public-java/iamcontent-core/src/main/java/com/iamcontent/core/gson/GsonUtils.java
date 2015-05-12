@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.io.gson;
+package com.iamcontent.core.gson;
 
 import java.lang.reflect.Type;
 
@@ -32,6 +32,13 @@ public class GsonUtils {
 
 	public static <T> T getMemberAsObject(JsonElement json, String memberName, JsonDeserializationContext context, Type typeOfT) {
 		return context.deserialize(getMember(json, memberName), typeOfT);
+	}
+
+	public static <T> T getMemberAsObject(JsonElement json, String memberName, JsonDeserializationContext context, Type typeOfT, T defaultValue) {
+		final JsonElement member = getMember(json, memberName);
+		if (member==null)
+			return defaultValue;
+		return context.deserialize(member, typeOfT);
 	}
 
 	public static double getMemberAsDouble(JsonElement json, String memberName) {

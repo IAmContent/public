@@ -20,18 +20,25 @@ package com.iamcontent.device.servo.calibrate;
 import static com.iamcontent.core.math.InterRangeDoubleConverter.fromNormalRangeConverter;
 
 import com.google.common.base.Converter;
+import com.google.common.base.Function;
 import com.iamcontent.core.math.DoubleRange;
 import com.iamcontent.core.math.InterRangeDoubleConverter.Mode;
 
 /**
- * A {@link ServoCalibrator} that proportionally scales its input values to create its output values.
+ * A {@link ServoCalibrator} that proportionally scales its input values to
+ * create its output values.
+ * 
  * @author Greg Elderfield
  */
 public class ProportionalServoCalibrator extends ImmutableServoCalibrator {
 
-	public ProportionalServoCalibrator(DoubleRange positionOutputRange, DoubleRange speedOutputRange,
-			DoubleRange accelerationOutputRange) {
+	public ProportionalServoCalibrator(DoubleRange positionOutputRange, DoubleRange speedOutputRange, DoubleRange accelerationOutputRange) {
 		super(normalConverter(positionOutputRange), normalConverter(speedOutputRange), normalConverter(accelerationOutputRange));
+	}
+
+	public ProportionalServoCalibrator(Converter<Double, Double> positionConverter, Function<Double, Double> speedConverter,
+			Function<Double, Double> accelerationConverter) {
+		super(positionConverter, speedConverter, accelerationConverter);
 	}
 
 	private static Converter<Double, Double> normalConverter(DoubleRange r) {

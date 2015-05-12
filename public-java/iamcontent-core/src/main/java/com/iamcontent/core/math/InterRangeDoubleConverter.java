@@ -25,7 +25,7 @@ import com.google.common.base.Converter;
  * Converts Double objects linearly according to two corresponding {@link Range} objects.
  * @author Greg Elderfield
  */
-public final class InterRangeDoubleConverter extends Converter<Double, Double> {
+public class InterRangeDoubleConverter extends Converter<Double, Double> {
 
 	/**
 	 * Indicates whether a converted value should be limited to its target range or not.

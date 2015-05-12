@@ -15,10 +15,10 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.io.gson;
+package com.iamcontent.core.gson;
 
-import static com.iamcontent.io.gson.GsonUtils.customGson;
-import static org.junit.Assert.assertEquals;
+import static com.iamcontent.core.gson.GsonUtils.customGson;
+import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,12 +37,12 @@ public class DoubleRangeDeserializerTest {
 
 	@Test
 	public void testDeserialize() {
-		final DoubleRange actual = gson.fromJson("{'limit1':1.0,'limit2':10.0}", DoubleRange.class);
+		final DoubleRange actual = gson.fromJson(rangeJson("1.0","10.0"), DoubleRange.class);
 		assertExactlyEquals(1.0, actual.getLimit1());
 		assertExactlyEquals(10.0, actual.getLimit2());
 	}
 
-	private void assertExactlyEquals(double expected, double actual) {
-		assertEquals(expected, actual, 0.0);
+	public static String rangeJson(String limit1, String limit2) {
+		return "{'limit1':" + limit1 + ",'limit2':" + limit2 + "}";
 	}
 }

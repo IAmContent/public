@@ -15,10 +15,9 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.io.gson;
+package com.iamcontent.core.gson;
 
-import static com.iamcontent.io.gson.GsonUtils.getMemberAsObject;
-import static com.iamcontent.io.gson.GsonUtils.getMemberAsString;
+import static com.iamcontent.core.gson.GsonUtils.getMemberAsDouble;
 
 import java.lang.reflect.Type;
 
@@ -28,30 +27,23 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.iamcontent.core.math.DoubleRange;
-import com.iamcontent.core.math.InterRangeDoubleConverter;
-import com.iamcontent.core.math.InterRangeDoubleConverter.Mode;
 
 /**
- * A Gson {@link JsonDeserializer} for {@link InterRangeDoubleConverter} objects.
+ * A Gson {@link JsonDeserializer} for {@link DoubleRange} objects.
  * @author Greg Elderfield
  */
-public class InterRangeDoubleConverterDeserializer implements JsonDeserializer<InterRangeDoubleConverter> {
+public class DoubleRangeDeserializer implements JsonDeserializer<DoubleRange> {
+	
+	private static final DoubleRangeDeserializer INSTANCE = new DoubleRangeDeserializer();
 
-	private static final InterRangeDoubleConverterDeserializer INSTANCE = new InterRangeDoubleConverterDeserializer();
-
-	@Override
-	public InterRangeDoubleConverter deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-			throws JsonParseException {
-		final DoubleRange fromRange = getMemberAsObject(json, "fromRange", context, DoubleRange.class);
-		final DoubleRange toRange = getMemberAsObject(json, "toRange", context, DoubleRange.class);
-		final Mode mode = Mode.valueOf(getMemberAsString(json, "mode", Mode.LIMIT_RESULT_TO_RANGE.name()));
-		return new InterRangeDoubleConverter(fromRange, toRange, mode);
+	public DoubleRange deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+		final double limit1 = getMemberAsDouble(json, "limit1");
+		final double limit2 = getMemberAsDouble(json, "limit2");
+		return new DoubleRange(limit1, limit2);
 	}
-
 
 	public static GsonBuilder register(GsonBuilder builder) {
-		builder.registerTypeAdapter(InterRangeDoubleConverter.class, INSTANCE);
+		builder.registerTypeAdapter(DoubleRange.class, INSTANCE);
 		return builder;
 	}
-
 }
