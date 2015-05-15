@@ -73,6 +73,10 @@ public class ProportionalServoCalibratorDeserializerTest {
 		assertNull(actual.getAccelerationConverter());
 	}
 
+	public static DoubleRange sourceRange(Function<Double, Double> converter) {
+		return ((InterRangeDoubleConverter)converter).getFromRange();
+	}
+
 	public static DoubleRange targetRange(Function<Double, Double> converter) {
 		return ((InterRangeDoubleConverter)converter).getToRange();
 	}

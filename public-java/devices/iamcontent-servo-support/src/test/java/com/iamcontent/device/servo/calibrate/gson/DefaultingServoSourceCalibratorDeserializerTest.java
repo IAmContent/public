@@ -18,6 +18,7 @@
 package com.iamcontent.device.servo.calibrate.gson;
 
 import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializerTest.sourceRange;
 import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializerTest.targetRange;
 import static org.junit.Assert.assertEquals;
 
@@ -56,7 +57,7 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 		final ServoSourceCalibrator actual = gson.fromJson(JSON_VALUES, DefaultingServoSourceCalibrator.class);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
-		checkCalibrator(actual, 2, 3.3, 4.4);
+		checkCalibrator(actual, 2, 0.0, 1.0, 3.3, 4.4);
 		checkDefaultCalibrator(actual, 3);
 		checkDefaultCalibrator(actual, 4);
 		checkDefaultCalibrator(actual, 5);
@@ -72,14 +73,17 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 	}
 
 	private void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
-		checkCalibrator(actual, channel, 1.1, 2.2);
+		checkCalibrator(actual, channel, 0.0, 1.0, 1.1, 2.2);
 	}
 
-	public static void checkCalibrator(ServoSourceCalibrator actual, int channel, double expectedLimit1, double expectedLimit2) {
-		final DoubleRange r = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
+	public static void checkCalibrator(ServoSourceCalibrator actual, int channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
+		final DoubleRange source = sourceRange(actual.getServoCalibrator(channel).getPositionConverter());
+		final DoubleRange target = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final String message = "Channel " + channel;
-		assertExactlyEquals(message, expectedLimit1, r.getLimit1());
-		assertExactlyEquals(message, expectedLimit2, r.getLimit2());
+		assertExactlyEquals(message, expectedFromLimit1, source.getLimit1());
+		assertExactlyEquals(message, expectedFromLimit2, source.getLimit2());
+		assertExactlyEquals(message, expectedToLimit1, target.getLimit1());
+		assertExactlyEquals(message, expectedToLimit2, target.getLimit2());
 	}
 
 	private static String channelAndCalibratorJson(int channel, String limit1, String limit2) {

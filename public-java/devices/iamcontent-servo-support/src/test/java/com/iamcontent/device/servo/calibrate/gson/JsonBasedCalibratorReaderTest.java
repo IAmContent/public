@@ -37,18 +37,18 @@ public class JsonBasedCalibratorReaderTest {
 	@Test
 	public void testPerServoExampleCalibrator() {
 		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator("per-servo-example");
-		checkCalibrator(actual, 0, 1000.0, 2000.0);
+		checkCalibrator(actual, 0, 0.0, 1.0, 1000.0, 2000.0);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
-		checkCalibrator(actual, 2, 800, 1200);
+		checkCalibrator(actual, 2, 0.0, 1.0, 800, 1200);
 		checkDefaultCalibrator(actual, 3);
-		checkCalibrator(actual, 4, 900, 1100);
+		checkCalibrator(actual, 4, 0.5, -0.5, 900, 1100);
 		checkDefaultCalibrator(actual, 5);
 		checkDefaultCalibrator(actual, 321);
 	}
 
 	private void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
-		checkCalibrator(actual, channel, 1000.0, 2000.0);
+		checkCalibrator(actual, channel, 0.0, 1.0, 1000.0, 2000.0);
 	}
 
 	@Test(expected=IORuntimeException.class)
