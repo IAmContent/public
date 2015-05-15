@@ -22,6 +22,7 @@ import static com.iamcontent.core.gson.GsonUtils.getMemberAsInt;
 import static com.iamcontent.core.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +52,9 @@ public class DefaultingServoSourceCalibratorDeserializer implements JsonDeserial
 	}
 
 	private Map<Integer, ServoCalibrator> asMap(JsonArray jsonArray, JsonDeserializationContext context) {
+		if (jsonArray==null) 
+			return Collections.emptyMap();
+		
 		final Map<Integer, ServoCalibrator> result = new HashMap<Integer, ServoCalibrator>(jsonArray.size());
 		for (JsonElement e : jsonArray)
 			addCalibrator(result, e, context);

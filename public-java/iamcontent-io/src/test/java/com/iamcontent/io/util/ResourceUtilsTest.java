@@ -26,11 +26,13 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
+import com.iamcontent.io.IORuntimeException;
+
 public class ResourceUtilsTest {
 
 	private static final String TEST_RESOURCE = "test-resource.txt";
 	
-	@Test(expected=FileNotFoundException.class)
+	@Test(expected=IORuntimeException.class)
 	public void testGetStreamOrThrow_nonExistentResource() throws FileNotFoundException {
 		ResourceUtils.getStreamOrThrow("NON_EXISTENT_FILE");
 	}

@@ -23,12 +23,16 @@ import com.iamcontent.core.math.DoubleRange;
  * A source of {@link ServoSourceCalibrator} objects.
  * @author Greg Elderfield
  */
-public class ServoCalibrators {
-	public static ServoSourceCalibrator defaultServoSourceCalibrator() {
-		return new DefaultingServoSourceCalibrator(defaultServoCalibrator());
+public class Calibrators {
+	public static ServoSourceCalibrator defaultCalibrator() {
+		return calibrator("default");
 	}
 	
-	public static ServoCalibrator defaultServoCalibrator() {
+	public static ServoSourceCalibrator calibrator(String calibratorName) {
+		return new DefaultingServoSourceCalibrator(defaultServoCalibrator()); // TODO: Read from JSON resource
+	}
+	
+	private static ServoCalibrator defaultServoCalibrator() {
 		return new ProportionalServoCalibrator(defaultPositionOutputRange(), defaultSpeedOutputRange(), defaultAccelerationOutputRange());
 	}
 

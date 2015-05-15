@@ -18,8 +18,8 @@
 package com.iamcontent.device.servo;
 
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
-import com.iamcontent.device.servo.calibrate.ServoCalibrators;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
+import com.iamcontent.device.servo.calibrate.Calibrators;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -41,24 +41,16 @@ public final class Servos {
 	}
 
 	/**
-	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the default {@link ServoSourceCalibrator}. Each servo from the returned source
-	 * delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
+	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the default {@link ServoSourceCalibrator}. 
+	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
 	public static ServoSource calibratedServoSource(final ServoSource delegate) {
-		return new ServoSource() {
-			private final ServoSourceCalibrator calibrator = ServoCalibrators.defaultServoSourceCalibrator();
-			@Override
-			public Servo getServo(int channel) {
-				final Servo delegateServo = delegate.getServo(channel);
-				final ServoCalibrator servoCalibrator = calibrator.getServoCalibrator(channel);
-				return new CalibratedServo(delegateServo, servoCalibrator);
-			}
-		};
+		return calibratedServoSource(delegate, Calibrators.defaultCalibrator());
 	}
 
 	/**
-	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given {@link ServoSourceCalibrator}. Each servo from the returned source
-	 * delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
+	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given {@link ServoSourceCalibrator}. 
+	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
 	public static ServoSource calibratedServoSource(final ServoSource delegate, final ServoSourceCalibrator calibrator) {
 		return new ServoSource() {

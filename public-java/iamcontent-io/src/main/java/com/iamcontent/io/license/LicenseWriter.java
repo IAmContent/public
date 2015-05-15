@@ -22,6 +22,8 @@ import static com.iamcontent.io.util.ResourceUtils.appendResource;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import com.iamcontent.io.IORuntimeException;
+
 /**
  * Writes out various forms of the license.
  * @author Greg Elderfield
@@ -87,7 +89,7 @@ public class LicenseWriter {
 		printHeader();
 		try {
 			appendResource(file, out);
-		} catch (IOException e) {
+		} catch (IORuntimeException e) {
 			printNonInteractiveTerms();
 		};
 		printFooter();

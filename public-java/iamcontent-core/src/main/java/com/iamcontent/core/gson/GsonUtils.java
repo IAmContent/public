@@ -28,6 +28,8 @@ import com.google.gson.JsonElement;
  * @author Greg Elderfield
  */
 public class GsonUtils {
+	
+	public static final String JSON_FILE_EXTENSION = ".json";
 
 	public static <T> T getMemberAsObject(JsonElement json, String memberName, JsonDeserializationContext context, Type typeOfT) {
 		return context.deserialize(getMember(json, memberName), typeOfT);

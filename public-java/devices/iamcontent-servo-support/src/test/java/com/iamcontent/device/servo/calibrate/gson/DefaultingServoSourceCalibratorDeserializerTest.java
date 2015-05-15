@@ -27,6 +27,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 import com.iamcontent.core.math.DoubleRange;
 import com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator;
+import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 
 public class DefaultingServoSourceCalibratorDeserializerTest {
 
@@ -38,6 +39,11 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 			+ channelAndCalibratorJson(2, "3.3", "4.4")
 			+ "]}";
 
+	private static final String JSON_DEFAULT_VALUE_ONLY = "{"
+			+ "'defaultCalibrator':"
+			+ calibratorJson("1.1", "2.2")
+			+ "}";
+
 	private Gson gson;
 
 	@Before
@@ -47,21 +53,29 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 
 	@Test
 	public void testDeserialize() {
-		final DefaultingServoSourceCalibrator actual = gson.fromJson(JSON_VALUES, DefaultingServoSourceCalibrator.class);
+		final ServoSourceCalibrator actual = gson.fromJson(JSON_VALUES, DefaultingServoSourceCalibrator.class);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
 		checkCalibrator(actual, 2, 3.3, 4.4);
 		checkDefaultCalibrator(actual, 3);
-		checkCalibrator(actual, 2, 3.3, 4.4);
+		checkDefaultCalibrator(actual, 4);
 		checkDefaultCalibrator(actual, 5);
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	private void checkDefaultCalibrator(DefaultingServoSourceCalibrator actual, int channel) {
+	@Test
+	public void testDeserialize_defaultValueOnly() {
+		final ServoSourceCalibrator actual = gson.fromJson(JSON_DEFAULT_VALUE_ONLY, DefaultingServoSourceCalibrator.class);
+		for (int c=0; c<6; c++)
+			checkDefaultCalibrator(actual, c);
+		checkDefaultCalibrator(actual, 321);
+	}
+
+	private void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
 		checkCalibrator(actual, channel, 1.1, 2.2);
 	}
 
-	private void checkCalibrator(DefaultingServoSourceCalibrator actual, int channel, double expectedLimit1, double expectedLimit2) {
+	public static void checkCalibrator(ServoSourceCalibrator actual, int channel, double expectedLimit1, double expectedLimit2) {
 		final DoubleRange r = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final String message = "Channel " + channel;
 		assertExactlyEquals(message, expectedLimit1, r.getLimit1());

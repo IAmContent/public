@@ -1,0 +1,31 @@
+{ defaultCalibrator: { 
+    positionConverter: {
+      toRange: {
+        limit1: 1000,
+        limit2: 2000
+      }
+    }
+  },
+  perServoCalibrators: [ 
+    { channel: 2,
+      calibrator: {
+        positionConverter: {
+          toRange: {
+            limit1: 800,
+            limit2: 1200
+          }
+        }
+      }
+    },
+    { channel: 4,
+      calibrator: {
+        positionConverter: {
+          toRange: {
+            limit1: 900,
+            limit2: 1100
+          }
+        }
+      }
+    }
+  ]
+}
