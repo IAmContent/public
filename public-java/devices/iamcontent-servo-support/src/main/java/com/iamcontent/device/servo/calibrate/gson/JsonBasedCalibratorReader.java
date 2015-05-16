@@ -40,16 +40,16 @@ public class JsonBasedCalibratorReader {
 		return calibrator(readerFor(calibratorName));
 	}
 
+	public static ServoSourceCalibrator calibrator(Reader r) {
+		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
+	}
+
 	private static Reader readerFor(String calibratorName) {
 		return inputStreamReader(getStreamOrThrow(resourceName(calibratorName)));
 	}
 
 	private static String resourceName(String calibratorName) {
 		return CALIBRATION_FOLDER + calibratorName + JSON_FILE_EXTENSION;
-	}
-
-	private static ServoSourceCalibrator calibrator(Reader r) {
-		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
 	}
 
 	private static Gson gson() {

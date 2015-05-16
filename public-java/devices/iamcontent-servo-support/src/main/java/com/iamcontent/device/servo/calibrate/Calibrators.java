@@ -17,36 +17,25 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
-import com.iamcontent.core.math.DoubleRange;
+import com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReader;
 
 /**
  * A source of {@link ServoSourceCalibrator} objects.
  * @author Greg Elderfield
  */
 public class Calibrators {
+	static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
+	private static final String DEFAULT_CALIBRATION_NAME = "default";
+	
 	public static ServoSourceCalibrator defaultCalibrator() {
-		return calibrator("default");
+		return calibrator(defaultCalibrationName());
 	}
 	
-	public static ServoSourceCalibrator calibrator(String calibratorName) {
-		return new DefaultingServoSourceCalibrator(defaultServoCalibrator()); // TODO: Read from JSON resource
-	}
-	
-	private static ServoCalibrator defaultServoCalibrator() {
-		return new ProportionalServoCalibrator(defaultPositionOutputRange(), defaultSpeedOutputRange(), defaultAccelerationOutputRange());
+	private static String defaultCalibrationName() {
+		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
 	}
 
-	private static DoubleRange defaultPositionOutputRange() {
-		return new DoubleRange(4000, 8000); // TODO: Remove Pololu-specific values and add configuration mechanism.
-	}
-	
-	private static DoubleRange defaultSpeedOutputRange() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	private static DoubleRange defaultAccelerationOutputRange() {
-		// TODO Auto-generated method stub
-		return null;
+	public static ServoSourceCalibrator calibrator(String calibratorName) {
+		return JsonBasedCalibratorReader.calibrator(calibratorName);
 	}
 }

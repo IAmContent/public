@@ -29,14 +29,22 @@ public class JsonBasedCalibratorReaderTest {
 	@Test
 	public void testDefaultCalibrator() {
 		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator("default");
-		for (int c=0; c<6; c++)
-			checkDefaultCalibrator(actual, c);
-		checkDefaultCalibrator(actual, 321);
+		checkDefaultCalibrator(actual);
 	}
 
 	@Test
 	public void testPerServoExampleCalibrator() {
 		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator("per-servo-example");
+		checkPerServoExampleCalibrator(actual);
+	}
+
+	public static void checkDefaultCalibrator(final ServoSourceCalibrator actual) {
+		for (int c=0; c<6; c++)
+			checkDefaultCalibrator(actual, c);
+		checkDefaultCalibrator(actual, 321);
+	}
+
+	public static void checkPerServoExampleCalibrator(final ServoSourceCalibrator actual) {
 		checkCalibrator(actual, 0, 0.0, 1.0, 1000.0, 2000.0);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
@@ -47,7 +55,7 @@ public class JsonBasedCalibratorReaderTest {
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	private void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
+	public static void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
 		checkCalibrator(actual, channel, 0.0, 1.0, 1000.0, 2000.0);
 	}
 
