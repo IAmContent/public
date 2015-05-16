@@ -1,5 +1,5 @@
 # iamcontent-io.jar
-## Publicly available I/O library from Greg Elderfield.
+## A publicly available I/O library from Greg Elderfield.
 
 This jar contains two main packages of interest:
 
