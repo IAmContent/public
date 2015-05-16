@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
+import static com.iamcontent.device.servo.calibrate.Calibrators.DEFAULT_CALIBRATION_NAME;
 import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializerTest.checkCalibrator;
 
 import org.junit.Test;
@@ -26,15 +27,17 @@ import com.iamcontent.io.IORuntimeException;
 
 public class JsonBasedCalibratorReaderTest {
 
+	public static final String PER_SERVO_EXAMPLE_CALIBRATION_NAME = "per-servo-example";
+
 	@Test
 	public void testDefaultCalibrator() {
-		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator("default");
+		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator(DEFAULT_CALIBRATION_NAME);
 		checkDefaultCalibrator(actual);
 	}
 
 	@Test
 	public void testPerServoExampleCalibrator() {
-		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator("per-servo-example");
+		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME);
 		checkPerServoExampleCalibrator(actual);
 	}
 

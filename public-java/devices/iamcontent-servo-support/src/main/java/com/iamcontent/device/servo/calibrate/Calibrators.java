@@ -24,8 +24,8 @@ import com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReader;
  * @author Greg Elderfield
  */
 public class Calibrators {
-	static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
-	private static final String DEFAULT_CALIBRATION_NAME = "default";
+	public static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
+	public static final String DEFAULT_CALIBRATION_NAME = "default";
 	
 	public static ServoSourceCalibrator defaultCalibrator() {
 		return calibrator(defaultCalibrationName());
