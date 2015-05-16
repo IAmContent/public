@@ -17,22 +17,17 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
-import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.PER_SERVO_EXAMPLE_CALIBRATION_NAME;
-import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
-import static com.iamcontent.device.servo.calibrate.Calibrators.defaultCalibrator;
 import static com.iamcontent.device.servo.calibrate.Calibrators.CALIBRATION_PROPERTY_KEY;
 import static com.iamcontent.device.servo.calibrate.Calibrators.DEFAULT_CALIBRATION_NAME;
+import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
+import static com.iamcontent.device.servo.calibrate.Calibrators.defaultCalibrator;
+import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.PER_SERVO_EXAMPLE_CALIBRATION_NAME;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkDefaultCalibrator;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkPerServoExampleCalibrator;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class CalibratorsTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testDefaultCalibrator() {

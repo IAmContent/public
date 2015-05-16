@@ -30,12 +30,12 @@ public class Calibrators {
 	public static ServoSourceCalibrator defaultCalibrator() {
 		return calibrator(defaultCalibrationName());
 	}
-	
-	private static String defaultCalibrationName() {
-		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
-	}
 
 	public static ServoSourceCalibrator calibrator(String calibratorName) {
 		return JsonBasedCalibratorReader.calibrator(calibratorName);
+	}
+	
+	private static String defaultCalibrationName() {
+		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
 	}
 }

@@ -22,11 +22,14 @@ import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCa
 import static com.iamcontent.io.util.ResourceUtils.getStreamOrThrow;
 import static com.iamcontent.io.util.Readers.inputStreamReader;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 
 import com.google.gson.Gson;
 import com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
+import com.iamcontent.io.IORuntimeException;
 
 /**
  * Creates {@link ServoSourceCalibrator} objects according to JSON file resources.
@@ -37,7 +40,11 @@ public class JsonBasedCalibratorReader {
 	private static final String CALIBRATION_FOLDER = "servo/calibration/";
 
 	public static ServoSourceCalibrator calibrator(String calibratorName) {
-		return calibrator(readerFor(calibratorName));
+		try (final Reader r = readerFor(calibratorName) ) {
+			return calibrator(r);
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
 	}
 
 	public static ServoSourceCalibrator calibrator(Reader r) {
@@ -45,7 +52,11 @@ public class JsonBasedCalibratorReader {
 	}
 
 	private static Reader readerFor(String calibratorName) {
-		return inputStreamReader(getStreamOrThrow(resourceName(calibratorName)));
+		return inputStreamReader(streamFor(calibratorName));
+	}
+
+	private static InputStream streamFor(String calibratorName) {
+		return getStreamOrThrow(resourceName(calibratorName));
 	}
 
 	private static String resourceName(String calibratorName) {
