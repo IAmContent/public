@@ -15,12 +15,12 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.servo.calibrate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.servo.calibrate.ServoCalibrator;
+import com.iamcontent.device.servo.Servo;
 
 /**
  * A {@link Servo} that alters its parameter values according to its {@link ServoCalibrator} and invokes a delegate {@link Servo}

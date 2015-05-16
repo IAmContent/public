@@ -25,8 +25,7 @@ import com.iamcontent.core.math.DoubleRange;
 import com.iamcontent.core.math.InterRangeDoubleConverter.Mode;
 
 /**
- * A {@link ServoCalibrator} that proportionally scales its input values to
- * create its output values.
+ * A {@link ServoCalibrator} that proportionally scales its input values to create its output values.
  * 
  * @author Greg Elderfield
  */

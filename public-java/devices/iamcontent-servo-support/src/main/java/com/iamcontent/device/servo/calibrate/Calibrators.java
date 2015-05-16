@@ -38,4 +38,7 @@ public class Calibrators {
 	private static String defaultCalibrationName() {
 		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
 	}
+	
+	private Calibrators() {
+	}
 }

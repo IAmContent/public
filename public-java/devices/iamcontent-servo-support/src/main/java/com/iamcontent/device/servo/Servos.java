@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.servo;
 
+import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.calibrate.Calibrators;
@@ -61,5 +62,8 @@ public final class Servos {
 				return new CalibratedServo(delegateServo, servoCalibrator);
 			}
 		};
+	}
+	
+	private Servos() {
 	}
 }
