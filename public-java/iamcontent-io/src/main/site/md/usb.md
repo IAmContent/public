@@ -15,6 +15,8 @@ For testing, this can be done from the command line by running the _UsbTestDrive
 
 The returned objects implement the _EasyUsbDevice_ interface, which extends the standard _java.usb.UsbDevice_ interface but throws _UsbRuntimeExceptions_ instead of checked exceptions.
 
+The _Usb_ class also has methods that accept a _Predicate_ to allow more specific device selection.
+
 ---
 
 This software comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it
