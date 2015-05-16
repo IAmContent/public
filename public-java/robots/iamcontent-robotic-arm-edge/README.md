@@ -5,7 +5,7 @@ The 'USB Robotic Arm Edge' is an educational toy, available from OWIRobot.com or
 
 The main class of this jar is _RoboticEdgeArm_, which allows commands to be issued to the Robotic Edge Arm via USB.
 
-![Class Diagram](src/main/site/uml/com.iamcontent.robot.arm.edge.png)
+![Class Diagram](src/site/uml/com.iamcontent.robot.arm.edge.png)
 
 For testing, run the _RoboticEdgeArmCommandLineDriver_ class. Examine the _ParseStringIntoCommandFunction_ class to see the supported syntax.
 

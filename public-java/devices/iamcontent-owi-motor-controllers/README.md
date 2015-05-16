@@ -3,7 +3,7 @@
 
 This jar contains a single class that allows commands to be issued to an Owi-535 Motor Controller via USB.
 
-![Class Diagram](src/main/site/uml/com.iamcontent.device.controller.owi.png)
+![Class Diagram](src/site/uml/com.iamcontent.device.controller.owi.png)
 
 ---
 

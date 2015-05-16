@@ -3,12 +3,12 @@
 
 This jar contains two main packages of interest:
 
-* the [usb](src/main/site/md/usb.md) package 
-* the [usb.topology](src/main/site/md/usb.topology.md) package
+* the [usb](src/site/md/usb.md) package 
+* the [usb.topology](src/site/md/usb.topology.md) package
 
 These packages provide a usable facade over the [javax.usb](http://sourceforge.net/projects/javax-usb/) API. This library is configured to use the [usb4java](http://usb4java.org/) implementation of [javax.usb](http://sourceforge.net/projects/javax-usb/).
 
-![Package Diagram](src/main/site/uml/com.iamcontent.io-package.png)
+![Package Diagram](src/site/uml/com.iamcontent.io-package.png)
 
 ---
 
