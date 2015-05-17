@@ -69,7 +69,8 @@ public class CalibratedServo implements Servo {
 
 	@Override
 	public void setSpeed(double speed) {
-		delegateServo.setSpeed(toDelegateSpeed(speed));
+		if (toDelegateSpeedConverter!=null)
+			delegateServo.setSpeed(toDelegateSpeed(speed));
 	}
 
 	private double toDelegateSpeed(double speed) {
@@ -78,7 +79,8 @@ public class CalibratedServo implements Servo {
 
 	@Override
 	public void setAcceleration(double acceleration) {
-		delegateServo.setAcceleration(toDelegateAcceleration(acceleration));
+		if (toDelegateAccelerationConverter!=null)
+			delegateServo.setAcceleration(toDelegateAcceleration(acceleration));
 	}
 	
 	private double toDelegateAcceleration(double acceleration) {
@@ -88,6 +90,7 @@ public class CalibratedServo implements Servo {
 	private static void checkArguments(Servo delegateServo, ServoCalibrator calibrator) {
 		checkNotNull(delegateServo, "Delegate servo cannot be null.");
 		checkNotNull(calibrator, "Calibrator cannot be null.");
+		checkNotNull(calibrator.getPositionConverter(), "PositionConverter of calibrator cannot be null.");
 	}
 
 }

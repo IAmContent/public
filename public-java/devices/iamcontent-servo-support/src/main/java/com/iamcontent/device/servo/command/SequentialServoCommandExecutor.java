@@ -45,10 +45,24 @@ public class SequentialServoCommandExecutor implements ServoCommandExecutor {
 
 	@Override
 	public void execute(ServoCommand command) {
-		setPosition(command.getChannel(), command.getPosition());
+		final int channel = command.getChannel();
+		setAcceleration(channel, command.getAcceleration());
+		setSpeed(channel, command.getSpeed());
+		setPosition(channel, command.getPosition());
 	}
 
-	private void setPosition(final int channel, final Double position) {
-		servoSource.getServo(channel).setPosition(position);
+	private void setAcceleration(int channel, Double acceleration) {
+		if (acceleration!=null)
+			servoSource.getServo(channel).setAcceleration(acceleration);
+	}
+
+	private void setSpeed(int channel, Double speed) {
+		if (speed!=null)
+			servoSource.getServo(channel).setSpeed(speed);
+	}
+
+	private void setPosition(int channel, Double position) {
+		if (position!=null)
+			servoSource.getServo(channel).setPosition(position);
 	}
 }

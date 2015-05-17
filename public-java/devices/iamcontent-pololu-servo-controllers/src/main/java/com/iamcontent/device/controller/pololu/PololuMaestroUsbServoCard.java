@@ -35,8 +35,8 @@ public class PololuMaestroUsbServoCard {
 	public static final short VENDOR_ID = 0x1ffb;
 	public static final short MICRO_MAESTRO_PRODUCT_ID = 0x0089;
 	
-	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
+	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
 	
 	private final EasyUsbDevice device;
 	

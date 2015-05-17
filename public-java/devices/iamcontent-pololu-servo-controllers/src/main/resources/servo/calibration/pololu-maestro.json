@@ -1,6 +1,12 @@
 { defaultCalibrator: { 
     positionConverter: {
       toRange: {limit1: 4000, limit2: 8000}
+    },
+    speedConverter: {
+      toRange: {limit1: 0, limit2: 200}
+    },
+    accelerationConverter: {
+      toRange: {limit1: 0, limit2: 255}
     }
   }
 }
