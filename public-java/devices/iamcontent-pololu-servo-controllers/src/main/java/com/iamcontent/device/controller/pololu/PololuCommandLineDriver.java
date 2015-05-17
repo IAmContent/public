@@ -17,11 +17,13 @@
  */
 package com.iamcontent.device.controller.pololu;
 
+import static com.iamcontent.device.controller.pololu.PololuMaestroUsbServoController.defaultInstance;
+import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
-import static com.iamcontent.device.servo.Servos.calibratedServoSource;
 
 import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.Servos;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
 import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandExecutor;
@@ -34,7 +36,8 @@ import com.iamcontent.io.cli.UnknownCommandException;
  */
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
-	private final ServoCommandExecutor executor = executor(device());
+	private static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro";
+	private final ServoCommandExecutor executor = executor(calibratedServoSource());
 
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
@@ -68,7 +71,11 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 		}
 	};
 
-	private ServoSource device() {
-		return calibratedServoSource(PololuMaestroUsbServoController.defaultServoSource());
+	private static ServoSource calibratedServoSource() {
+		return Servos.calibratedServoSource(rawServoSource(), calibrator(DEFAULT_CALIBRATOR_NAME));
+	}
+
+	private static ServoSource rawServoSource() {
+		return Servos.rawServoSource(defaultInstance());
 	}
 }

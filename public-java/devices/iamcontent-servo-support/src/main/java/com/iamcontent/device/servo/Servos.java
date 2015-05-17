@@ -20,7 +20,6 @@ package com.iamcontent.device.servo;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.device.servo.calibrate.Calibrators;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -39,14 +38,6 @@ public final class Servos {
 				return new RawServo(controller, channel);
 			}
 		};
-	}
-
-	/**
-	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the default {@link ServoSourceCalibrator}. 
-	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
-	 */
-	public static ServoSource calibratedServoSource(final ServoSource delegate) {
-		return calibratedServoSource(delegate, Calibrators.defaultCalibrator());
 	}
 
 	/**

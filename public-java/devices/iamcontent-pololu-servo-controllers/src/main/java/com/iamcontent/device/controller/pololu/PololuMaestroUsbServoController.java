@@ -20,11 +20,8 @@ package com.iamcontent.device.controller.pololu;
  */
 
 
-import static com.iamcontent.device.servo.Servos.rawServoSource;
-
 import javax.usb.UsbDevice;
 
-import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -33,13 +30,6 @@ import com.iamcontent.device.servo.raw.ServoController;
  */
 public class PololuMaestroUsbServoController extends PololuMaestroUsbServoCard implements ServoController {
 
-	/**
-	 * Creates a {@link ServoSource} for the first Pololu Maestro device that is found.
-	 */
-	public static ServoSource defaultServoSource() {
-		return rawServoSource(defaultInstance());
-	}
-	
 	/**
 	 * Creates an instance for the first Pololu Maestro device that is found.
 	 */

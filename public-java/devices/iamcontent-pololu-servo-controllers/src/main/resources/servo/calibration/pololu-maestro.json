@@ -1,6 +1,6 @@
 { defaultCalibrator: { 
     positionConverter: {
-      toRange: {limit1: 1000, limit2: 2000}
+      toRange: {limit1: 4000, limit2: 8000}
     }
   }
 }
