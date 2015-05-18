@@ -70,7 +70,8 @@ public class PololuMaestroUsbServoCard {
 	}
 	
 	public void setRawAcceleration(short channel, short acceleration) {
-		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, channel, (short)(acceleration | 0x80)));
+		final int accelerationFlag = 0x80;
+		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, (short)(channel | accelerationFlag), acceleration));
 	}
 	
 	protected UsbControlIrp request(byte request, short index, short value) {
