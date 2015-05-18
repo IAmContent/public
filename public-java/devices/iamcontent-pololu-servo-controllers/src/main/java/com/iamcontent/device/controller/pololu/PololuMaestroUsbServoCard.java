@@ -18,6 +18,8 @@
 package com.iamcontent.device.controller.pololu;
 
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
+import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_IN;
+import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_OUT;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 
 import javax.usb.UsbControlIrp;
@@ -37,6 +39,8 @@ public class PololuMaestroUsbServoCard {
 	
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
+	private static final byte REQUEST_GET_VARIABLES = (byte)0x83;
+	private static final byte REQUEST_GET_SERVO_SETTINGS = (byte)0x87;
 	
 	private final EasyUsbDevice device;
 	
@@ -62,19 +66,45 @@ public class PololuMaestroUsbServoCard {
 	}
 
 	public void setRawPosition(short channel, short position) {
-		device.syncSubmit(request(REQUEST_SET_TARGET, channel, position));
+		device.syncSubmit(outRequest(REQUEST_SET_TARGET, channel, position));
 	}
 
 	public void setRawSpeed(short channel, short speed) {
-		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, channel, speed));
+		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, channel, speed));
 	}
 	
 	public void setRawAcceleration(short channel, short acceleration) {
 		final int accelerationFlag = 0x80;
-		device.syncSubmit(request(REQUEST_SET_SERVO_VARIABLE, (short)(channel | accelerationFlag), acceleration));
+		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, (short)(channel | accelerationFlag), acceleration));
 	}
 	
-	protected UsbControlIrp request(byte request, short index, short value) {
-		return device.createUsbControlIrp(REQUESTTYPE_TYPE_VENDOR, request, value, index);
+	public short getRawPosition(short channel) {
+		final UsbControlIrp request = inRequest(REQUEST_GET_VARIABLES); // FIXME: This is specific to the Micro Maestro card.
+		device.syncSubmit(request);
+		final short result = extractPosition(request.getData(), channel);
+		return result;
+	}
+
+	protected UsbControlIrp inRequest(byte request) {
+		final byte requestType = REQUESTTYPE_TYPE_VENDOR | REQUESTTYPE_DIRECTION_IN;
+		final UsbControlIrp result = device.createUsbControlIrp(requestType, request, (short)0, (short)0);
+		result.setData(new byte[140]);
+		return result;
+	}
+	
+	protected UsbControlIrp outRequest(byte request, short index, short value) {
+		final byte requestType = REQUESTTYPE_TYPE_VENDOR | REQUESTTYPE_DIRECTION_OUT;
+		return device.createUsbControlIrp(requestType, request, value, index);
+	}
+
+	private short extractPosition(byte[] data, short channel) {
+		final int positionIndex0 = 98;
+		final int bytesPerChannel = 7;
+		final int loIndex = positionIndex0 + channel * bytesPerChannel;
+		return asShort(data[loIndex], data[loIndex + 1]);
+	}
+
+	private short asShort(byte lo, byte hi) {
+		return (short) ((hi << 8) | (lo & 0xFF));
 	}
 }

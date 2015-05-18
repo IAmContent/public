@@ -57,8 +57,7 @@ public class PololuMaestroUsbServoController extends PololuMaestroUsbServoCard i
 	
 	@Override
 	public double getPosition(int channel) {
-		// TODO getPosition() not implemented yet
-		return 0;
+		return getRawPosition((short)channel);
 	}
 
 	@Override

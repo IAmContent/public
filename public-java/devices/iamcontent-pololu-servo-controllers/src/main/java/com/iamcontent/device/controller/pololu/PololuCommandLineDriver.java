@@ -28,7 +28,6 @@ import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
 import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandExecutor;
 import com.iamcontent.io.cli.CommandLineDriver;
-import com.iamcontent.io.cli.UnknownCommandException;
 
 /**
  * An example driver for the {@link PololuMaestroUsbServoController}. Useful for manual testing.
@@ -37,7 +36,8 @@ import com.iamcontent.io.cli.UnknownCommandException;
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
 	private static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro";
-	private final ServoCommandExecutor executor = executor(calibratedServoSource());
+	private static final ServoSource SERVO_SOURCE = calibratedServoSource();
+	private static final ServoCommandExecutor executor = executor(SERVO_SOURCE);
 
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
@@ -60,14 +60,43 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	}
 
 	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction() {
+		private static final String QUERY_PREFIX = "?";
 		@Override
 		public ServoCommand apply(String command) {
 			try {
+				if (isQuery(command)) {
+					executeQuery(command);
+					return null;
+				}
 				return super.apply(command);
-			} catch (UnknownCommandException e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				return null;
 			}
+		}
+
+		private void executeQuery(String command) {
+			displayPosition(channelString(command));
+		}
+
+		private String channelString(String command) {
+			return command.substring(QUERY_PREFIX.length()).trim();
+		}
+
+		private void displayPosition(String channelString) {
+			displayPosition(Integer.parseInt(channelString));
+		}
+
+		private void displayPosition(int channel) {
+			System.out.println("position(" + channel + ")=" + getPosition(channel));
+		}
+
+		private double getPosition(int channel) {
+			return SERVO_SOURCE.getServo(channel).getPosition();
+		}
+
+		private boolean isQuery(String command) {
+			return command.startsWith(QUERY_PREFIX);
 		}
 	};
 
