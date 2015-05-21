@@ -21,11 +21,12 @@ import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MI
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_12;
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_18;
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_24;
+import static com.iamcontent.io.usb.UsbDevicePredicates.vendorAndProductIdsMatch;
 
 import javax.usb.UsbDevice;
-import javax.usb.UsbDeviceDescriptor;
 
 import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
+import com.iamcontent.io.IORuntimeException;
 
 /**
  * The USB characteristics of the different types of Pololu Maestro cards.
@@ -60,27 +61,22 @@ public enum UsbMaestroCardType {
 		return productId;
 	}
 
-	public static UsbMaestroCardType forProductIdOrNull(short productId) {
+	public static UsbMaestroCardType forUsbDeviceOrThrow(UsbDevice device) {
+		final UsbMaestroCardType result = forUsbDeviceOrNull(device);
+		if (result!=null)
+			return result;
+		else
+			throw new IORuntimeException("USB Device is not a Usb Maestro Card");
+	}
+
+	public static UsbMaestroCardType forUsbDeviceOrNull(UsbDevice device) {
 		for (UsbMaestroCardType c : values())
-			if (productId==c.getProductId())
+			if (vendorAndProductIdsMatch(VENDOR_ID, c.getProductId(), device))
 				return c;
 		return null;
 	}
-	
-	public static boolean isAMaestroCard(UsbDevice device) {
-		return isAMaestroCard(device.getUsbDeviceDescriptor());
-	}
-	
-	public static boolean isAMaestroCard(UsbDeviceDescriptor deviceDescriptor) {
-		return isMaestroVendorId(deviceDescriptor.idVendor()) 
-				&& isMaestroProductId(deviceDescriptor.idProduct());
-	}
 
-	private static boolean isMaestroVendorId(short vendorId) {
-		return vendorId==VENDOR_ID;
-	}
-	
-	private static boolean isMaestroProductId(short productId) {
-		return forProductIdOrNull(productId) !=null;
+	public static boolean isAMaestroCard(UsbDevice device) {
+		return forUsbDeviceOrNull(device) !=null;
 	}
 }

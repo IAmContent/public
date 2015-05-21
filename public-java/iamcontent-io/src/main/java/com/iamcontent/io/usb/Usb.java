@@ -17,8 +17,8 @@
  */
 package com.iamcontent.io.usb;
 
+import static com.iamcontent.io.usb.UsbDevicePredicates.deviceHasVendorIdAndProductId;
 import static com.iamcontent.io.usb.topology.UsbDeviceFinder.usbDeviceFinder;
-import static com.iamcontent.io.usb.topology.UsbDevicePredicates.deviceHasVendorIdAndProductId;
 
 import java.util.List;
 

@@ -17,9 +17,9 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
+
 /**
- * The minimal set of functions required of a Pololu Maestro card in order for it to be controlled by a
- * {@link PololuMaestroServoController}.
+ * The minimal set of functions required of a Pololu Maestro card.
  * @author Greg Elderfield
  */
 public interface PololuMaestroServoCard {
@@ -29,4 +29,5 @@ public interface PololuMaestroServoCard {
 	void setRawAcceleration(short channel, short acceleration);
 
 	short getRawPosition(short channel);
+	MaestroCardType getType();
 }

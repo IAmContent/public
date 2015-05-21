@@ -18,11 +18,11 @@
 package com.iamcontent.device.controller.pololu.maestro;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
+import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
 import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
 
 import com.google.common.collect.Iterables;
-import com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCard;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.Servos;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
@@ -72,7 +72,7 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 				}
 				return super.apply(command);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());
 				return null;
 			}
 		}
@@ -111,6 +111,6 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	}
 
 	private static ServoController defaultServoController() {
-		return pololuMaestroServoController(UsbPololuMaestroServoCard.defaultInstance());
+		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
 }

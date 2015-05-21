@@ -42,7 +42,10 @@ public class EasedUsbDevice implements EasyUsbDevice {
 	}
 	
 	public static EasedUsbDevice eased(UsbDevice device) {
-		return new EasedUsbDevice(device);
+		if (device instanceof EasyUsbDevice) 
+			return (EasedUsbDevice) device;
+		else
+			return new EasedUsbDevice(device);
 	}
 
 	@Override

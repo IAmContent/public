@@ -25,47 +25,35 @@ import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
-import com.google.common.base.Predicate;
+import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.EasyUsbDevice;
-import com.iamcontent.io.usb.Usb;
 
 /**
- * A {@link PololuMaestroServoCard} that uses Pololu's Native USB protocol.
+ * An abstract {@link PololuMaestroServoCard} that uses Pololu's Native USB protocol.
+ * Methods with implementations that vary by card type must be provided by concrete subclasses.
  * 
  * The command values used by this protocol were obtained from Pololu's Native USB SDK,
  * downloaded from www.pololu.com.
  * 
  * @author Greg Elderfield
  */
-public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
+public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestroServoCard {
 	
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
-	private static final byte REQUEST_GET_VARIABLES = (byte)0x83;
-	private static final byte REQUEST_GET_SERVO_SETTINGS = (byte)0x87;
 	
-	private final EasyUsbDevice device;
-	
-	/**
-	 * Creates an instance for the first Pololu Maestro device that is found.
-	 */
-	public static PololuMaestroServoCard defaultInstance() {
-		return new UsbPololuMaestroServoCard();
-	}
-	
-	/**
-	 * Creates an instance with the first Pololu Maestro device that is found.
-	 */
-	public UsbPololuMaestroServoCard() {
-		device = Usb.device(isAMaestroUsbDevice());
-	}
+	protected static final int BYTES_PER_SERVO_STATUS_BLOCK = 7;
 
+	protected final EasyUsbDevice device;
+	protected final UsbMaestroCardType type;
+	
 	/**
 	 * Creates an instance with the given UsbDevice.
 	 */
-	public UsbPololuMaestroServoCard(UsbDevice device) {
+	public AbstractUsbPololuMaestroServoCard(UsbDevice device) {
 		this.device = eased(device);
+		this.type = UsbMaestroCardType.forUsbDeviceOrThrow(device);
 	}
 
 	@Override
@@ -84,18 +72,18 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, (short)(channel | accelerationFlag), acceleration));
 	}
 	
-	@Override
-	public short getRawPosition(short channel) {
-		final UsbControlIrp request = inRequest(REQUEST_GET_VARIABLES); // FIXME: This is specific to the Micro Maestro card.
-		device.syncSubmit(request);
-		final short result = extractPosition(request.getData(), channel);
-		return result;
+	public MaestroCardType getType() {
+		return type.getType();
+	}
+	
+	protected int getChannelCount() {
+		return getType().getChannelCount();
 	}
 
-	protected UsbControlIrp inRequest(byte request) {
+	protected UsbControlIrp inRequest(byte request, int dataSize) {
 		final byte requestType = REQUESTTYPE_TYPE_VENDOR | REQUESTTYPE_DIRECTION_IN;
 		final UsbControlIrp result = device.createUsbControlIrp(requestType, request, (short)0, (short)0);
-		result.setData(new byte[140]);
+		result.setData(new byte[dataSize]);
 		return result;
 	}
 	
@@ -104,23 +92,16 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 		return device.createUsbControlIrp(requestType, request, value, index);
 	}
 
-	private static short extractPosition(byte[] data, short channel) {
-		final int positionIndex0 = 98;
-		final int bytesPerChannel = 7;
-		final int loIndex = positionIndex0 + channel * bytesPerChannel;
+	protected int sizeOfAllServoStatusBlocks() {
+		return getChannelCount() * BYTES_PER_SERVO_STATUS_BLOCK;
+	}
+
+	protected static short extractPositionFromStatusBlocks(byte[] data, int offset, short channel) {
+		final int loIndex = offset + channel * BYTES_PER_SERVO_STATUS_BLOCK;
 		return asShort(data[loIndex], data[loIndex + 1]);
 	}
-
-	private static short asShort(byte lo, byte hi) {
+	
+	protected static short asShort(byte lo, byte hi) {
 		return (short) ((hi << 8) | (lo & 0xFF));
-	}
-
-	public static Predicate<UsbDevice> isAMaestroUsbDevice() {
-		return new Predicate<UsbDevice>() {
-			@Override
-			public boolean apply(UsbDevice device) {
-				return UsbMaestroCardType.isAMaestroCard(device);
-			}
-		};
 	}
 }
