@@ -1,6 +1,3 @@
-package com.iamcontent.device.controller.pololu;
-
-
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
@@ -18,55 +15,49 @@ package com.iamcontent.device.controller.pololu;
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
+package com.iamcontent.device.controller.pololu;
 
 import javax.usb.UsbDevice;
 
+import com.iamcontent.device.controller.pololu.usb.UsbPololuMaestroServoCard;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
- * Represents a Pololu Maestro card.
+ * Wraps a {@link PololuMaestroServoCard}, presenting it as a {@link ServoController}.
  * @author Greg Elderfield
  */
-public class PololuMaestroUsbServoController extends PololuMaestroUsbServoCard implements ServoController {
+public class PololuMaestroServoController implements ServoController {
+
+	private final PololuMaestroServoCard card;
+	
+	public PololuMaestroServoController(PololuMaestroServoCard card) {
+		this.card = card;
+	}
 
 	/**
 	 * Creates an instance for the first Pololu Maestro device that is found.
 	 */
-	public static PololuMaestroUsbServoController defaultInstance() {
-		return new PololuMaestroUsbServoController();
+	public static PololuMaestroServoController pololuMaestroServoController(PololuMaestroServoCard card) {
+		return new PololuMaestroServoController(card);
 	}
 	
-	/**
-	 * Creates an instance with the first Pololu Maestro device that is found.
-	 */
-	public PololuMaestroUsbServoController() {
-	}
-
-	/**
-	 * Creates an instance with the given UsbDevice.
-	 */
-	public PololuMaestroUsbServoController(UsbDevice device) {
-		super(device);
-	}
-
 	@Override
 	public void setPosition(int channel, double value) {
-		setRawPosition((short)channel, (short)value);
+		card.setRawPosition((short)channel, (short)value);
 	}
 	
 	@Override
 	public double getPosition(int channel) {
-		return getRawPosition((short)channel);
+		return card.getRawPosition((short)channel);
 	}
 
 	@Override
 	public void setSpeed(int channel, double speed) {
-		setRawSpeed((short)channel, (short)speed);
+		card.setRawSpeed((short)channel, (short)speed);
 	}
 
 	@Override
 	public void setAcceleration(int channel, double acceleration) {
-		setRawAcceleration((short)channel, (short)acceleration);
+		card.setRawAcceleration((short)channel, (short)acceleration);
 	}
 }

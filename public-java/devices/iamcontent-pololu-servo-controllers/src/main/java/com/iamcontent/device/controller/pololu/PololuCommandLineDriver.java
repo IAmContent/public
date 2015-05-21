@@ -17,20 +17,22 @@
  */
 package com.iamcontent.device.controller.pololu;
 
-import static com.iamcontent.device.controller.pololu.PololuMaestroUsbServoController.defaultInstance;
+import static com.iamcontent.device.controller.pololu.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
 
 import com.google.common.collect.Iterables;
+import com.iamcontent.device.controller.pololu.usb.UsbPololuMaestroServoCard;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.Servos;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
 import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandExecutor;
+import com.iamcontent.device.servo.raw.ServoController;
 import com.iamcontent.io.cli.CommandLineDriver;
 
 /**
- * An example driver for the {@link PololuMaestroUsbServoController}. Useful for manual testing.
+ * An example driver for the {@link PololuMaestroServoController}. Useful for manual testing.
  * @author Greg Elderfield
  */
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
@@ -105,6 +107,10 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	}
 
 	private static ServoSource rawServoSource() {
-		return Servos.rawServoSource(defaultInstance());
+		return Servos.rawServoSource(defaultServoController());
+	}
+
+	private static ServoController defaultServoController() {
+		return pololuMaestroServoController(UsbPololuMaestroServoCard.defaultInstance());
 	}
 }
