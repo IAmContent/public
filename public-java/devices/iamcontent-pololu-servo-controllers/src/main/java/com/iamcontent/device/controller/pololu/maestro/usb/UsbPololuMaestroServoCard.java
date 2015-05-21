@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.controller.pololu.usb;
+package com.iamcontent.device.controller.pololu.maestro.usb;
 
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import static com.iamcontent.io.usb.topology.UsbDevicePredicates.deviceHasVendorIdAndProductId;
@@ -28,7 +28,7 @@ import javax.usb.UsbDevice;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.iamcontent.device.controller.pololu.PololuMaestroServoCard;
+import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.EasyUsbDevice;
 import com.iamcontent.io.usb.Usb;
 

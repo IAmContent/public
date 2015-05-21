@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.controller.pololu;
+package com.iamcontent.device.controller.pololu.maestro;
 
 /**
  * The minimal set of functions required of a Pololu Maestro card in order for it to be controlled by a

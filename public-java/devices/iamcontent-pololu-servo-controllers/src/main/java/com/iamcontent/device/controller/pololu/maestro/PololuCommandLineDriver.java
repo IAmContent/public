@@ -15,14 +15,14 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.controller.pololu;
+package com.iamcontent.device.controller.pololu.maestro;
 
-import static com.iamcontent.device.controller.pololu.PololuMaestroServoController.pololuMaestroServoController;
+import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
 
 import com.google.common.collect.Iterables;
-import com.iamcontent.device.controller.pololu.usb.UsbPololuMaestroServoCard;
+import com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCard;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.Servos;
 import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;

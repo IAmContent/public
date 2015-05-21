@@ -15,11 +15,8 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.controller.pololu;
+package com.iamcontent.device.controller.pololu.maestro;
 
-import javax.usb.UsbDevice;
-
-import com.iamcontent.device.controller.pololu.usb.UsbPololuMaestroServoCard;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
