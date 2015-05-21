@@ -27,17 +27,14 @@ public class PololuMaestroServoController implements ServoController {
 
 	private final PololuMaestroServoCard card;
 	
-	public PololuMaestroServoController(PololuMaestroServoCard card) {
-		this.card = card;
-	}
-
-	/**
-	 * Creates an instance for the first Pololu Maestro device that is found.
-	 */
 	public static PololuMaestroServoController pololuMaestroServoController(PololuMaestroServoCard card) {
 		return new PololuMaestroServoController(card);
 	}
 	
+	public PololuMaestroServoController(PololuMaestroServoCard card) {
+		this.card = card;
+	}
+
 	@Override
 	public void setPosition(int channel, double value) {
 		card.setRawPosition((short)channel, (short)value);

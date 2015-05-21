@@ -34,14 +34,17 @@ public class UsbDevicePredicates {
     public static Predicate<UsbDevice> deviceHasVendorIdAndProductId(final short vendorId, final short productId) {
         return new Predicate<UsbDevice>() {
 			public boolean apply(UsbDevice device) {
-		        return isAMatch(device.getUsbDeviceDescriptor());
+		        return vendorAndProductIdsMatch(vendorId, productId, device);
 		    }
-
-			private boolean isAMatch(final UsbDeviceDescriptor descriptor) {
-				return vendorId == descriptor.idVendor()
-		            && productId == descriptor.idProduct();
-			}
         };
+    }
+    
+    public static boolean vendorAndProductIdsMatch(short vendorId, short productId, UsbDevice device) {
+    	return vendorAndProductIdsMatch(vendorId, productId, device.getUsbDeviceDescriptor());
+    }
+    
+    public static boolean vendorAndProductIdsMatch(short vendorId, short productId, UsbDeviceDescriptor descriptor) {
+    	return vendorId == descriptor.idVendor() && productId == descriptor.idProduct();
     }
     
     private UsbDevicePredicates() {

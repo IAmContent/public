@@ -18,7 +18,6 @@
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
-import static com.iamcontent.io.usb.topology.UsbDevicePredicates.deviceHasVendorIdAndProductId;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_IN;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_OUT;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
@@ -26,8 +25,6 @@ import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.EasyUsbDevice;
 import com.iamcontent.io.usb.Usb;
@@ -42,25 +39,6 @@ import com.iamcontent.io.usb.Usb;
  */
 public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 	
-	public static final short VENDOR_ID = 0x1ffb;
-	
-	public static enum CardType {
-		MICRO_MAESTRO_6(0x0089),
-		MINI_MAESTRO_12(0x008A),
-		MINI_MAESTRO_18(0x008B),
-		MINI_MAESTRO_24(0x008C);
-		
-		private final short productId;
-
-		private CardType(int productId) {
-			this.productId = (short)productId;
-		}
-
-		public short getProductId() {
-			return productId;
-		}
-	}
-
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
 	private static final byte REQUEST_GET_VARIABLES = (byte)0x83;
@@ -79,7 +57,7 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 	 * Creates an instance with the first Pololu Maestro device that is found.
 	 */
 	public UsbPololuMaestroServoCard() {
-		device = Usb.device(isAMaestroUsbDevice());
+		device = Usb.device(UsbMaestroCardType.isAMaestroUsbDevice());
 	}
 
 	/**
@@ -134,18 +112,5 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 
 	private short asShort(byte lo, byte hi) {
 		return (short) ((hi << 8) | (lo & 0xFF));
-	}
-
-	@SuppressWarnings("unchecked")
-	private static Predicate<UsbDevice> isAMaestroUsbDevice() {
-		return Predicates.or(
-				isMaestroDevice(CardType.MICRO_MAESTRO_6), 
-				isMaestroDevice(CardType.MINI_MAESTRO_12), 
-				isMaestroDevice(CardType.MINI_MAESTRO_18), 
-				isMaestroDevice(CardType.MINI_MAESTRO_24));
-	}
-
-	private static Predicate<UsbDevice> isMaestroDevice(CardType cardType) {
-		return deviceHasVendorIdAndProductId(VENDOR_ID, cardType.getProductId());
 	}
 }
