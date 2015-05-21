@@ -21,11 +21,10 @@ import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MI
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_12;
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_18;
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_24;
-import static com.iamcontent.io.usb.topology.UsbDevicePredicates.vendorAndProductIdsMatch;
 
 import javax.usb.UsbDevice;
+import javax.usb.UsbDeviceDescriptor;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
 
 /**
@@ -61,23 +60,27 @@ public enum UsbMaestroCardType {
 		return productId;
 	}
 
-	public boolean isThisMaestroCardType(UsbDevice device) {
-		return vendorAndProductIdsMatch(VENDOR_ID, getProductId(), device);
+	public static UsbMaestroCardType forProductIdOrNull(short productId) {
+		for (UsbMaestroCardType c : values())
+			if (productId==c.getProductId())
+				return c;
+		return null;
 	}
-
+	
 	public static boolean isAMaestroCard(UsbDevice device) {
-		for (UsbMaestroCardType t : values())
-			if (t.isThisMaestroCardType(device))
-				return true;
-		return false;
+		return isAMaestroCard(device.getUsbDeviceDescriptor());
+	}
+	
+	public static boolean isAMaestroCard(UsbDeviceDescriptor deviceDescriptor) {
+		return isMaestroVendorId(deviceDescriptor.idVendor()) 
+				&& isMaestroProductId(deviceDescriptor.idProduct());
 	}
 
-	public static Predicate<UsbDevice> isAMaestroUsbDevice() {
-		return new Predicate<UsbDevice>() {
-			@Override
-			public boolean apply(UsbDevice device) {
-				return isAMaestroCard(device);
-			}
-		};
+	private static boolean isMaestroVendorId(short vendorId) {
+		return vendorId==VENDOR_ID;
+	}
+	
+	private static boolean isMaestroProductId(short productId) {
+		return forProductIdOrNull(productId) !=null;
 	}
 }

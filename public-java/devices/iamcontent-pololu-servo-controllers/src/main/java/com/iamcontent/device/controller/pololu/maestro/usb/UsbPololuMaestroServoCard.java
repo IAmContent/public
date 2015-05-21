@@ -25,6 +25,7 @@ import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
+import com.google.common.base.Predicate;
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.EasyUsbDevice;
 import com.iamcontent.io.usb.Usb;
@@ -57,7 +58,7 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 	 * Creates an instance with the first Pololu Maestro device that is found.
 	 */
 	public UsbPololuMaestroServoCard() {
-		device = Usb.device(UsbMaestroCardType.isAMaestroUsbDevice());
+		device = Usb.device(isAMaestroUsbDevice());
 	}
 
 	/**
@@ -103,14 +104,23 @@ public class UsbPololuMaestroServoCard implements PololuMaestroServoCard {
 		return device.createUsbControlIrp(requestType, request, value, index);
 	}
 
-	private short extractPosition(byte[] data, short channel) {
+	private static short extractPosition(byte[] data, short channel) {
 		final int positionIndex0 = 98;
 		final int bytesPerChannel = 7;
 		final int loIndex = positionIndex0 + channel * bytesPerChannel;
 		return asShort(data[loIndex], data[loIndex + 1]);
 	}
 
-	private short asShort(byte lo, byte hi) {
+	private static short asShort(byte lo, byte hi) {
 		return (short) ((hi << 8) | (lo & 0xFF));
+	}
+
+	public static Predicate<UsbDevice> isAMaestroUsbDevice() {
+		return new Predicate<UsbDevice>() {
+			@Override
+			public boolean apply(UsbDevice device) {
+				return UsbMaestroCardType.isAMaestroCard(device);
+			}
+		};
 	}
 }

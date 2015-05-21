@@ -17,7 +17,6 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
-
 /**
  * The different types of Pololu Maestro cards.
  * @author Greg Elderfield
@@ -29,13 +28,13 @@ public enum MaestroCardType {
 	MINI_MAESTRO_18(18),
 	MINI_MAESTRO_24(24);
 	
-	private final int servoCount;
+	private final int channelCount;
 
-	private MaestroCardType(int servoCount) {
-		this.servoCount = servoCount;
+	private MaestroCardType(int channelCount) {
+		this.channelCount = channelCount;
 	}
 
-	public int getServoCount() {
-		return servoCount;
+	public int getChannelCount() {
+		return channelCount;
 	}
 }
