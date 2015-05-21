@@ -20,6 +20,7 @@ package com.iamcontent.device.controller.pololu.maestro.usb;
 import javax.usb.UsbDevice;
 
 import com.google.common.base.Predicate;
+import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.Usb;
 
 /**
@@ -31,14 +32,14 @@ public class UsbPololuMaestroServoCards {
 	/**
 	 * Creates an instance with the first Pololu Maestro {@link UsbDevice} that is found.
 	 */
-	public static AbstractUsbPololuMaestroServoCard defaultUsbPololuMaestroServoCard() {
+	public static PololuMaestroServoCard defaultUsbPololuMaestroServoCard() {
 		return usbPololuMaestroServoCard(Usb.device(isAMaestroUsbDevice()));
 	}
 
 	/**
 	 * Creates an instance with the given UsbDevice.
 	 */
-	public static AbstractUsbPololuMaestroServoCard usbPololuMaestroServoCard(UsbDevice device) {
+	public static PololuMaestroServoCard usbPololuMaestroServoCard(UsbDevice device) {
 		final UsbMaestroCardType cardType = UsbMaestroCardType.forUsbDeviceOrThrow(device);
 		switch (cardType) {
 		case USB_MICRO_MAESTRO_6:
