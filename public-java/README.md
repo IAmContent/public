@@ -6,7 +6,26 @@ IAmContent Public Libraries.
 Copyright (C) 2015 Greg Elderfield
 
 @author Greg Elderfield, support@jarchitect.co.uk
- 
+
+This software comprises the following packages:
+
+```
+public-java
+  |-- iamcontent-core.jar  - a few utility classes and functions
+  |-- iamcontent-io.jar    - I/O utilities and a usable facade over the javax.usb API.
+  |-- devices
+  |     |-- iamcontent-servo-support.jar              -  Supports control of servos
+  |     |-- iamcontent-pololu-servo-controllers.jar   -  Servo control using Pololu Maestro cards
+  |     |-- iamcontent-owi-motor-controllers.jar      -  Motor control using the Owi-535 Motor Controller
+  |-- robots
+        |-- iamcontent-robotic-arm-edge.jar           -  Control of the 'USB Robotic Arm Edge'
+
+```
+
+![Package Diagram](src/site/uml/public-java-maven-projects.png)
+
+---
+
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.

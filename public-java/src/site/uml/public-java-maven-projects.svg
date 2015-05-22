@@ -73,7 +73,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -120,13 +120,13 @@
          sodipodi:linespacing="125%"
          id="text2985-4"
          y="127.56754"
-         x="247.99245"
+         x="277.99243"
          style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#424242;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            y="127.56754"
-           x="247.99245"
+           x="277.99243"
            id="tspan2987-0"
-           sodipodi:role="line">iamcontent-devices</tspan></text>
+           sodipodi:role="line">devices</tspan></text>
       <g
          id="g3811-9">
         <rect
@@ -152,13 +152,13 @@
          sodipodi:linespacing="125%"
          id="text2985-4-2"
          y="127.56754"
-         x="247.99245"
+         x="281.99243"
          style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#424242;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            y="127.56754"
-           x="247.99245"
+           x="281.99243"
            id="tspan2987-0-4"
-           sodipodi:role="line">iamcontent-robots</tspan></text>
+           sodipodi:role="line">robots</tspan></text>
       <g
          id="g3811-9-5">
         <rect
