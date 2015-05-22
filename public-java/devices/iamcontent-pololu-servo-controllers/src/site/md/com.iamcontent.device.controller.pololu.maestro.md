@@ -12,9 +12,12 @@ _PololuMaestroServoController_ wraps a _PololuMaestroServoCard_ as a [ServoContr
 
 The _PololuCommandLineDriver_ provides an example usage and can be run from the command line for testing purposes. It supports the following commands (position, speed and acceleration values are all in the range 0.0..1.0):
 
-|Format|Description|Example|Example Description|
+|Command|Format|Example|Example Description|
 | ---- | ---- | ---- | ---- |
-|<channel> <position> | 1 0.34 | Set the servo on channel 1 to position 0.34 |
+| Set position | _channel position_ | 1 0.34 | For the servo on channel 1: set its position to 0.34. |
+| Set position & speed | _channel position speed_ | 1 0.34 0.2 | For the servo on channel 1: set its speed to 0.2 and then set its position to 0.34. |
+| Set position, speed & acceleration | _channel position speed acceleration_ | 1 0.34 0.2 0.15 | For the servo on channel 1: set its acceleration to 0.15, then set its speed to 0.2 and then set its position to 0.34. |
+| Get position | ? _position_ | ?3 | Get the position of the servo on channel 3. |
 
 ---
 
