@@ -10,7 +10,7 @@ _PololuMaestroServoCard_ defines a minimal set of functions that are required of
 
 _PololuMaestroServoController_ wraps a _PololuMaestroServoCard_ as a [ServoController](../../../../iamcontent-servo-support/src/site/md/com.iamcontent.device.servo.raw.md).
 
-The _PololuCommandLineDriver_ provides an example usage and can be run from the command line for testing purposes. It supports the following commands (position, speed and acceleration values are all in the range 0.0..1.0):
+The _PololuCommandLineDriver_ provides an example usage and can be run from the command line for testing purposes. It supports the following commands:
 
 |Command|Format|Example|Example Description|
 | ---- | ---- | ---- | ---- |
@@ -18,6 +18,8 @@ The _PololuCommandLineDriver_ provides an example usage and can be run from the 
 | Set position & speed | _channel position speed_ | 1 0.34 0.2 | For the servo on channel 1: set its speed to 0.2 and then set its position to 0.34. |
 | Set position, speed & acceleration | _channel position speed acceleration_ | 1 0.34 0.2 0.15 | For the servo on channel 1: set its acceleration to 0.15, then set its speed to 0.2 and then set its position to 0.34. |
 | Get position | ? _position_ | ?3 | Get the position of the servo on channel 3. |
+
+Note that the _PololuCommandLineDriver_ uses a [ServoSourceCalibrator](../../../../iamcontent-servo-support/src/site/md/com.iamcontent.device.servo.calibrate.md) so that the input position, speed and acceleration values are all in the range 0.0..1.0. The configuration file for this is at [src/main/resources/servo/calibration/pololu-maestro.json](../../main/resources/servo/calibration/pololu-maestro.json).
 
 ---
 
