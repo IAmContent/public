@@ -8,7 +8,7 @@ _UsbMaestroCardType_ enumerates the different types of Pololu Maestro cards, hol
 
 _AbstractUsbPololuMaestroServoCard_ uses Pololu's Native USB protocol to partially implement the [PololuMaestroServoCard](com.iamcontent.device.controller.pololu.maestro.md) functions. Functions that require different implementations for different card types are implemented by the concrete subclasses _UsbPololuMicroMaestroServoCard_ and _UsbPololuMiniMaestroServoCard_.
 
-_UsbPololuMaestroServoCards_ provides factory methods for creating the correct concrete implementation for a given _UsbDevice_ (or, alernatively, the first Pololu Maestro _UsbDevice_ that is found).
+_UsbPololuMaestroServoCards_ provides factory methods for creating the correct concrete implementation for a given _UsbDevice_ (or, alternatively, for the first Pololu Maestro _UsbDevice_ that is found).
 
 ---
 
