@@ -1,6 +1,6 @@
 #Java package: _pololu.maestro_
 
-Defines the  servo functions required of a Pololu Maestro card and allows these functions to be used with the [iamcontent-servo-support](../../../../iamcontent-servo-support) jar.
+Defines the servo functions required of a Pololu Maestro card and allows these functions to be used with the [iamcontent-servo-support](../../../../iamcontent-servo-support) jar.
 
 ![Class Diagram](../uml/com.iamcontent.device.controller.pololu.maestro.png)
 
