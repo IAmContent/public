@@ -8,7 +8,7 @@
     <position height="-1" width="-1" x="484" y="331"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <attributes public="true" package="false" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </enumeration>  
@@ -16,7 +16,7 @@
     project="iamcontent-pololu-servo-controllers" 
     file="/iamcontent-pololu-servo-controllers/src/main/java/com/iamcontent/device/controller/pololu/maestro/PololuCommandLineDriver.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="632" y="221"/>    
+    <position height="-1" width="-1" x="709" y="208"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
