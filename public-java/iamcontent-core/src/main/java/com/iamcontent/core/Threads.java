@@ -15,29 +15,28 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core.math;
+package com.iamcontent.core;
 
 /**
- * Math utility functions.
+ * Helper functions for Thread usgae.
  * @author Greg Elderfield
  */
-public class MathUtils {
+public class Threads {
 
-	public static int limit(int i, int min, int max) {
-		return Math.min(max, Math.max(i, min));
-	}
-
-	public static double limit(double i, double min, double max) {
-		return Math.min(max, Math.max(i, min));
-	}
-
-	public static double linearConvert(double v, double from1, double from2, double to1, double to2) {
-		final double fromRange = from2 - from1;
-		final double toRange = to2 - to1;
-		final double quotient = (v-from1)/fromRange;
-		return (quotient * toRange) + to1;
+	/**
+	 * Invokes Thread.sleep(long), catching any {@link InterruptedException} that is thrown.
+	 * @param millis The length of time to sleep in milliseconds
+	 * @return true if Thread.sleep(long) terminated normally, false if an {@link InterruptedException} was thrown.
+	 */
+	public static boolean sleepQuietly(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			return false;
+		}
+		return true;
 	}
 	
-	private MathUtils() {
+	private Threads() {
 	}
 }

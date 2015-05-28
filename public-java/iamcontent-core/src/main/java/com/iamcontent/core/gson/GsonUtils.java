@@ -66,4 +66,7 @@ public class GsonUtils {
 	public static JsonElement getMember(JsonElement json, String memberName) {
 		return json.getAsJsonObject().get(memberName);
 	}
+	
+	private GsonUtils() {
+	}
 }
