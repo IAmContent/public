@@ -20,6 +20,7 @@
     </licenses>
 
 	<modules>
+		<module>iamcontent-robonova-1</module>
 		<module>iamcontent-robotic-arm-edge</module>
 	</modules>
 </project>
