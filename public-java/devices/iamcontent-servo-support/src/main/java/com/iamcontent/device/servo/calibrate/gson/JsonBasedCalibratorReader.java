@@ -18,7 +18,7 @@
 package com.iamcontent.device.servo.calibrate.gson;
 
 import static com.iamcontent.core.gson.GsonUtils.JSON_FILE_EXTENSION;
-import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.calibrate.gson.NumberedServoSourceCalibratorDeserializer.customGsonBuilder;
 import static com.iamcontent.io.util.ResourceUtils.getStreamOrThrow;
 import static com.iamcontent.io.util.Readers.inputStreamReader;
 
@@ -39,15 +39,16 @@ public class JsonBasedCalibratorReader {
 
 	private static final String CALIBRATION_FOLDER = "servo/calibration/";
 
-	public static ServoSourceCalibrator calibrator(String calibratorName) {
+	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
 		try (final Reader r = readerFor(calibratorName) ) {
-			return calibrator(r);
+			return numberedChannelCalibrator(r);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		}
 	}
 
-	public static ServoSourceCalibrator calibrator(Reader r) {
+	@SuppressWarnings("unchecked")
+	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(Reader r) {
 		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
 	}
 

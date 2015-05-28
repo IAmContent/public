@@ -31,23 +31,23 @@ public class JsonBasedCalibratorReaderTest {
 
 	@Test
 	public void testDefaultCalibrator() {
-		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator(DEFAULT_CALIBRATION_NAME);
+		final ServoSourceCalibrator<Integer> actual = JsonBasedCalibratorReader.numberedChannelCalibrator(DEFAULT_CALIBRATION_NAME);
 		checkDefaultCalibrator(actual);
 	}
 
 	@Test
 	public void testPerServoExampleCalibrator() {
-		final ServoSourceCalibrator actual = JsonBasedCalibratorReader.calibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME);
+		final ServoSourceCalibrator<Integer> actual = JsonBasedCalibratorReader.numberedChannelCalibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME);
 		checkPerServoExampleCalibrator(actual);
 	}
 
-	public static void checkDefaultCalibrator(final ServoSourceCalibrator actual) {
+	public static void checkDefaultCalibrator(final ServoSourceCalibrator<Integer> actual) {
 		for (int c=0; c<6; c++)
 			checkDefaultCalibrator(actual, c);
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	public static void checkPerServoExampleCalibrator(final ServoSourceCalibrator actual) {
+	public static void checkPerServoExampleCalibrator(final ServoSourceCalibrator<Integer> actual) {
 		checkCalibrator(actual, 0, 0.0, 1.0, 1000.0, 2000.0);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
@@ -58,12 +58,12 @@ public class JsonBasedCalibratorReaderTest {
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	public static void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
+	public static void checkDefaultCalibrator(ServoSourceCalibrator<Integer> actual, int channel) {
 		checkCalibrator(actual, channel, 0.0, 1.0, 1000.0, 2000.0);
 	}
 
 	@Test(expected=IORuntimeException.class)
 	public void testNonExistentCalibrator() {
-		JsonBasedCalibratorReader.calibrator("non-existent");
+		JsonBasedCalibratorReader.numberedChannelCalibrator("non-existent");
 	}
 }

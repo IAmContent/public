@@ -19,7 +19,7 @@ package com.iamcontent.device.controller.pololu.maestro;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
+import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
 
 import com.google.common.collect.Iterables;
@@ -103,7 +103,7 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	};
 
 	private static ServoSource<Integer> calibratedServoSource() {
-		return Servos.calibratedServoSource(rawServoSource(), calibrator(DEFAULT_CALIBRATOR_NAME));
+		return Servos.calibratedServoSource(rawServoSource(), numberedChannelCalibrator(DEFAULT_CALIBRATOR_NAME));
 	}
 
 	private static ServoSource<Integer> rawServoSource() {

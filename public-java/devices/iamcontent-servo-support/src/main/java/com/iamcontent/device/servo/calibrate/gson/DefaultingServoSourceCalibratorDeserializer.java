@@ -18,7 +18,7 @@
 package com.iamcontent.device.servo.calibrate.gson;
 
 import static com.iamcontent.core.gson.GsonUtils.getArrayMember;
-import static com.iamcontent.core.gson.GsonUtils.getMemberAsInt;
+import static com.iamcontent.core.gson.GsonUtils.getMember;
 import static com.iamcontent.core.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -37,42 +36,39 @@ import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 
 /**
- * A Gson {@link JsonDeserializer} for {@link DefaultingServoSourceCalibrator} objects.
+ * An abstract Gson {@link JsonDeserializer} for {@link DefaultingServoSourceCalibrator} objects.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public class DefaultingServoSourceCalibratorDeserializer implements JsonDeserializer<DefaultingServoSourceCalibrator> {
-
-	private static final DefaultingServoSourceCalibratorDeserializer INSTANCE = new DefaultingServoSourceCalibratorDeserializer();
+public abstract class DefaultingServoSourceCalibratorDeserializer<C> implements JsonDeserializer<DefaultingServoSourceCalibrator<C>> {
 
 	@Override
-	public DefaultingServoSourceCalibrator deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+	public DefaultingServoSourceCalibrator<C> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		final ServoCalibrator defaultCalibrator = getMemberAsObject(json, "defaultCalibrator", context, ProportionalServoCalibrator.class);
-		final Map<Object, ServoCalibrator> perServoCalibrators = asMap(getArrayMember(json, "perServoCalibrators"), context);
-		return new DefaultingServoSourceCalibrator(defaultCalibrator, perServoCalibrators);
+		final Map<C, ServoCalibrator> perServoCalibrators = asMap(getArrayMember(json, "perServoCalibrators"), context);
+		return new DefaultingServoSourceCalibrator<C>(defaultCalibrator, perServoCalibrators);
 	}
 
-	private Map<Object, ServoCalibrator> asMap(JsonArray jsonArray, JsonDeserializationContext context) {
+	private Map<C, ServoCalibrator> asMap(JsonArray jsonArray, JsonDeserializationContext context) {
 		if (jsonArray==null) 
 			return Collections.emptyMap();
 		
-		final Map<Object, ServoCalibrator> result = new HashMap<Object, ServoCalibrator>(jsonArray.size());
+		final Map<C, ServoCalibrator> result = new HashMap<C, ServoCalibrator>(jsonArray.size());
 		for (JsonElement e : jsonArray)
 			addCalibrator(result, e, context);
 		return result;
 	}
 
-	private void addCalibrator(Map<Object, ServoCalibrator> result, JsonElement json, JsonDeserializationContext context) {
-		final int channel = getMemberAsInt(json, "channel");
+	private void addCalibrator(Map<C, ServoCalibrator> result, JsonElement json, JsonDeserializationContext context) {
+		final JsonElement member = getMember(json, "channel");
+		final C channel = asChannel(member);
 		final ServoCalibrator calibrator = getMemberAsObject(json, "calibrator", context, ProportionalServoCalibrator.class);
 		result.put(channel, calibrator);
 	}
 
-	public static GsonBuilder register(GsonBuilder builder) {
-		builder.registerTypeAdapter(DefaultingServoSourceCalibrator.class, INSTANCE);
-		return builder;
-	}
-	
-	public static GsonBuilder customGsonBuilder() {
-		return register(ProportionalServoCalibratorDeserializer.customGsonBuilder());
-	}
+	/**
+	 * Extracts a channel identifier from the given Json element.
+	 */
+	protected abstract C asChannel(JsonElement e);
 }

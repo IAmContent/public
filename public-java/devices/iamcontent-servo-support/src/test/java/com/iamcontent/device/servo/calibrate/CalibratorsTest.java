@@ -19,8 +19,8 @@ package com.iamcontent.device.servo.calibrate;
 
 import static com.iamcontent.device.servo.calibrate.Calibrators.CALIBRATION_PROPERTY_KEY;
 import static com.iamcontent.device.servo.calibrate.Calibrators.DEFAULT_CALIBRATION_NAME;
-import static com.iamcontent.device.servo.calibrate.Calibrators.calibrator;
-import static com.iamcontent.device.servo.calibrate.Calibrators.defaultCalibrator;
+import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
+import static com.iamcontent.device.servo.calibrate.Calibrators.defaultNumberedChannelCalibrator;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.PER_SERVO_EXAMPLE_CALIBRATION_NAME;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkDefaultCalibrator;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkPerServoExampleCalibrator;
@@ -31,17 +31,17 @@ public class CalibratorsTest {
 
 	@Test
 	public void testDefaultCalibrator() {
-		checkDefaultCalibrator(defaultCalibrator());
+		checkDefaultCalibrator(defaultNumberedChannelCalibrator());
 		
 		System.setProperty(CALIBRATION_PROPERTY_KEY, PER_SERVO_EXAMPLE_CALIBRATION_NAME);
-		checkPerServoExampleCalibrator(defaultCalibrator());
+		checkPerServoExampleCalibrator(defaultNumberedChannelCalibrator());
 		
 		System.setProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
-		checkDefaultCalibrator(defaultCalibrator());
+		checkDefaultCalibrator(defaultNumberedChannelCalibrator());
 	}
 
 	@Test
 	public void testCalibrator() {
-		checkPerServoExampleCalibrator(calibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME));
+		checkPerServoExampleCalibrator(numberedChannelCalibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME));
 	}
 }

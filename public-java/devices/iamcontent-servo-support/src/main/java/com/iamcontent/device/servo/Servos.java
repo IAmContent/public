@@ -44,7 +44,7 @@ public final class Servos {
 	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given {@link ServoSourceCalibrator}. 
 	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
-	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator calibrator) {
+	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator<C> calibrator) {
 		return new ServoSource<C>() {
 			@Override
 			public Servo<C> getServo(C channel) {

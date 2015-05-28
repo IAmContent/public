@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.calibrate.gson.NumberedServoSourceCalibratorDeserializer.customGsonBuilder;
 import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializerTest.sourceRange;
 import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializerTest.targetRange;
 import static org.junit.Assert.assertEquals;
@@ -53,8 +53,9 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDeserialize() {
-		final ServoSourceCalibrator actual = gson.fromJson(JSON_VALUES, DefaultingServoSourceCalibrator.class);
+		final ServoSourceCalibrator<Integer> actual = gson.fromJson(JSON_VALUES, DefaultingServoSourceCalibrator.class);
 		checkDefaultCalibrator(actual, 0);
 		checkDefaultCalibrator(actual, 1);
 		checkCalibrator(actual, 2, 0.0, 1.0, 3.3, 4.4);
@@ -65,18 +66,19 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDeserialize_defaultValueOnly() {
-		final ServoSourceCalibrator actual = gson.fromJson(JSON_DEFAULT_VALUE_ONLY, DefaultingServoSourceCalibrator.class);
+		final ServoSourceCalibrator<Integer> actual = gson.fromJson(JSON_DEFAULT_VALUE_ONLY, DefaultingServoSourceCalibrator.class);
 		for (int c=0; c<6; c++)
 			checkDefaultCalibrator(actual, c);
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	private static void checkDefaultCalibrator(ServoSourceCalibrator actual, Object channel) {
+	private static void checkDefaultCalibrator(ServoSourceCalibrator<Integer> actual, int channel) {
 		checkCalibrator(actual, channel, 0.0, 1.0, 1.1, 2.2);
 	}
 
-	public static <C> void checkCalibrator(ServoSourceCalibrator actual, Object channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
+	public static <C> void checkCalibrator(ServoSourceCalibrator<Integer> actual, int channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
 		final DoubleRange source = sourceRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final DoubleRange target = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final String message = "Channel " + channel;

@@ -27,12 +27,12 @@ public class Calibrators {
 	public static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
 	public static final String DEFAULT_CALIBRATION_NAME = "default";
 	
-	public static ServoSourceCalibrator defaultCalibrator() {
-		return calibrator(defaultCalibrationName());
+	public static ServoSourceCalibrator<Integer> defaultNumberedChannelCalibrator() {
+		return numberedChannelCalibrator(defaultCalibrationName());
 	}
 
-	public static ServoSourceCalibrator calibrator(String calibratorName) {
-		return JsonBasedCalibratorReader.calibrator(calibratorName);
+	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
+		return JsonBasedCalibratorReader.numberedChannelCalibrator(calibratorName);
 	}
 	
 	private static String defaultCalibrationName() {

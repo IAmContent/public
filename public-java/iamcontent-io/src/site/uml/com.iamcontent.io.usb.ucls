@@ -4,7 +4,7 @@
   <interface id="1" language="java" name="com.iamcontent.io.usb.EasyUsbDevice" project="iamcontent-io" 
     file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/EasyUsbDevice.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="626" y="130"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -12,8 +12,8 @@
   </interface>  
   <class id="2" language="java" name="com.iamcontent.io.usb.Usb" project="iamcontent-io" 
     file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/Usb.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="228" y="122"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="233" y="130"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -22,8 +22,8 @@
   <class id="3" language="java" name="com.iamcontent.io.usb.UsbRuntimeException" project="iamcontent-io" 
     file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/UsbRuntimeException.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="392" y="340"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="392" y="337"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -32,7 +32,7 @@
   <class id="4" language="java" name="com.iamcontent.io.usb.EasedUsbDevice" project="iamcontent-io" 
     file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/EasedUsbDevice.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="624" y="335"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
@@ -42,17 +42,17 @@
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="3"/>  
   </dependency>  
-  <realization id="6">    
+  <dependency id="6">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <realization id="7">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </realization>  
-  <dependency id="7">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
   <dependency id="8">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
