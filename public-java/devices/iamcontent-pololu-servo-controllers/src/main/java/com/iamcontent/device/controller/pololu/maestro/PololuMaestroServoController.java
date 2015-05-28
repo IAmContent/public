@@ -23,7 +23,7 @@ import com.iamcontent.device.servo.raw.ServoController;
  * Wraps a {@link PololuMaestroServoCard}, presenting it as a {@link ServoController}.
  * @author Greg Elderfield
  */
-public class PololuMaestroServoController implements ServoController {
+public class PololuMaestroServoController implements ServoController<Integer> {
 
 	private final PololuMaestroServoCard card;
 	
@@ -36,22 +36,26 @@ public class PololuMaestroServoController implements ServoController {
 	}
 
 	@Override
-	public void setPosition(int channel, double value) {
-		card.setRawPosition((short)channel, (short)value);
+	public void setPosition(Integer channel, double value) {
+		card.setRawPosition(asShort(channel), (short)value);
+	}
+
+	@Override
+	public double getPosition(Integer channel) {
+		return card.getRawPosition(asShort(channel));
+	}
+
+	@Override
+	public void setSpeed(Integer channel, double speed) {
+		card.setRawSpeed(asShort(channel), (short)speed);
+	}
+
+	@Override
+	public void setAcceleration(Integer channel, double acceleration) {
+		card.setRawAcceleration(asShort(channel), (short)acceleration);
 	}
 	
-	@Override
-	public double getPosition(int channel) {
-		return card.getRawPosition((short)channel);
-	}
-
-	@Override
-	public void setSpeed(int channel, double speed) {
-		card.setRawSpeed((short)channel, (short)speed);
-	}
-
-	@Override
-	public void setAcceleration(int channel, double acceleration) {
-		card.setRawAcceleration((short)channel, (short)acceleration);
+	private static short asShort(Integer i) {
+		return (short) i.intValue();
 	}
 }

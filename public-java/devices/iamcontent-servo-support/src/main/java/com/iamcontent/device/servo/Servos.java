@@ -31,11 +31,11 @@ public final class Servos {
 	/**
 	 * @return A {@link ServoSource} of {@link RawServo}s for the given {@link ServoController}.
 	 */
-	public static ServoSource rawServoSource(final ServoController controller) {
-		return new ServoSource() {
+	public static <C> ServoSource<C> rawServoSource(final ServoController<C> controller) {
+		return new ServoSource<C>() {
 			@Override
-			public Servo getServo(int channel) {
-				return new RawServo(controller, channel);
+			public Servo<C> getServo(C channel) {
+				return new RawServo<C>(controller, channel);
 			}
 		};
 	}
@@ -44,13 +44,13 @@ public final class Servos {
 	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given {@link ServoSourceCalibrator}. 
 	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
-	public static ServoSource calibratedServoSource(final ServoSource delegate, final ServoSourceCalibrator calibrator) {
-		return new ServoSource() {
+	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator calibrator) {
+		return new ServoSource<C>() {
 			@Override
-			public Servo getServo(int channel) {
-				final Servo delegateServo = delegate.getServo(channel);
+			public Servo<C> getServo(C channel) {
+				final Servo<C> delegateServo = delegate.getServo(channel);
 				final ServoCalibrator servoCalibrator = calibrator.getServoCalibrator(channel);
-				return new CalibratedServo(delegateServo, servoCalibrator);
+				return new CalibratedServo<C>(delegateServo, servoCalibrator);
 			}
 		};
 	}

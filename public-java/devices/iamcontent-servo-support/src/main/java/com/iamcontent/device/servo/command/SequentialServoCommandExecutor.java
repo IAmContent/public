@@ -24,44 +24,46 @@ import com.iamcontent.device.servo.ServoSource;
 /**
  * A {@link ServoCommandExecutor} that executes {@link ServoCommand}s sequentially.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public class SequentialServoCommandExecutor implements ServoCommandExecutor {
+public class SequentialServoCommandExecutor<C> implements ServoCommandExecutor<C> {
 	
-	final ServoSource servoSource;
+	final ServoSource<C> servoSource;
 
-	public static SequentialServoCommandExecutor executor(ServoSource servoSource) {
-		return new SequentialServoCommandExecutor(servoSource);
+	public static <C> SequentialServoCommandExecutor<C> executor(ServoSource<C> servoSource) {
+		return new SequentialServoCommandExecutor<C>(servoSource);
 	}
 
-	public SequentialServoCommandExecutor(ServoSource servoSource) {
+	public SequentialServoCommandExecutor(ServoSource<C> servoSource) {
 		this.servoSource = servoSource;
 	}
 	
 	@Override
-	public void execute(List<? extends ServoCommand> commands) {
-		for (ServoCommand c : commands)
+	public void execute(List<? extends ServoCommand<? extends C>> commands) {
+		for (ServoCommand<? extends C> c : commands)
 			execute(c);
 	}
 
 	@Override
-	public void execute(ServoCommand command) {
-		final int channel = command.getChannel();
+	public void execute(ServoCommand<? extends C> command) {
+		final C channel = command.getChannel();
 		setAcceleration(channel, command.getAcceleration());
 		setSpeed(channel, command.getSpeed());
 		setPosition(channel, command.getPosition());
 	}
 
-	private void setAcceleration(int channel, Double acceleration) {
+	private void setAcceleration(C channel, Double acceleration) {
 		if (acceleration!=null)
 			servoSource.getServo(channel).setAcceleration(acceleration);
 	}
 
-	private void setSpeed(int channel, Double speed) {
+	private void setSpeed(C channel, Double speed) {
 		if (speed!=null)
 			servoSource.getServo(channel).setSpeed(speed);
 	}
 
-	private void setPosition(int channel, Double position) {
+	private void setPosition(C channel, Double position) {
 		if (position!=null)
 			servoSource.getServo(channel).setPosition(position);
 	}

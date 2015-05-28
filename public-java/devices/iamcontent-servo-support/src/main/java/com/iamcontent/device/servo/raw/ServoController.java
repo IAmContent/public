@@ -20,10 +20,12 @@ package com.iamcontent.device.servo.raw;
 /**
  * Defines a Servo controller that accepts 'raw' (i.e. non-normalized) values.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public interface ServoController {
-	void setPosition(int channel, double value);
-	double getPosition(int channel);
-	void setSpeed(int channel, double speed);
-	void setAcceleration(int channel, double acceleration);
+public interface ServoController<C> {
+	void setPosition(C channel, double value);
+	double getPosition(C channel);
+	void setSpeed(C channel, double speed);
+	void setAcceleration(C channel, double acceleration);
 }

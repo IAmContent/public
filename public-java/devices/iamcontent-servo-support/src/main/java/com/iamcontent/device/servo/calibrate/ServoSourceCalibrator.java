@@ -27,5 +27,5 @@ public interface ServoSourceCalibrator {
 	/**
 	 * @return The {@link ServoCalibrator} for the given channel.
 	 */
-	ServoCalibrator getServoCalibrator(int channel);
+	ServoCalibrator getServoCalibrator(Object channel);
 }

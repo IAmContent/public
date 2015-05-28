@@ -19,8 +19,6 @@ package com.iamcontent.device.servo.calibrate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,27 +28,17 @@ import java.util.Map;
 public class DefaultingServoSourceCalibrator implements ServoSourceCalibrator {
 
 	private final ServoCalibrator defaultCalibrator;
-	private final Map<Integer, ServoCalibrator> perServoCalibrators;
+	private final Map<Object, ServoCalibrator> perServoCalibrators;
 	
-	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator, Map<Integer, ServoCalibrator> perServoCalibrators) {
+	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator, Map<Object, ServoCalibrator> perServoCalibrators) {
 		checkNotNull(defaultCalibrator, "The default calibrator cannot be null.");
 		this.defaultCalibrator = defaultCalibrator;
 		this.perServoCalibrators = perServoCalibrators;
 	}
-	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator, ServoCalibrator... perServoCalibrators) {
-		this(defaultCalibrator, asMap(perServoCalibrators));
-	}
 	
 	@Override
-	public ServoCalibrator getServoCalibrator(int channel) {
+	public ServoCalibrator getServoCalibrator(Object channel) {
 		final ServoCalibrator c = perServoCalibrators.get(channel);
 		return c!=null ? c : defaultCalibrator;
-	}
-
-	private static Map<Integer, ServoCalibrator> asMap(ServoCalibrator[] calibrators) {
-		final Map<Integer, ServoCalibrator> map = new HashMap<Integer, ServoCalibrator>(calibrators.length);
-		for (int i=0; i<calibrators.length; i++)
-			map.put(i, calibrators[i]);
-		return Collections.unmodifiableMap(map);
 	}
 }

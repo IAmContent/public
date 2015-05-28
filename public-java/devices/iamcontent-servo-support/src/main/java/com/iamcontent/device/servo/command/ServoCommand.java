@@ -23,12 +23,14 @@ import com.iamcontent.device.servo.ServoSource;
 /**
  * Represents a single command that can be performed by a {@link ServoSource} on a {@link Servo}. 
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public interface ServoCommand {
+public interface ServoCommand<C> {
 	/**
 	 * @return The channel number of the {@link Servo}.
 	 */
-	int getChannel();
+	C getChannel();
 	
 	/**
 	 * @return The relative position for the {@link Servo}, between 0.0 and 1.0, or null if the position is not changed by this command

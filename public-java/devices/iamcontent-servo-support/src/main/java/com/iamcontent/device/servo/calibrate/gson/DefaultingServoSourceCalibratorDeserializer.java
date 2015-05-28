@@ -47,21 +47,21 @@ public class DefaultingServoSourceCalibratorDeserializer implements JsonDeserial
 	@Override
 	public DefaultingServoSourceCalibrator deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		final ServoCalibrator defaultCalibrator = getMemberAsObject(json, "defaultCalibrator", context, ProportionalServoCalibrator.class);
-		final Map<Integer, ServoCalibrator> perServoCalibrators = asMap(getArrayMember(json, "perServoCalibrators"), context);
+		final Map<Object, ServoCalibrator> perServoCalibrators = asMap(getArrayMember(json, "perServoCalibrators"), context);
 		return new DefaultingServoSourceCalibrator(defaultCalibrator, perServoCalibrators);
 	}
 
-	private Map<Integer, ServoCalibrator> asMap(JsonArray jsonArray, JsonDeserializationContext context) {
+	private Map<Object, ServoCalibrator> asMap(JsonArray jsonArray, JsonDeserializationContext context) {
 		if (jsonArray==null) 
 			return Collections.emptyMap();
 		
-		final Map<Integer, ServoCalibrator> result = new HashMap<Integer, ServoCalibrator>(jsonArray.size());
+		final Map<Object, ServoCalibrator> result = new HashMap<Object, ServoCalibrator>(jsonArray.size());
 		for (JsonElement e : jsonArray)
 			addCalibrator(result, e, context);
 		return result;
 	}
 
-	private void addCalibrator(Map<Integer, ServoCalibrator> result, JsonElement json, JsonDeserializationContext context) {
+	private void addCalibrator(Map<Object, ServoCalibrator> result, JsonElement json, JsonDeserializationContext context) {
 		final int channel = getMemberAsInt(json, "channel");
 		final ServoCalibrator calibrator = getMemberAsObject(json, "calibrator", context, ProportionalServoCalibrator.class);
 		result.put(channel, calibrator);

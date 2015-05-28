@@ -72,11 +72,11 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 		checkDefaultCalibrator(actual, 321);
 	}
 
-	private void checkDefaultCalibrator(ServoSourceCalibrator actual, int channel) {
+	private static void checkDefaultCalibrator(ServoSourceCalibrator actual, Object channel) {
 		checkCalibrator(actual, channel, 0.0, 1.0, 1.1, 2.2);
 	}
 
-	public static void checkCalibrator(ServoSourceCalibrator actual, int channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
+	public static <C> void checkCalibrator(ServoSourceCalibrator actual, Object channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
 		final DoubleRange source = sourceRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final DoubleRange target = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
 		final String message = "Channel " + channel;

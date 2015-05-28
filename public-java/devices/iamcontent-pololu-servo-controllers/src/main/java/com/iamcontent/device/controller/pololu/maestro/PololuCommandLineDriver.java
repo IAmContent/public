@@ -38,8 +38,8 @@ import com.iamcontent.io.cli.CommandLineDriver;
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
 	private static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro";
-	private static final ServoSource SERVO_SOURCE = calibratedServoSource();
-	private static final ServoCommandExecutor executor = executor(SERVO_SOURCE);
+	private static final ServoSource<Integer> SERVO_SOURCE = calibratedServoSource();
+	private static final ServoCommandExecutor<Integer> executor = executor(SERVO_SOURCE);
 
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
@@ -48,23 +48,23 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 
 	@Override
 	public void run() {
-		for (ServoCommand c : commands())
+		for (ServoCommand<Integer> c : commands())
 			execute(c);
 	}
 	
-	private void execute(ServoCommand c) {
+	private void execute(ServoCommand<Integer> c) {
 		if (c!=null)
 			executor.execute(c);
 	}
 
-	private Iterable<ServoCommand> commands() {
+	private Iterable<ServoCommand<Integer>> commands() {
 		return Iterables.transform(commandStrings(), parsingFunction);
 	}
 
 	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction() {
 		private static final String QUERY_PREFIX = "?";
 		@Override
-		public ServoCommand apply(String command) {
+		public ServoCommand<Integer> apply(String command) {
 			try {
 				if (isQuery(command)) {
 					executeQuery(command);
@@ -102,15 +102,15 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 		}
 	};
 
-	private static ServoSource calibratedServoSource() {
+	private static ServoSource<Integer> calibratedServoSource() {
 		return Servos.calibratedServoSource(rawServoSource(), calibrator(DEFAULT_CALIBRATOR_NAME));
 	}
 
-	private static ServoSource rawServoSource() {
+	private static ServoSource<Integer> rawServoSource() {
 		return Servos.rawServoSource(defaultServoController());
 	}
 
-	private static ServoController defaultServoController() {
+	private static ServoController<Integer> defaultServoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
 }

@@ -22,15 +22,17 @@ import java.io.Serializable;
 /**
  * An immutable {@link ServoCommand}.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public class ImmutableServoCommand implements ServoCommand, Serializable {
+public class ImmutableServoCommand<C> implements ServoCommand<C>, Serializable {
 
-	private final int channel;
+	private final C channel;
 	private final Double position;
 	private final Double speed;
 	private final Double acceleration;
 	
-	public ImmutableServoCommand(int channel, Double position, Double speed, Double acceleration) {
+	public ImmutableServoCommand(C channel, Double position, Double speed, Double acceleration) {
 		this.channel = channel;
 		this.position = position;
 		this.speed = speed;
@@ -38,7 +40,7 @@ public class ImmutableServoCommand implements ServoCommand, Serializable {
 	}
 
 	@Override
-	public int getChannel() {
+	public C getChannel() {
 		return channel;
 	}
 

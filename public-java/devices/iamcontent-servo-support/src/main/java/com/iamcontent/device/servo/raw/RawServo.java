@@ -23,19 +23,21 @@ import com.iamcontent.device.servo.Servo;
  * A {@link Servo} that directly delegates its operations to a {@link ServoController} without altering the
  * arguments of the operations.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public class RawServo implements Servo {
+public class RawServo<C> implements Servo<C> {
 	
-	private final ServoController controller;
-	private final int channel;
+	private final ServoController<C> controller;
+	private final C channel;
 	
-	public RawServo(ServoController controller, int channel) {
+	public RawServo(ServoController<C> controller, C channel) {
 		this.controller = controller;
 		this.channel = channel;
 	}
 
 	@Override
-	public int getChannel() {
+	public C getChannel() {
 		return channel;
 	}
 

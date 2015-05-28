@@ -26,16 +26,18 @@ import com.iamcontent.device.servo.Servo;
  * A {@link Servo} that alters its parameter values according to its {@link ServoCalibrator} and invokes a delegate {@link Servo}
  * with the altered parameter values.
  * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a servo. 
  */
-public class CalibratedServo implements Servo {
+public class CalibratedServo<C> implements Servo<C> {
 	
-	private final Servo delegateServo;
+	private final Servo<C> delegateServo;
 	private final Function<Double, Double> toDelegatePositionConverter;
 	private final Function<Double, Double> fromDelegatePositionConverter;
 	private final Function<Double, Double> toDelegateSpeedConverter;
 	private final Function<Double, Double> toDelegateAccelerationConverter;
 	
-	public CalibratedServo(Servo delegateServo, ServoCalibrator calibrator) {
+	public CalibratedServo(Servo<C> delegateServo, ServoCalibrator calibrator) {
 		checkArguments(delegateServo, calibrator);
 		this.delegateServo = delegateServo;
 		this.toDelegatePositionConverter = calibrator.getPositionConverter();
@@ -45,7 +47,7 @@ public class CalibratedServo implements Servo {
 	}
 
 	@Override
-	public int getChannel() {
+	public C getChannel() {
 		return delegateServo.getChannel();
 	}
 	
@@ -87,7 +89,7 @@ public class CalibratedServo implements Servo {
 		return toDelegateAccelerationConverter.apply(acceleration);
 	}
 
-	private static void checkArguments(Servo delegateServo, ServoCalibrator calibrator) {
+	private static void checkArguments(Servo<?> delegateServo, ServoCalibrator calibrator) {
 		checkNotNull(delegateServo, "Delegate servo cannot be null.");
 		checkNotNull(calibrator, "Calibrator cannot be null.");
 		checkNotNull(calibrator.getPositionConverter(), "PositionConverter of calibrator cannot be null.");

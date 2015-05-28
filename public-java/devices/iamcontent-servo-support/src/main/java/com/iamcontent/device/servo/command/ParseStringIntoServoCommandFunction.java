@@ -23,13 +23,13 @@ import com.iamcontent.io.cli.UnknownCommandException;
 /**
  * A function to parse a String command into a {@link ServoCommand}.
  */
-public class ParseStringIntoServoCommandFunction implements Function<String, ServoCommand> {
+public class ParseStringIntoServoCommandFunction implements Function<String, ServoCommand<Integer>> {
 
 	@Override
-	public ServoCommand apply(String command) {
+	public ServoCommand<Integer> apply(String command) {
 		try {
 			final Args args = new Args(command);
-			return new ImmutableServoCommand(args.channel, args.position, args.speed, args.acceleration);
+			return new ImmutableServoCommand<Integer>(args.channel, args.position, args.speed, args.acceleration);
 		} catch (Exception e) {
 			throw new UnknownCommandException(command);
 		}
