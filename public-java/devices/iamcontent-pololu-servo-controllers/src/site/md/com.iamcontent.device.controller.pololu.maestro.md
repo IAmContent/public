@@ -21,6 +21,11 @@ The _PololuCommandLineDriver_ provides an example usage and can be run from the 
 
 Note that the _PololuCommandLineDriver_ uses a [ServoSourceCalibrator](../../../../iamcontent-servo-support/src/site/md/com.iamcontent.device.servo.calibrate.md) so that the input position, speed and acceleration values are all in the range 0.0..1.0. The configuration file for this is at [src/main/resources/servo/calibration/pololu-maestro.json](../../main/resources/servo/calibration/pololu-maestro.json).
 
+
+Examine [RawPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/RawPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a [raw ServoSource](../../../../iamcontent-servo-support/src/site/md/com.iamcontent.device.servo.raw.md).
+
+Examine [CalibratedPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/CalibratedPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a [calibrated ServoSource](../../../../iamcontent-servo-support/src/site/md/com.iamcontent.device.servo.calibrate.md).
+
 ---
 
 This software comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it

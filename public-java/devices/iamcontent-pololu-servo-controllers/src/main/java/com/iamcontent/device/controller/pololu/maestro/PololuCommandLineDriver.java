@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
+import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.DEFAULT_CALIBRATOR_NAME;
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
 import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
@@ -37,7 +38,6 @@ import com.iamcontent.io.cli.CommandLineDriver;
  */
 public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
 
-	private static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro";
 	private static final ServoSource<Integer> SERVO_SOURCE = calibratedServoSource();
 	private static final ServoCommandExecutor<Integer> executor = executor(SERVO_SOURCE);
 

@@ -15,86 +15,68 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.controller.pololu.maestro.usb;
+package com.iamcontent.device.controller.pololu.maestro;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.logging.Logger;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.iamcontent.core.BooleanCondition;
 import com.iamcontent.core.ThreadUtils;
-import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
-import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 
 /**
- * A simple integration test, which doubles as an example of how to use the maestro.usb package.
+ * A simple abstract integration test for Pololu Maestro servo cards.
  * @author Greg Elderfield
  */
-public class SimpleUsbPololuMaestroServoCardIT {
+public abstract class AbstractPololuMaestroServoCardIT {
 
-	private static final Logger LOGGER = Logger.getLogger(SimpleUsbPololuMaestroServoCardIT.class.getName());
-	
-	private static final short CHANNEL = 0;
-	
-	private PololuMaestroServoCard card;
-	
-	@Before
-	public void setUp() {
-		card = UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard();
-		resetDynamics();
-	}
+	private static final Logger LOGGER = Logger.getLogger(AbstractPololuMaestroServoCardIT.class.getName());
+	private static final int CHANNEL = 0;
 
-	@Test
-	public void testGetType() {
-		final MaestroCardType cardType = getType();
-		assertEquals(MaestroCardType.MICRO_MAESTRO_6, cardType);
+	private final double acceleration;
+	private final double speed;
+	private final double position;
+	private final double midPosition;
+
+	public AbstractPololuMaestroServoCardIT(double acceleration, double speed, double position, double midPosition) {
+		this.acceleration = acceleration;
+		this.speed = speed;
+		this.position = position;
+		this.midPosition = midPosition;
 	}
 
 	@Test
 	public void testRawDynamics() throws Exception {
-		final short acceleration = 120;
-		final short speed = 50;
-		final short position = 7000;
+		resetDynamics();
+		
 		setAcceleration(CHANNEL, acceleration);
 		setSpeed(CHANNEL, speed);
 		setPosition(CHANNEL, position);
 		
 		waitForServoPosition(CHANNEL, position);
 		
-		final short measuredPosition = card.getRawPosition(CHANNEL);
+		final double measuredPosition = getPosition(CHANNEL);
 		
-		assertEquals(position, measuredPosition);
+		assertEquals(position, measuredPosition, 0.0001);
 	}
 
-	private void setAcceleration(short channel, double acceleration) {
-		card.setRawAcceleration(channel, (short)acceleration);
-	}
+	protected abstract void setAcceleration(int channel, double acceleration);
+	protected abstract void setSpeed(int channel, double speed);
+	protected abstract void setPosition(int channel, double position);
+	protected abstract double getPosition(int channel);
 
-	private void setSpeed(short channel, double speed) {
-		card.setRawSpeed(channel, (short)speed);
-	}
-
-	private void setPosition(short channel, double position) {
-		card.setRawPosition(channel, (short)position);
-	}
-
-	private MaestroCardType getType() {
-		return card.getType();
-	}
-
-	private void waitForServoPosition(final short channel, final short position) {
+	private void waitForServoPosition(final int channel, final double position) {
 		ThreadUtils.sleepUntil(servoIsAtPosition(channel, position), 5000, 20);
 		System.out.println("-----");
 	}
 
-	private BooleanCondition servoIsAtPosition(final short channel, final short position) {
+	private BooleanCondition servoIsAtPosition(final int channel, final double position) {
 		return new BooleanCondition() {
 			@Override
 			public boolean isTrue() {
-				final short pos = card.getRawPosition(channel);
+				final double pos = getPosition(channel);
 				LOGGER.info("Servo " + channel + " is at position " + pos + " waiting for position " + position);
 				return pos == position;
 			}
@@ -102,7 +84,6 @@ public class SimpleUsbPololuMaestroServoCardIT {
 	}
 
 	private void resetDynamics() {
-		final short midPosition = 6000;
 		setAcceleration(CHANNEL, (short) 0);
 		setSpeed(CHANNEL, (short) 0);
 		setPosition(CHANNEL, midPosition);

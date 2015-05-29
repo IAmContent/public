@@ -10,7 +10,7 @@ _AbstractUsbPololuMaestroServoCard_ uses Pololu's Native USB protocol to partial
 
 _UsbPololuMaestroServoCards_ provides factory methods for creating the correct concrete implementation for a given _UsbDevice_ (or, alternatively, for the first Pololu Maestro _UsbDevice_ that is found).
 
-Examine [SimpleUsbPololuMaestroServoCardIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/usb/SimpleUsbPololuMaestroServoCardIT.java) for a simple example of how to use this package.
+Examine [UsbPololuMaestroServoCardIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/usb/UsbPololuMaestroServoCardIT.java) for a simple example of how to use this package.
 
 ---
 
