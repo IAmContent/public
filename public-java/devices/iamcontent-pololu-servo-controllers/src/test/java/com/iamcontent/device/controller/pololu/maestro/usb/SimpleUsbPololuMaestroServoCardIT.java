@@ -19,10 +19,13 @@ package com.iamcontent.device.controller.pololu.maestro.usb;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.logging.Logger;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import com.iamcontent.core.Threads;
+import com.iamcontent.core.BooleanCondition;
+import com.iamcontent.core.ThreadUtils;
 import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 
@@ -32,6 +35,8 @@ import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
  */
 public class SimpleUsbPololuMaestroServoCardIT {
 
+	private static final Logger LOGGER = Logger.getLogger(SimpleUsbPololuMaestroServoCardIT.class.getName());
+	
 	private static final short CHANNEL = 0;
 	
 	private PololuMaestroServoCard card;
@@ -44,7 +49,7 @@ public class SimpleUsbPololuMaestroServoCardIT {
 
 	@Test
 	public void testGetType() {
-		final MaestroCardType cardType = card.getType();
+		final MaestroCardType cardType = getType();
 		assertEquals(MaestroCardType.MICRO_MAESTRO_6, cardType);
 	}
 
@@ -53,9 +58,9 @@ public class SimpleUsbPololuMaestroServoCardIT {
 		final short acceleration = 120;
 		final short speed = 50;
 		final short position = 7000;
-		card.setRawAcceleration(CHANNEL, acceleration);
-		card.setRawSpeed(CHANNEL, speed);
-		card.setRawPosition(CHANNEL, position);
+		setAcceleration(CHANNEL, acceleration);
+		setSpeed(CHANNEL, speed);
+		setPosition(CHANNEL, position);
 		
 		waitForServoPosition(CHANNEL, position);
 		
@@ -64,22 +69,43 @@ public class SimpleUsbPololuMaestroServoCardIT {
 		assertEquals(position, measuredPosition);
 	}
 
+	private void setAcceleration(short channel, double acceleration) {
+		card.setRawAcceleration(channel, (short)acceleration);
+	}
+
+	private void setSpeed(short channel, double speed) {
+		card.setRawSpeed(channel, (short)speed);
+	}
+
+	private void setPosition(short channel, double position) {
+		card.setRawPosition(channel, (short)position);
+	}
+
+	private MaestroCardType getType() {
+		return card.getType();
+	}
+
 	private void waitForServoPosition(final short channel, final short position) {
-		for (int i=0; i < 50; i++) {
-			final short pos = card.getRawPosition(channel);
-			System.out.println("Servo " + channel + " is at position " + pos);
-			if (pos==position)
-				break;
-			Threads.sleepQuietly(20);
-		}
+		ThreadUtils.sleepUntil(servoIsAtPosition(channel, position), 5000, 20);
 		System.out.println("-----");
+	}
+
+	private BooleanCondition servoIsAtPosition(final short channel, final short position) {
+		return new BooleanCondition() {
+			@Override
+			public boolean isTrue() {
+				final short pos = card.getRawPosition(channel);
+				LOGGER.info("Servo " + channel + " is at position " + pos + " waiting for position " + position);
+				return pos == position;
+			}
+		};
 	}
 
 	private void resetDynamics() {
 		final short midPosition = 6000;
-		card.setRawAcceleration(CHANNEL, (short) 0);
-		card.setRawSpeed(CHANNEL, (short) 0);
-		card.setRawPosition(CHANNEL, midPosition);
+		setAcceleration(CHANNEL, (short) 0);
+		setSpeed(CHANNEL, (short) 0);
+		setPosition(CHANNEL, midPosition);
 		waitForServoPosition(CHANNEL, midPosition);
 	}
 }

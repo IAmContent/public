@@ -18,25 +18,9 @@
 package com.iamcontent.core;
 
 /**
- * Helper functions for Thread usgae.
+ * Represents an abstract boolean condition.
  * @author Greg Elderfield
  */
-public class Threads {
-
-	/**
-	 * Invokes Thread.sleep(long), catching any {@link InterruptedException} that is thrown.
-	 * @param millis The length of time to sleep in milliseconds
-	 * @return true if Thread.sleep(long) terminated normally, false if an {@link InterruptedException} was thrown.
-	 */
-	public static boolean sleepQuietly(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			return false;
-		}
-		return true;
-	}
-	
-	private Threads() {
-	}
+public interface BooleanCondition {
+	boolean isTrue();
 }
