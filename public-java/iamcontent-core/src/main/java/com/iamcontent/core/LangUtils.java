@@ -15,14 +15,35 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robot.robonova1;
+package com.iamcontent.core;
 
-import com.iamcontent.device.servo.ServoSource;
+import java.lang.reflect.Type;
+import java.util.Map;
+
+import com.google.common.reflect.TypeParameter;
+import com.google.common.reflect.TypeToken;
 
 /**
- * Represents the Robonova 1.
+ * Helper functions for Java language usage.
  * @author Greg Elderfield
  */
-public interface Robonova1 {
-	ServoSource<ServoId> servos();
+public class LangUtils {
+
+	public static <K, V> Type mapType(Class<K> keyClass, Class<V> valueClass) {
+		return mapTypeToken(keyClass, valueClass).getType();
+	}
+
+	private static <K, V> TypeToken<Map<K, V>> mapTypeToken(Class<K> keyClass, Class<V> valueClass) {
+		return mapTypeToken(TypeToken.of(keyClass), TypeToken.of(valueClass));
+	}
+	
+	@SuppressWarnings("serial")
+	private static <K, V> TypeToken<Map<K, V>> mapTypeToken(TypeToken<K> keyType, TypeToken<V> valueType) {
+		return new TypeToken<Map<K, V>>() {}
+		.where(new TypeParameter<K>() {}, keyType)
+		.where(new TypeParameter<V>() {}, valueType);
+	}
+
+	private LangUtils() {
+	}
 }

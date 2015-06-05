@@ -15,14 +15,23 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robot.robonova1;
+package com.iamcontent.core;
 
-import com.iamcontent.device.servo.ServoSource;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Represents the Robonova 1.
- * @author Greg Elderfield
- */
-public interface Robonova1 {
-	ServoSource<ServoId> servos();
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+
+import org.junit.Test;
+
+public class LangUtilsTest {
+
+	@Test
+	public void testMapType() {
+		final Class<String> keyClass = String.class;
+		final Class<BigDecimal> valueClass = BigDecimal.class;
+		final Type mapType = LangUtils.mapType(keyClass, valueClass);
+		assertEquals("java.util.Map<java.lang.String, java.math.BigDecimal>",  mapType.toString());
+	}
+
 }

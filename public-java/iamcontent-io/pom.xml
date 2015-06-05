@@ -18,6 +18,11 @@
 	</licenses>
 	
 	<dependencies>
+        <dependency>
+            <groupId>com.iamcontent.public-java</groupId>
+            <artifactId>iamcontent-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.usb4java</groupId>
 			<artifactId>usb4java-javax</artifactId>

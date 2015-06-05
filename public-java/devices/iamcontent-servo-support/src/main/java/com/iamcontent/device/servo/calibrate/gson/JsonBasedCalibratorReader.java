@@ -19,51 +19,40 @@ package com.iamcontent.device.servo.calibrate.gson;
 
 import static com.iamcontent.core.gson.GsonUtils.JSON_FILE_EXTENSION;
 import static com.iamcontent.device.servo.calibrate.gson.NumberedServoSourceCalibratorDeserializer.customGsonBuilder;
-import static com.iamcontent.io.util.ResourceUtils.getStreamOrThrow;
-import static com.iamcontent.io.util.Readers.inputStreamReader;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 
 import com.google.gson.Gson;
 import com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.io.IORuntimeException;
+import com.iamcontent.io.util.AbstractResourceReader;
 
 /**
  * Creates {@link ServoSourceCalibrator} objects according to JSON file resources.
  * @author Greg Elderfield
  */
-public class JsonBasedCalibratorReader {
+public class JsonBasedCalibratorReader extends AbstractResourceReader<ServoSourceCalibrator<Integer>> {
 
 	private static final String CALIBRATION_FOLDER = "servo/calibration/";
 
-	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
-		try (final Reader r = readerFor(calibratorName) ) {
-			return numberedChannelCalibrator(r);
-		} catch (IOException e) {
-			throw new IORuntimeException(e);
-		}
+	public JsonBasedCalibratorReader(String calibratorName) {
+		super(CALIBRATION_FOLDER, calibratorName, JSON_FILE_EXTENSION);
 	}
 
+	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
+		return newInstance(calibratorName).read();
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
-	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(Reader r) {
+	protected ServoSourceCalibrator<Integer> readFrom(Reader r) {
 		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
 	}
 
-	private static Reader readerFor(String calibratorName) {
-		return inputStreamReader(streamFor(calibratorName));
+	private static JsonBasedCalibratorReader newInstance(String calibratorName) {
+		return new JsonBasedCalibratorReader(calibratorName);
 	}
-
-	private static InputStream streamFor(String calibratorName) {
-		return getStreamOrThrow(resourceName(calibratorName));
-	}
-
-	private static String resourceName(String calibratorName) {
-		return CALIBRATION_FOLDER + calibratorName + JSON_FILE_EXTENSION;
-	}
-
+	
 	private static Gson gson() {
 		return customGsonBuilder().create();
 	}
