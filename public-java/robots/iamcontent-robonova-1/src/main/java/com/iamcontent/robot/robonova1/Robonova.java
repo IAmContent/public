@@ -20,9 +20,9 @@ package com.iamcontent.robot.robonova1;
 import com.iamcontent.device.servo.ServoSource;
 
 /**
- * Represents the Robonova 1.
+ * Represents a Robonova biped robot.
  * @author Greg Elderfield
  */
-public interface Robonova1 {
+public interface Robonova {
 	ServoSource<ServoId> servos();
 }

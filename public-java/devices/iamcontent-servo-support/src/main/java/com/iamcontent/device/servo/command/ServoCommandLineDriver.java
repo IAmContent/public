@@ -32,11 +32,13 @@ import com.iamcontent.io.cli.CommandLineDriver;
  */
 public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implements Runnable {
 
-	private final ServoSource<C> servoSource = servoSource();
-	private final ServoCommandExecutor<C> executor = executor(servoSource);
+	private ServoSource<C> servoSource;
+	private ServoCommandExecutor<C> executor;
 
 	@Override
 	public void run() {
+		servoSource = servoSource();
+		executor = executor(servoSource);
 		for (ServoCommand<C> c : commands())
 			execute(c);
 	}
