@@ -21,25 +21,17 @@ import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServo
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
 import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
-import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
 
-import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.Servos;
-import com.iamcontent.device.servo.command.ParseStringIntoServoCommandFunction;
-import com.iamcontent.device.servo.command.ServoCommand;
-import com.iamcontent.device.servo.command.ServoCommandExecutor;
+import com.iamcontent.device.servo.command.ServoCommandLineDriver;
 import com.iamcontent.device.servo.raw.ServoController;
-import com.iamcontent.io.cli.CommandLineDriver;
 
 /**
- * An example driver for the {@link PololuMaestroServoController}. Useful for manual testing.
+ * A {@link ServoCommandLineDriver} for the {@link PololuMaestroServoController}. Useful for manual testing.
  * @author Greg Elderfield
  */
-public class PololuCommandLineDriver extends CommandLineDriver implements Runnable {
-
-	private static final ServoSource<Integer> SERVO_SOURCE = calibratedServoSource();
-	private static final ServoCommandExecutor<Integer> executor = executor(SERVO_SOURCE);
+public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
@@ -47,62 +39,7 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 	}
 
 	@Override
-	public void run() {
-		for (ServoCommand<Integer> c : commands())
-			execute(c);
-	}
-	
-	private void execute(ServoCommand<Integer> c) {
-		if (c!=null)
-			executor.execute(c);
-	}
-
-	private Iterable<ServoCommand<Integer>> commands() {
-		return Iterables.transform(commandStrings(), parsingFunction);
-	}
-
-	private final ParseStringIntoServoCommandFunction parsingFunction = new ParseStringIntoServoCommandFunction() {
-		private static final String QUERY_PREFIX = "?";
-		@Override
-		public ServoCommand<Integer> apply(String command) {
-			try {
-				if (isQuery(command)) {
-					executeQuery(command);
-					return null;
-				}
-				return super.apply(command);
-			} catch (Exception e) {
-				System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());
-				return null;
-			}
-		}
-
-		private void executeQuery(String command) {
-			displayPosition(channelString(command));
-		}
-
-		private String channelString(String command) {
-			return command.substring(QUERY_PREFIX.length()).trim();
-		}
-
-		private void displayPosition(String channelString) {
-			displayPosition(Integer.parseInt(channelString));
-		}
-
-		private void displayPosition(int channel) {
-			System.out.println("position(" + channel + ")=" + getPosition(channel));
-		}
-
-		private double getPosition(int channel) {
-			return SERVO_SOURCE.getServo(channel).getPosition();
-		}
-
-		private boolean isQuery(String command) {
-			return command.startsWith(QUERY_PREFIX);
-		}
-	};
-
-	private static ServoSource<Integer> calibratedServoSource() {
+	protected ServoSource<Integer> servoSource() {
 		return Servos.calibratedServoSource(rawServoSource(), numberedChannelCalibrator(DEFAULT_CALIBRATOR_NAME));
 	}
 
@@ -112,5 +49,10 @@ public class PololuCommandLineDriver extends CommandLineDriver implements Runnab
 
 	private static ServoController<Integer> defaultServoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
+	}
+
+	@Override
+	protected Integer parseChannel(String s) {
+		return new Integer(s);
 	}
 }

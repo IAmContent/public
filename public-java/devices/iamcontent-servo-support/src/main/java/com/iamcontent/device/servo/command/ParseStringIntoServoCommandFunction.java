@@ -18,32 +18,38 @@
 package com.iamcontent.device.servo.command;
 
 import com.google.common.base.Function;
+import com.iamcontent.device.servo.Servo;
 import com.iamcontent.io.cli.UnknownCommandException;
 
 /**
- * A function to parse a String command into a {@link ServoCommand}.
+ * An abstract function to parse a String command into a {@link ServoCommand}.
+ * @author Greg Elderfield
+ * 
+ * @param C The type used to identify the channel of a {@link Servo}. 
  */
-public class ParseStringIntoServoCommandFunction implements Function<String, ServoCommand<Integer>> {
+public abstract class ParseStringIntoServoCommandFunction<C> implements Function<String, ServoCommand<C>> {
 
 	@Override
-	public ServoCommand<Integer> apply(String command) {
+	public ServoCommand<C> apply(String command) {
 		try {
 			final Args args = new Args(command);
-			return new ImmutableServoCommand<Integer>(args.channel, args.position, args.speed, args.acceleration);
+			return new ImmutableServoCommand<C>(args.channel, args.position, args.speed, args.acceleration);
 		} catch (Exception e) {
 			throw new UnknownCommandException(command);
 		}
 	}
 
-	private static class Args {
+	protected abstract C parseChannel(String s);
+
+	private class Args {
 		private final String[] args;
-		final int channel;
+		final C channel;
 		final double position;
 		final Double speed;
 		final Double acceleration;
 		public Args(String command) {
 			args = command.split(" ");
-			channel = Integer.parseInt(args[0]);
+			channel = parseChannel(args[0]);
 			position = Double.parseDouble(args[1]);
 			speed = doubleIfPresent(2);
 			acceleration = doubleIfPresent(3);
