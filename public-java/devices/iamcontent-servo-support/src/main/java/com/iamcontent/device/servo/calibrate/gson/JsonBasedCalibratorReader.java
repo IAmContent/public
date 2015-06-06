@@ -33,7 +33,7 @@ import com.iamcontent.io.util.AbstractResourceReader;
  */
 public class JsonBasedCalibratorReader extends AbstractResourceReader<ServoSourceCalibrator<Integer>> {
 
-	private static final String CALIBRATION_FOLDER = "servo/calibration/";
+	private static final String CALIBRATION_FOLDER = "servo/";
 
 	public JsonBasedCalibratorReader(String calibratorName) {
 		super(CALIBRATION_FOLDER, calibratorName, JSON_FILE_EXTENSION);

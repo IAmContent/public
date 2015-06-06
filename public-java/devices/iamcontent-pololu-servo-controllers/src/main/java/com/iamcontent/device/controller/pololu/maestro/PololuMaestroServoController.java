@@ -25,7 +25,7 @@ import com.iamcontent.device.servo.raw.ServoController;
  */
 public class PololuMaestroServoController implements ServoController<Integer> {
 
-	public static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro";
+	public static final String DEFAULT_CALIBRATOR_NAME = "pololu-maestro-calibration";
 
 	private final PololuMaestroServoCard card;
 	

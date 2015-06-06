@@ -27,7 +27,7 @@ import com.iamcontent.io.IORuntimeException;
 
 public class JsonBasedCalibratorReaderTest {
 
-	public static final String PER_SERVO_EXAMPLE_CALIBRATION_NAME = "per-servo-example";
+	public static final String PER_SERVO_EXAMPLE_CALIBRATION_NAME = "per-servo-example-calibration";
 
 	@Test
 	public void testDefaultCalibrator() {
