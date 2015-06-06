@@ -17,11 +17,13 @@
  */
 package com.iamcontent.device.servo;
 
+import com.google.common.base.Function;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
+import com.iamcontent.device.servo.rechannel.ReChanneledServo;
 
 /**
  * Methods to facilitate {@link Servo} usage.
@@ -51,6 +53,21 @@ public final class Servos {
 				final Servo<C> delegateServo = delegate.getServo(channel);
 				final ServoCalibrator servoCalibrator = calibrator.getServoCalibrator(channel);
 				return new CalibratedServo<C>(delegateServo, servoCalibrator);
+			}
+		};
+	}
+	
+	/**
+	 * @return A {@link ServoSource} that creates {@link ReChanneledServo}s from a delegate {@link ServoSource}, selecting {@link Servo}s
+	 * from the latter according to the given channelTranslation function.
+	 */
+	public static <C, D> ServoSource<C> reChanneledServoSource(final ServoSource<D> delegate, final Function<C, D> channelTranslation) {
+		return new ServoSource<C>() {
+			@Override
+			public Servo<C> getServo(C channel) {
+				final D delegateChannel = channelTranslation.apply(channel);
+				final Servo<D> delegateServo = delegate.getServo(delegateChannel);
+				return new ReChanneledServo<C>(delegateServo, channel);
 			}
 		};
 	}
