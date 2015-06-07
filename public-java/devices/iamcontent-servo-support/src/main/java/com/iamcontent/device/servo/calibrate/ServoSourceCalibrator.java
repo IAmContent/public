@@ -23,7 +23,7 @@ import com.iamcontent.device.servo.ServoSource;
  * Calibrates a single {@link ServoSource}.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public interface ServoSourceCalibrator<C> {
 	/**

@@ -28,7 +28,7 @@ import com.iamcontent.io.cli.CommandLineDriver;
  * An abstract {@link CommandLineDriver} for the control of {@link Servo}s. Useful for manual testing.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a {@link Servo}. 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
 public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implements Runnable {
 

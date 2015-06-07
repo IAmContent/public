@@ -21,7 +21,7 @@ package com.iamcontent.device.servo;
  * Represents a source of {@link Servo}s.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public interface ServoSource<C> {
 	Servo<C> getServo(C channel);

@@ -36,9 +36,9 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 			+ "'defaultCalibrator':"
 			+ calibratorJson("1.1", "2.2")
 			+ ","
-			+ "'perServoCalibrators':["
+			+ "'perServoCalibrators':{"
 			+ channelAndCalibratorJson(2, "3.3", "4.4")
-			+ "]}";
+			+ "}}";
 
 	private static final String JSON_DEFAULT_VALUE_ONLY = "{"
 			+ "'defaultCalibrator':"
@@ -89,10 +89,7 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 	}
 
 	private static String channelAndCalibratorJson(int channel, String limit1, String limit2) {
-		return "{"
-				+ "'channel':" + channel + ","
-				+ "'calibrator':" + calibratorJson(limit1, limit2)
-				+ "}";
+		return "'" + channel + "':" + calibratorJson(limit1, limit2);
 	}
 
 	public static String calibratorJson(String limit1, String limit2) {

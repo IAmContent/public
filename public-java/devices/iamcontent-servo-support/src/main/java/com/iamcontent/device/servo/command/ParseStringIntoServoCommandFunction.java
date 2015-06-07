@@ -25,7 +25,7 @@ import com.iamcontent.io.cli.UnknownCommandException;
  * An abstract function to parse a String command into a {@link ServoCommand}.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a {@link Servo}. 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
 public abstract class ParseStringIntoServoCommandFunction<C> implements Function<String, ServoCommand<C>> {
 

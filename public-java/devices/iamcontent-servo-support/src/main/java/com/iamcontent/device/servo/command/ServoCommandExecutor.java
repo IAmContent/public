@@ -23,7 +23,7 @@ import java.util.List;
  * Represents a servo controller that can execute {@link ServoCommand}s.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public interface ServoCommandExecutor<C> {
 

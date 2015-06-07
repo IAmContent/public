@@ -19,20 +19,19 @@ package com.iamcontent.device.servo.calibrate.gson;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
 import com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator;
+import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
 
 /**
  * A Gson {@link JsonDeserializer} for {@link DefaultingServoSourceCalibrator} objects with Integer channel type.
  * @author Greg Elderfield
  */
-public class NumberedServoSourceCalibratorDeserializer extends DefaultingServoSourceCalibratorDeserializer<Integer> {
+public class NumberedServoSourceCalibratorDeserializer extends DefaultingServoSourceCalibratorDeserializer<Integer, ProportionalServoCalibrator> {
 
 	private static final NumberedServoSourceCalibratorDeserializer INSTANCE = new NumberedServoSourceCalibratorDeserializer();
 
-	@Override
-	protected Integer asChannel(JsonElement e) {
-		return e.getAsInt();
+	public NumberedServoSourceCalibratorDeserializer() {
+		super(Integer.class, ProportionalServoCalibrator.class);
 	}
 
 	public static GsonBuilder register(GsonBuilder builder) {

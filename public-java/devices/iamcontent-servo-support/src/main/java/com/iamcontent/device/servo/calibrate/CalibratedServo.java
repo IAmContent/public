@@ -27,7 +27,7 @@ import com.iamcontent.device.servo.Servo;
  * with the altered parameter values.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public class CalibratedServo<C> implements Servo<C> {
 	

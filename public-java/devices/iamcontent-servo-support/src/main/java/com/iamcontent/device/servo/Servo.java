@@ -21,7 +21,7 @@ package com.iamcontent.device.servo;
  * Represents the operations that can be performed on a Servo.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public interface Servo<C> {
 	C getChannel();

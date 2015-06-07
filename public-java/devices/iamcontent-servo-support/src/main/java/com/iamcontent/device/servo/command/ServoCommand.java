@@ -24,7 +24,7 @@ import com.iamcontent.device.servo.ServoSource;
  * Represents a single command that can be performed by a {@link ServoSource} on a {@link Servo}. 
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public interface ServoCommand<C> {
 	/**

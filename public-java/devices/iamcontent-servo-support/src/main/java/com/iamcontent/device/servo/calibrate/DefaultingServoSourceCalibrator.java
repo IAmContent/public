@@ -19,21 +19,27 @@ package com.iamcontent.device.servo.calibrate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * A {@link ServoSourceCalibrator} that allows a default {@link ServoCalibrator} to be set but over-ridden on a per-channel basis.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public class DefaultingServoSourceCalibrator<C> implements ServoSourceCalibrator<C> {
 
 	private final ServoCalibrator defaultCalibrator;
 	private final Map<C, ServoCalibrator> perServoCalibrators;
 	
+	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator) {
+		this(defaultCalibrator, Collections.<C, ServoCalibrator> emptyMap());
+	}
+	
 	public DefaultingServoSourceCalibrator(ServoCalibrator defaultCalibrator, Map<C, ServoCalibrator> perServoCalibrators) {
 		checkNotNull(defaultCalibrator, "The default calibrator cannot be null.");
+		checkNotNull(perServoCalibrators, "The per-servo calibrator Map cannot be null, although it may be empty.");
 		this.defaultCalibrator = defaultCalibrator;
 		this.perServoCalibrators = perServoCalibrators;
 	}

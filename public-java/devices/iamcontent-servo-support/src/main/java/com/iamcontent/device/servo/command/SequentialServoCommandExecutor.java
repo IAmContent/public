@@ -25,7 +25,7 @@ import com.iamcontent.device.servo.ServoSource;
  * A {@link ServoCommandExecutor} that executes {@link ServoCommand}s sequentially.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public class SequentialServoCommandExecutor<C> implements ServoCommandExecutor<C> {
 	

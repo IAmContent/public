@@ -24,7 +24,7 @@ import com.iamcontent.device.servo.Servo;
  * arguments of the operations.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public class RawServo<C> implements Servo<C> {
 	

@@ -24,7 +24,7 @@ import com.iamcontent.device.servo.Servo;
  * and might not even have the same channel class.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a {@link ReChanneledServo}. 
+ * @param <C> The type used to identify the channel of a {@link ReChanneledServo}. 
  */
 public class ReChanneledServo<C> implements Servo<C> {
 	private final Servo<?> delegateServo;

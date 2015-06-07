@@ -23,7 +23,7 @@ import java.io.Serializable;
  * An immutable {@link ServoCommand}.
  * @author Greg Elderfield
  * 
- * @param C The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a servo. 
  */
 public class ImmutableServoCommand<C> implements ServoCommand<C>, Serializable {
 
