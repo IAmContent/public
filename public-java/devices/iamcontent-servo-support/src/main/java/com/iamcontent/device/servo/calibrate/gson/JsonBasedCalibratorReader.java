@@ -18,42 +18,61 @@
 package com.iamcontent.device.servo.calibrate.gson;
 
 import static com.iamcontent.core.gson.GsonUtils.JSON_FILE_EXTENSION;
-import static com.iamcontent.device.servo.calibrate.gson.NumberedServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
 
 import java.io.Reader;
 
 import com.google.gson.Gson;
+import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator;
+import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
+import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.io.util.AbstractResourceReader;
 
 /**
  * Creates {@link ServoSourceCalibrator} objects according to JSON file resources.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of a servo.
+ * @param <S> The type of the {@link ServoCalibrator} used for each {@link Servo}.
  */
-public class JsonBasedCalibratorReader extends AbstractResourceReader<ServoSourceCalibrator<Integer>> {
+public class JsonBasedCalibratorReader<C, S extends ServoCalibrator>  extends AbstractResourceReader<ServoSourceCalibrator<C>> {
 
 	private static final String CALIBRATION_FOLDER = "servo/";
+	
+	private final Class<C> channelClass;
+	private final Class<S> servoCalibratorClass;
 
-	public JsonBasedCalibratorReader(String calibratorName) {
+	public JsonBasedCalibratorReader(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
 		super(CALIBRATION_FOLDER, calibratorName, JSON_FILE_EXTENSION);
+		this.channelClass = channelClass;
+		this.servoCalibratorClass = servoCalibratorClass;
 	}
 
 	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
-		return newInstance(calibratorName).read();
+		return read(calibratorName, Integer.class);
+	}
+
+	public static <C> ServoSourceCalibrator<C> read(String calibratorName, Class<C> channelClass) {
+		return newInstance(calibratorName, channelClass, ProportionalServoCalibrator.class).read();
+	}
+
+	public static <C, S extends ServoCalibrator> ServoSourceCalibrator<C> read(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return newInstance(calibratorName, channelClass, servoCalibratorClass).read();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected ServoSourceCalibrator<Integer> readFrom(Reader r) {
+	protected ServoSourceCalibrator<C> readFrom(Reader r) {
 		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
 	}
 
-	private static JsonBasedCalibratorReader newInstance(String calibratorName) {
-		return new JsonBasedCalibratorReader(calibratorName);
+	private static <C, S extends ServoCalibrator> JsonBasedCalibratorReader<C, S> newInstance(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return new JsonBasedCalibratorReader<C, S>(calibratorName, channelClass, servoCalibratorClass);
 	}
 	
-	private static Gson gson() {
-		return customGsonBuilder().create();
+	private Gson gson() {
+		return customGsonBuilder(channelClass, servoCalibratorClass).create();
 	}
 }

@@ -44,22 +44,22 @@ public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 		switch (tidied(s)) {
 		case "lsf":
 		case "sfl":
-			return ServoId.SHOULDER_FLEXOR_LEFT;
+			return ServoId.LEFT_SHOULDER_FLEXOR;
 		case "rsf":
 		case "sfr":
-			return ServoId.SHOULDER_FLEXOR_RIGHT;
+			return ServoId.RIGHT_SHOULDER_FLEXOR;
 		case "lsa":
 		case "sal":
-			return ServoId.SHOULDER_ABDUCTOR_LEFT;
+			return ServoId.LEFT_SHOULDER_ABDUCTOR;
 		case "rsa":
 		case "sar":
-			return ServoId.SHOULDER_ABDUCTOR_RIGHT;
+			return ServoId.RIGHT_SHOULDER_ABDUCTOR;
 		case "lef":
 		case "efl":
-			return ServoId.ELBOW_FLEXOR_LEFT;
+			return ServoId.LEFT_ELBOW_FLEXOR;
 		case "ref":
 		case "efr":
-			return ServoId.ELBOW_FLEXOR_RIGHT;
+			return ServoId.RIGHT_ELBOW_FLEXOR;
 
 		default:
 			throw new UnknownCommandException(s);

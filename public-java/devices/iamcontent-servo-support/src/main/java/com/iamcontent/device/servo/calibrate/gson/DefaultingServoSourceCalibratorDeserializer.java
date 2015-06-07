@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -40,7 +41,7 @@ import com.iamcontent.device.servo.calibrate.ServoCalibrator;
  * @param <C> The type used to identify the channel of a servo.
  * @param <S> The type of the {@link ServoCalibrator} used for each {@link Servo}.
  */
-public abstract class DefaultingServoSourceCalibratorDeserializer<C, S extends ServoCalibrator> implements JsonDeserializer<DefaultingServoSourceCalibrator<C>> {
+public class DefaultingServoSourceCalibratorDeserializer<C, S extends ServoCalibrator> implements JsonDeserializer<DefaultingServoSourceCalibrator<C>> {
 
 	private final Type mapType;
 	
@@ -57,5 +58,18 @@ public abstract class DefaultingServoSourceCalibratorDeserializer<C, S extends S
 
 	private Map<C, ServoCalibrator> emptyMap() {
 		return Collections.<C, ServoCalibrator>emptyMap();
+	}
+
+	public static <C, S extends ServoCalibrator> GsonBuilder register(GsonBuilder builder, Class<C> channelClass, Class<S> servoCalibratorClass) {
+		builder.registerTypeAdapter(DefaultingServoSourceCalibrator.class, newInstance(channelClass, servoCalibratorClass));
+		return builder;
+	}
+
+	public static <C, S extends ServoCalibrator> GsonBuilder customGsonBuilder(Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return register(ProportionalServoCalibratorDeserializer.customGsonBuilder(), channelClass, servoCalibratorClass);
+	}
+	
+	private static <C, S extends ServoCalibrator> DefaultingServoSourceCalibratorDeserializer<C, S> newInstance(Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return new DefaultingServoSourceCalibratorDeserializer<C, S>(channelClass, servoCalibratorClass);
 	}
 }

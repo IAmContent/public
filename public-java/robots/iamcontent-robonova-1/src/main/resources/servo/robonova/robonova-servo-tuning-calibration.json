@@ -1,0 +1,23 @@
+{ defaultCalibrator: { 
+    positionConverter: {
+      toRange: {limit1: 0, limit2: 1}
+    }
+  },
+  perServoCalibrators: {
+    "RIGHT_SHOULDER_FLEXOR" : {
+      positionConverter: {
+        toRange: {limit1: 1, limit2: 0}
+      }
+    },
+    "RIGHT_SHOULDER_ABDUCTOR" : {
+      positionConverter: {
+        toRange: {limit1: 1, limit2: 0}
+      }
+    },
+    "LEFT_ELBOW_FLEXOR" : {
+      positionConverter: {
+        toRange: {limit1: 1, limit2: 0}
+      }
+    }
+  }
+}

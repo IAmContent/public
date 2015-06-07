@@ -20,6 +20,7 @@ package com.iamcontent.device.servo.calibrate;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.iamcontent.device.servo.Servo;
 
 /**
@@ -31,6 +32,8 @@ import com.iamcontent.device.servo.Servo;
  */
 public class CalibratedServo<C> implements Servo<C> {
 	
+	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
+	
 	private final Servo<C> delegateServo;
 	private final Function<Double, Double> toDelegatePositionConverter;
 	private final Function<Double, Double> fromDelegatePositionConverter;
@@ -40,10 +43,10 @@ public class CalibratedServo<C> implements Servo<C> {
 	public CalibratedServo(Servo<C> delegateServo, ServoCalibrator calibrator) {
 		checkArguments(delegateServo, calibrator);
 		this.delegateServo = delegateServo;
-		this.toDelegatePositionConverter = calibrator.getPositionConverter();
-		this.fromDelegatePositionConverter = calibrator.getPositionConverter().reverse();
-		this.toDelegateSpeedConverter = calibrator.getSpeedConverter();
-		this.toDelegateAccelerationConverter = calibrator.getAccelerationConverter();
+		this.toDelegatePositionConverter = identityIfNull(calibrator.getPositionConverter());
+		this.fromDelegatePositionConverter = identityIfNull(calibrator.getPositionConverter().reverse());
+		this.toDelegateSpeedConverter = identityIfNull(calibrator.getSpeedConverter());
+		this.toDelegateAccelerationConverter = identityIfNull(calibrator.getAccelerationConverter());
 	}
 
 	@Override
@@ -95,4 +98,7 @@ public class CalibratedServo<C> implements Servo<C> {
 		checkNotNull(calibrator.getPositionConverter(), "PositionConverter of calibrator cannot be null.");
 	}
 
+	private static Function<Double, Double> identityIfNull(Function<Double, Double> f) {
+		return f==null ? IDENTITY_FUNCTION : f;
+	}
 }
