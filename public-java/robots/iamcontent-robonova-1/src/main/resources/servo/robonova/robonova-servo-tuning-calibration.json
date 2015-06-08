@@ -4,19 +4,73 @@
     }
   },
   perServoCalibrators: {
-    "RIGHT_SHOULDER_FLEXOR" : {
+    RIGHT_SHOULDER_FLEXOR : {
       positionConverter: {
         toRange: {limit1: 1, limit2: 0}
       }
     },
-    "RIGHT_SHOULDER_ABDUCTOR" : {
+    RIGHT_SHOULDER_ABDUCTOR : {
       positionConverter: {
         toRange: {limit1: 1, limit2: 0}
       }
     },
-    "LEFT_ELBOW_FLEXOR" : {
+    LEFT_ELBOW_FLEXOR : {
       positionConverter: {
         toRange: {limit1: 1, limit2: 0}
+      }
+    },
+    
+    LEFT_HIP_ABDUCTOR : {
+      positionConverter: {
+        notes: "Physical stop on full adduction",
+        toRange: {limit1: 0.6, limit2: 0}
+      }
+    },
+    RIGHT_HIP_ABDUCTOR : {
+      positionConverter: {
+        notes: "Physical stop on full adduction",
+        toRange: {limit1: 0.4, limit2: 1}
+      }
+    },
+    RIGHT_HIP_FLEXOR : {
+      positionConverter: {
+        toRange: {limit1: 1, limit2: 0}
+      }
+    },
+    LEFT_KNEE_FLEXOR : {
+      positionConverter: {
+        notes: "Hard stop and some L/R asymmetry",
+        toRange: {limit1: 0.05, limit2: 0.95}
+      }
+    },
+    RIGHT_KNEE_FLEXOR : {
+      positionConverter: {
+        notes: "Hard stop and some L/R asymmetry",
+        toRange: {limit1: 0.98, limit2: 0.08}
+      }
+    },
+    LEFT_ANKLE_PLANTARFLEXOR : {
+      positionConverter: {
+        notes: "Hard stops",
+        toRange: {limit1: 0.15, limit2: 1}
+      }
+    },
+    RIGHT_ANKLE_PLANTARFLEXOR : {
+      positionConverter: {
+        notes: "Hard stops",
+        toRange: {limit1: 0.85, limit2: 0}
+      }
+    },
+    LEFT_ANKLE_INVERTER : {
+      positionConverter: {
+        notes: "Hard stops",
+        toRange: {limit1: 0.55, limit2: 0.25}
+      }
+    },
+    RIGHT_ANKLE_INVERTER : {
+      positionConverter: {
+        notes: "Hard stops",
+        toRange: {limit1: 0.45, limit2: 0.75}
       }
     }
   }

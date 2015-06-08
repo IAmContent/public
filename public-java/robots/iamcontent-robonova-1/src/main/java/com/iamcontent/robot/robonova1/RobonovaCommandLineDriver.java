@@ -61,6 +61,41 @@ public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 		case "efr":
 			return ServoId.RIGHT_ELBOW_FLEXOR;
 
+		case "lha":
+		case "hal":
+			return ServoId.LEFT_HIP_ABDUCTOR;
+		case "rha":
+		case "har":
+			return ServoId.RIGHT_HIP_ABDUCTOR;
+		case "lhf":
+		case "hfl":
+			return ServoId.LEFT_HIP_FLEXOR;
+		case "rhf":
+		case "hfr":
+			return ServoId.RIGHT_HIP_FLEXOR;
+		case "lkf":
+		case "kfl":
+			return ServoId.LEFT_KNEE_FLEXOR;
+		case "rkf":
+		case "kfr":
+			return ServoId.RIGHT_KNEE_FLEXOR;
+		case "laf":
+		case "afl":
+		case "lapf":
+		case "apfl":
+			return ServoId.LEFT_ANKLE_PLANTARFLEXOR;
+		case "raf":
+		case "afr":
+		case "rapf":
+		case "apfr":
+			return ServoId.RIGHT_ANKLE_PLANTARFLEXOR;
+		case "lai":
+		case "ail":
+			return ServoId.LEFT_ANKLE_INVERTER;
+		case "rai":
+		case "air":
+			return ServoId.RIGHT_ANKLE_INVERTER;
+
 		default:
 			throw new UnknownCommandException(s);
 		}

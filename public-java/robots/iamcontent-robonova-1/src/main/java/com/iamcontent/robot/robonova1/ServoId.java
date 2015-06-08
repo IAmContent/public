@@ -17,8 +17,10 @@
  */
 package com.iamcontent.robot.robonova1;
 
+import com.iamcontent.device.servo.Servo;
+
 /**
- * Identifies the different servos on the Robonova.
+ * Identifies the different {@link Servo}s on the {@link Robonova}.
  * @author Greg Elderfield
  */
 public enum ServoId {
@@ -35,8 +37,8 @@ public enum ServoId {
 	RIGHT_HIP_FLEXOR,
 	LEFT_KNEE_FLEXOR,
 	RIGHT_KNEE_FLEXOR,
-	LEFT_ANKLE_FLEXOR,
-	RIGHT_ANKLE_FLEXOR,
-	LEFT_FOOT_INVERTER,
-	RIGHT_FOOT_INVERTER;
+	LEFT_ANKLE_PLANTARFLEXOR,
+	RIGHT_ANKLE_PLANTARFLEXOR,
+	LEFT_ANKLE_INVERTER,
+	RIGHT_ANKLE_INVERTER;
 }
