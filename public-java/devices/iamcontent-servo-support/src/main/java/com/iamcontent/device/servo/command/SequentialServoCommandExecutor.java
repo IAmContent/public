@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.command;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.iamcontent.device.servo.ServoSource;
 
@@ -40,7 +40,7 @@ public class SequentialServoCommandExecutor<C> implements ServoCommandExecutor<C
 	}
 	
 	@Override
-	public void execute(List<? extends ServoCommand<? extends C>> commands) {
+	public void execute(Collection<? extends ServoCommand<? extends C>> commands) {
 		for (ServoCommand<? extends C> c : commands)
 			execute(c);
 	}

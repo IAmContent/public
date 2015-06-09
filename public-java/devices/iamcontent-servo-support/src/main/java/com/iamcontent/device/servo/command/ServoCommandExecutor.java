@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.command;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Represents a servo controller that can execute {@link ServoCommand}s.
@@ -29,6 +29,6 @@ public interface ServoCommandExecutor<C> {
 
 	void execute(ServoCommand<? extends C> command);
 
-	void execute(List<? extends ServoCommand<? extends C>> commands);
+	void execute(Collection<? extends ServoCommand<? extends C>> commands);
 
 }
