@@ -29,7 +29,7 @@ import com.iamcontent.device.servo.ServoSource;
  */
 public class SequentialServoCommandExecutor<C> implements ServoCommandExecutor<C> {
 	
-	final ServoSource<C> servoSource;
+	private final ServoSource<C> servoSource;
 
 	public static <C> SequentialServoCommandExecutor<C> executor(ServoSource<C> servoSource) {
 		return new SequentialServoCommandExecutor<C>(servoSource);
