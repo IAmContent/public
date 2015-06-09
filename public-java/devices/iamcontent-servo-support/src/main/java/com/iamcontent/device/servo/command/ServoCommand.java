@@ -28,7 +28,7 @@ import com.iamcontent.device.servo.ServoSource;
  */
 public interface ServoCommand<C> {
 	/**
-	 * @return The channel number of the {@link Servo}.
+	 * @return The channel of the {@link Servo}.
 	 */
 	C getChannel();
 	
