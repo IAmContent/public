@@ -25,7 +25,7 @@ import com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReader;
  */
 public class Calibrators {
 	public static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
-	public static final String DEFAULT_CALIBRATION_NAME = "default-calibration";
+	public static final String DEFAULT_CALIBRATION_NAME = "servo/default-calibration";
 	
 	public static ServoSourceCalibrator<Integer> defaultNumberedChannelCalibrator() {
 		return numberedChannelCalibrator(defaultCalibrationName());

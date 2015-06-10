@@ -31,10 +31,8 @@ import com.iamcontent.io.gson.JsonBasedMapReader;
  */
 public class ChannelTranslationFunctionReader<F, T> {
 
-	private static final String FOLDER = "servo/";
-
 	public static <F, T> Function<F, T> function(String name, Class<F> fromChannelClass, Class<T> toChannelClass) {
-		final Map<F, T> map = JsonBasedMapReader.map(FOLDER, name, fromChannelClass, toChannelClass);
+		final Map<F, T> map = JsonBasedMapReader.map(name, fromChannelClass, toChannelClass);
 		return Functions.forMap(map);
 	}
 }

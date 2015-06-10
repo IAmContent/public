@@ -21,7 +21,6 @@ import static com.iamcontent.io.util.Readers.inputStreamReader;
 import static com.iamcontent.io.util.ResourceUtils.getStreamOrThrow;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 
 import com.iamcontent.io.IORuntimeException;
@@ -31,15 +30,14 @@ import com.iamcontent.io.IORuntimeException;
  * @author Greg Elderfield
  */
 public abstract class AbstractResourceReader<T> {
-	private final String folder, calibratorName;
+	private final String calibratorName;
 
-	public AbstractResourceReader(String folder, String calibratorName) {
-		this.folder = folder;
+	public AbstractResourceReader(String calibratorName) {
 		this.calibratorName = calibratorName;
 	}
 
-	public AbstractResourceReader(String folder, String calibratorName, String extension) {
-		this(folder, calibratorName + extension);
+	public AbstractResourceReader(String calibratorName, String extension) {
+		this(calibratorName + extension);
 	}
 
 	public T read() {
@@ -53,14 +51,6 @@ public abstract class AbstractResourceReader<T> {
 	protected abstract T readFrom(Reader r);
 
 	private Reader reader() {
-		return inputStreamReader(streamFor());
-	}
-
-	private InputStream streamFor() {
-		return getStreamOrThrow(resourceName());
-	}
-
-	private String resourceName() {
-		return folder + calibratorName;
+		return inputStreamReader(getStreamOrThrow(calibratorName));
 	}
 }

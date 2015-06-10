@@ -35,13 +35,13 @@ public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> 
 
 	private final Type mapType;
 	
-	public JsonBasedMapReader(String folder, String name, Class<K> keyClass, Class<V> valueClass) {
-		super(folder, name, JSON_FILE_EXTENSION);
+	public JsonBasedMapReader(String name, Class<K> keyClass, Class<V> valueClass) {
+		super(name, JSON_FILE_EXTENSION);
 		this.mapType = LangUtils.mapType(keyClass, valueClass);
 	}
 
-	public static <F, T> Map<F, T> map(String folder, String name, Class<F> keyClass, Class<T> valueClass) {
-		return newInstance(folder, name, keyClass, valueClass).read();
+	public static <F, T> Map<F, T> map(String name, Class<F> keyClass, Class<T> valueClass) {
+		return newInstance(name, keyClass, valueClass).read();
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> 
 		return gson().fromJson(r, mapType);
 	}
 
-	private static <F, T> JsonBasedMapReader<F, T> newInstance(String folder, String name, Class<F> keyClass, Class<T> valueClass) {
-		return new JsonBasedMapReader<F, T>(folder, name, keyClass, valueClass);
+	private static <F, T> JsonBasedMapReader<F, T> newInstance(String name, Class<F> keyClass, Class<T> valueClass) {
+		return new JsonBasedMapReader<F, T>(name, keyClass, valueClass);
 	}
 	
 	private static Gson gson() {

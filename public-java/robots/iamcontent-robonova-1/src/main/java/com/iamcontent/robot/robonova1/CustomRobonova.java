@@ -36,7 +36,7 @@ import com.iamcontent.device.servo.rechannel.ChannelTranslations;
  */
 public class CustomRobonova implements Robonova {
 
-	private static final String CONFIG_FOLDER = "robonova/";
+	private static final String CONFIG_FOLDER = "robonova/servo/";
 	public static final String SERVO_CALIBRATOR_NAME = CONFIG_FOLDER + "pololu-maestro-calibration-for-Hitec-HSR4898HB-servos";
 	public static final String TUNING_CALIBRATOR_NAME = CONFIG_FOLDER + "robonova-servo-tuning-calibration";
 	public static final String CHANNEL_TRANSLATION_NAME = CONFIG_FOLDER + "channels";

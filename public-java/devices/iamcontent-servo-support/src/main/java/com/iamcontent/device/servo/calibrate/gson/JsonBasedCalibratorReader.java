@@ -39,13 +39,11 @@ import com.iamcontent.io.util.AbstractResourceReader;
  */
 public class JsonBasedCalibratorReader<C, S extends ServoCalibrator>  extends AbstractResourceReader<ServoSourceCalibrator<C>> {
 
-	private static final String CALIBRATION_FOLDER = "servo/";
-	
 	private final Class<C> channelClass;
 	private final Class<S> servoCalibratorClass;
 
 	public JsonBasedCalibratorReader(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
-		super(CALIBRATION_FOLDER, calibratorName, JSON_FILE_EXTENSION);
+		super(calibratorName, JSON_FILE_EXTENSION);
 		this.channelClass = channelClass;
 		this.servoCalibratorClass = servoCalibratorClass;
 	}
