@@ -23,6 +23,8 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.gson.Gson;
 import com.iamcontent.core.LangUtils;
 import com.iamcontent.io.util.AbstractResourceReader;
@@ -44,6 +46,11 @@ public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> 
 		return newInstance(name, keyClass, valueClass).read();
 	}
 
+	public static <F, T> Function<F, T> function(String name, Class<F> fromClass, Class<T> toClass) {
+		final Map<F, T> map = map(name, fromClass, toClass);
+		return Functions.forMap(map);
+	}
+	
 	@Override
 	protected Map<K, V> readFrom(Reader r) {
 		return gson().fromJson(r, mapType);

@@ -19,6 +19,7 @@ package com.iamcontent.device.servo.rechannel;
 
 import com.google.common.base.Function;
 import com.iamcontent.device.servo.Servo;
+import com.iamcontent.io.gson.JsonBasedMapReader;
 
 /**
  * A source of Functions to translate {@link Servo} channel identifiers.
@@ -27,7 +28,7 @@ import com.iamcontent.device.servo.Servo;
 public class ChannelTranslations {
 	
 	public static <F, T> Function<F, T> function(String translationName, Class<F> fromChannelClass, Class<T> toChannelClass) {
-		return ChannelTranslationFunctionReader.function(translationName, fromChannelClass, toChannelClass);
+		return JsonBasedMapReader.function(translationName, fromChannelClass, toChannelClass);
 	}
 	
 	private ChannelTranslations() {
