@@ -60,15 +60,14 @@ public class DefaultingServoSourceCalibratorDeserializer<C, S extends ServoCalib
 		return Collections.<C, ServoCalibrator>emptyMap();
 	}
 
-	public static <C, S extends ServoCalibrator> GsonBuilder register(GsonBuilder builder, Class<C> channelClass, Class<S> servoCalibratorClass) {
-		builder.registerTypeAdapter(DefaultingServoSourceCalibrator.class, newInstance(channelClass, servoCalibratorClass));
-		return builder;
-	}
-
 	public static <C, S extends ServoCalibrator> GsonBuilder customGsonBuilder(Class<C> channelClass, Class<S> servoCalibratorClass) {
 		return register(ProportionalServoCalibratorDeserializer.customGsonBuilder(), channelClass, servoCalibratorClass);
 	}
 	
+	public static <C, S extends ServoCalibrator> GsonBuilder register(GsonBuilder builder, Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return builder.registerTypeAdapter(DefaultingServoSourceCalibrator.class, newInstance(channelClass, servoCalibratorClass));
+	}
+
 	private static <C, S extends ServoCalibrator> DefaultingServoSourceCalibratorDeserializer<C, S> newInstance(Class<C> channelClass, Class<S> servoCalibratorClass) {
 		return new DefaultingServoSourceCalibratorDeserializer<C, S>(channelClass, servoCalibratorClass);
 	}

@@ -50,8 +50,7 @@ public class ProportionalServoCalibratorDeserializer implements JsonDeserializer
 	}
 
 	public static GsonBuilder register(GsonBuilder builder) {
-		builder.registerTypeAdapter(ProportionalServoCalibrator.class, INSTANCE);
-		return builder;
+		return builder.registerTypeAdapter(ProportionalServoCalibrator.class, INSTANCE);
 	}
 	
 	public static GsonBuilder customGsonBuilder() {

@@ -1,0 +1,5 @@
+[
+{testEnum:"ONE", testString:"First"},
+{testEnum:"SEVEN", testString:"Seventh"},
+{testEnum:"TWO", testString:"Second"}
+]

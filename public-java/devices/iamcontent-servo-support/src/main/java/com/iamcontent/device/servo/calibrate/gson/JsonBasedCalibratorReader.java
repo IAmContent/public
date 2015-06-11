@@ -53,7 +53,7 @@ public class JsonBasedCalibratorReader<C, S extends ServoCalibrator>  extends Ab
 	}
 
 	public static <C> ServoSourceCalibrator<C> read(String calibratorName, Class<C> channelClass) {
-		return newInstance(calibratorName, channelClass, ProportionalServoCalibrator.class).read();
+		return read(calibratorName, channelClass, ProportionalServoCalibrator.class);
 	}
 
 	public static <C, S extends ServoCalibrator> ServoSourceCalibrator<C> read(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {

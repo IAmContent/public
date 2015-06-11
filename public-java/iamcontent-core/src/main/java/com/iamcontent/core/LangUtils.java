@@ -18,6 +18,7 @@
 package com.iamcontent.core;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.reflect.TypeParameter;
@@ -29,8 +30,12 @@ import com.google.common.reflect.TypeToken;
  */
 public class LangUtils {
 
-	public static <K, V> Type mapType(Class<K> keyClass, Class<V> valueClass) {
+	public static Type mapType(Class<?> keyClass, Class<?> valueClass) {
 		return mapTypeToken(keyClass, valueClass).getType();
+	}
+
+	public static Type listType(Class<?> elementClass) {
+		return listTypeToken(elementClass).getType();
 	}
 
 	private static <K, V> TypeToken<Map<K, V>> mapTypeToken(Class<K> keyClass, Class<V> valueClass) {
@@ -42,6 +47,16 @@ public class LangUtils {
 		return new TypeToken<Map<K, V>>() {}
 		.where(new TypeParameter<K>() {}, keyType)
 		.where(new TypeParameter<V>() {}, valueType);
+	}
+
+	private static <E> TypeToken<List<E>> listTypeToken(Class<E> elementClass) {
+		return listTypeToken(TypeToken.of(elementClass));
+	}
+	
+	@SuppressWarnings("serial")
+	private static <E> TypeToken<List<E>> listTypeToken(TypeToken<E> elementType) {
+		return new TypeToken<List<E>>() {}
+		.where(new TypeParameter<E>() {}, elementType);
 	}
 
 	private LangUtils() {

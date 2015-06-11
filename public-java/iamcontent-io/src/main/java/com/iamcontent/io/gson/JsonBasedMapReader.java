@@ -36,31 +36,37 @@ import com.iamcontent.io.util.AbstractResourceReader;
 public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> {
 
 	private final Type mapType;
-	
-	public JsonBasedMapReader(String name, Class<K> keyClass, Class<V> valueClass) {
+	private final Gson gson;
+
+	public JsonBasedMapReader(String name, Class<K> keyClass, Class<V> valueClass, Gson gson) {
 		super(name, JSON_FILE_EXTENSION);
 		this.mapType = LangUtils.mapType(keyClass, valueClass);
+		this.gson = gson;
 	}
 
 	public static <F, T> Map<F, T> map(String name, Class<F> keyClass, Class<T> valueClass) {
-		return newInstance(name, keyClass, valueClass).read();
+		return map(name, keyClass, valueClass, new Gson());
+	}
+
+	public static <F, T> Map<F, T> map(String name, Class<F> keyClass, Class<T> valueClass, Gson gson) {
+		return newInstance(name, keyClass, valueClass, gson).read();
 	}
 
 	public static <F, T> Function<F, T> function(String name, Class<F> fromClass, Class<T> toClass) {
-		final Map<F, T> map = map(name, fromClass, toClass);
+		return function(name, fromClass, toClass, new Gson());
+	}
+
+	public static <F, T> Function<F, T> function(String name, Class<F> fromClass, Class<T> toClass, Gson gson) {
+		final Map<F, T> map = map(name, fromClass, toClass, gson);
 		return Functions.forMap(map);
 	}
 	
 	@Override
 	protected Map<K, V> readFrom(Reader r) {
-		return gson().fromJson(r, mapType);
+		return gson.fromJson(r, mapType);
 	}
 
-	private static <F, T> JsonBasedMapReader<F, T> newInstance(String name, Class<F> keyClass, Class<T> valueClass) {
-		return new JsonBasedMapReader<F, T>(name, keyClass, valueClass);
-	}
-	
-	private static Gson gson() {
-		return new Gson();
+	private static <F, T> JsonBasedMapReader<F, T> newInstance(String name, Class<F> keyClass, Class<T> valueClass, Gson gson) {
+		return new JsonBasedMapReader<F, T>(name, keyClass, valueClass, gson);
 	}
 }
