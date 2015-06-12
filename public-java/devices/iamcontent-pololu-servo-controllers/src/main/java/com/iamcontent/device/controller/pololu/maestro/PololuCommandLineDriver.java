@@ -33,6 +33,10 @@ import com.iamcontent.device.servo.raw.ServoController;
  */
 public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 
+	public PololuCommandLineDriver() {
+		super(Integer.class);
+	}
+
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
 		driver.run();

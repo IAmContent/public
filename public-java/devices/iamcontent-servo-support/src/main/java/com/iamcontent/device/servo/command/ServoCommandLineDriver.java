@@ -18,7 +18,11 @@
 package com.iamcontent.device.servo.command;
 
 import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
+import static com.iamcontent.device.servo.command.ServoCommands.servoCommands;
 
+import java.util.List;
+
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
@@ -36,9 +40,12 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 
 	private ServoSource<C> servoSource;
 	private ServoCommandExecutor<C> executor;
+	private Class<C> channelClass;
 
-	public ServoCommandLineDriver() {
+	public ServoCommandLineDriver(Class<C> channelClass) {
+		this.channelClass = channelClass;
 		addCommandHandler(positionQueryCommandHandler());
+		addCommandHandler(namedCommandHandler());
 	}
 
 	@Override
@@ -90,6 +97,24 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 				return servoSource.getServo(channel).getPosition();
 			}
 		};
+	}
+
+	private Predicate<String> namedCommandHandler() {
+		return new PrefixCommandHandler("!") {
+			@Override
+			protected void executeCommand(String commandName) {
+				final String fileName = commandFolder() + commandName;
+				executeCommands(servoCommands(fileName, channelClass));
+			}
+
+			private void executeCommands(final List<ServoCommand<C>> commands) {
+				executor.execute(commands);
+			}
+		};
+	}
+
+	protected String commandFolder() {
+		return "servo/commands/";
 	}
 
 	protected abstract ServoSource<C> servoSource();

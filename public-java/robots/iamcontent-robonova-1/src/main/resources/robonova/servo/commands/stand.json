@@ -1,0 +1,20 @@
+[
+  {channel:"LEFT_SHOULDER_FLEXOR", position:0.5},
+  {channel:"RIGHT_SHOULDER_FLEXOR", position:0.5},
+  {channel:"LEFT_SHOULDER_ABDUCTOR", position:0.1},
+  {channel:"RIGHT_SHOULDER_ABDUCTOR", position:0.1},
+  {channel:"LEFT_ELBOW_FLEXOR", position:0.6},
+  {channel:"RIGHT_ELBOW_FLEXOR", position:0.6},
+  
+  {channel:"LEFT_HIP_ABDUCTOR", position:0.18},
+  {channel:"RIGHT_HIP_ABDUCTOR", position:0.18},
+  {channel:"LEFT_HIP_FLEXOR", position:0.72},
+  {channel:"RIGHT_HIP_FLEXOR", position:0.72},
+  {channel:"LEFT_KNEE_FLEXOR", position:0.26},
+  {channel:"RIGHT_KNEE_FLEXOR", position:0.26},
+  {channel:"LEFT_ANKLE_PLANTARFLEXOR", position:0.53},
+  {channel:"RIGHT_ANKLE_PLANTARFLEXOR", position:0.53},
+  {channel:"LEFT_ANKLE_INVERTER", position:0.15},
+  {channel:"RIGHT_ANKLE_INVERTER", position:0.15}
+
+]

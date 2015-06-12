@@ -29,6 +29,10 @@ public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 
 	private final Robonova robonova = new CustomRobonova();
 	
+	public RobonovaCommandLineDriver() {
+		super(ServoId.class);
+	}
+
 	public static void main(String[] args) {
 		final RobonovaCommandLineDriver driver = new RobonovaCommandLineDriver();
 		driver.run();
@@ -99,5 +103,10 @@ public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 		default:
 			throw new UnknownCommandException(s);
 		}
+	}
+
+	@Override
+	protected String commandFolder() {
+		return "robonova/servo/commands/";
 	}
 }

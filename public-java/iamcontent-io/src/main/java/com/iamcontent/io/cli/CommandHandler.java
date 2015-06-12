@@ -30,7 +30,12 @@ public abstract class CommandHandler implements Predicate<String> {
 
 	@Override
 	public boolean apply(String command) {
-		return executeIfCommandMatches(tidied(command));
+		try {
+			return executeIfCommandMatches(tidied(command));
+		} catch (Exception e) {
+			System.out.println("Cound not execute command: '" + command + "': " + e.getMessage());
+			return true;
+		}
 	}
 
 	private boolean executeIfCommandMatches(String command) {
