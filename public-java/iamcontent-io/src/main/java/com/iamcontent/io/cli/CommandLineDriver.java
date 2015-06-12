@@ -17,12 +17,14 @@
  */
 package com.iamcontent.io.cli;
 
+import static com.google.common.base.Predicates.not;
+import static com.google.common.base.Predicates.or;
 import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
 import static com.iamcontent.io.util.Readers.bufferedReader;
 
 import java.io.BufferedReader;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -36,12 +38,15 @@ import com.iamcontent.io.util.BufferedReaderIterator;
 public abstract class CommandLineDriver {
 
 	private final LicenseWriter licenseWriter = licenseWriter();
-	private static final Collection<String> QUIT_COMMANDS = Arrays.asList(null, "q", "quit", "exit", "bye");
 
 	protected final BufferedReader in;
+	private final List<Predicate<String>> commandHandlers = new ArrayList<>();
 	
 	public CommandLineDriver() {
 		this(bufferedReader(System.in));
+		addCommandHandler(warrantyCommandHandler());
+		addCommandHandler(licenseCommandHandler());
+		addCommandHandler(quitCommandHandler());
 	}
 	
 	public CommandLineDriver(BufferedReader in) {
@@ -54,7 +59,7 @@ public abstract class CommandLineDriver {
 	
 	protected Iterable<String> commandStrings() {
 		licenseWriter.printInteractiveInstructions();
-		return Iterables.filter(inputLines(), driverCommandHandler());
+		return Iterables.filter(inputLines(), commandShouldBeProcessed());
 	}
 	
 	private BufferedReaderIterator inputLines() {
@@ -68,40 +73,47 @@ public abstract class CommandLineDriver {
 		};
 	}
 
-	private Predicate<String> driverCommandHandler() {
-		return new Predicate<String>() {
-			@Override
-			public boolean apply(String command) {
-				return !isDriverCommand(command);
-			}
+	protected Predicate<String> commandShouldBeProcessed() {
+		return not(commandExecutedByAnyHandler());
+	}
 
-			private boolean isDriverCommand(String command) {
-				switch (command) {
-				case "license":
-					licenseWriter.printTermsAndConditions();
-					return true;
-				case "warranty":
-					licenseWriter.printWarranty();
-					return true;
-				default:
-					if (isQuit(command))
-						quit();
-					return false;
-				}
+	private Predicate<String> commandExecutedByAnyHandler() {
+		return or(commandHandlers);
+	}
+	
+	protected void onQuit() {
+	}
+	
+	protected void addCommandHandler(Predicate<String> handler) {
+		commandHandlers.add(handler);
+	}
+	
+	private CommandHandler warrantyCommandHandler() {
+		return new LiteralCommandHandler("warranty") {
+			@Override
+			protected void executeCommand(String argument) {
+				licenseWriter.printWarranty();
 			}
-			
-			private void quit() {
+		};
+	}
+	
+	private CommandHandler licenseCommandHandler() {
+		return new LiteralCommandHandler("license", "licence") {
+			@Override
+			protected void executeCommand(String argument) {
+				licenseWriter.printTermsAndConditions();
+			}
+		};
+	}
+	
+	private CommandHandler quitCommandHandler() {
+		return new LiteralCommandHandler(null, "q", "quit", "exit", "bye") {
+			@Override
+			protected void executeCommand(String argument) {
 				onQuit();
 				System.out.println("Bye");
 				System.exit(0);
 			}
 		};
-	}
-	
-	protected boolean isQuit(String command) {
-		return QUIT_COMMANDS.contains(tidied(command));
-	}
-
-	protected void onQuit() {
 	}
 }

@@ -22,7 +22,9 @@ import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor
 import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.io.cli.CommandHandler;
 import com.iamcontent.io.cli.CommandLineDriver;
+import com.iamcontent.io.cli.PrefixCommandHandler;
 
 /**
  * An abstract {@link CommandLineDriver} for the control of {@link Servo}s. Useful for manual testing.
@@ -34,6 +36,10 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 
 	private ServoSource<C> servoSource;
 	private ServoCommandExecutor<C> executor;
+
+	public ServoCommandLineDriver() {
+		addCommandHandler(positionQueryCommandHandler());
+	}
 
 	@Override
 	public void run() {
@@ -53,14 +59,9 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 	}
 
 	private final ParseStringIntoServoCommandFunction<C> parsingFunction = new ParseStringIntoServoCommandFunction<C>() {
-		private static final String QUERY_PREFIX = "?";
 		@Override
 		public ServoCommand<C> apply(String command) {
 			try {
-				if (isQuery(command)) {
-					executeQuery(command);
-					return null;
-				}
 				return super.apply(command);
 			} catch (Exception e) {
 				System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());
@@ -68,35 +69,28 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 			}
 		}
 
-		private void executeQuery(String command) {
-			displayPosition(channelString(command));
-		}
-
-		private String channelString(String command) {
-			return command.substring(QUERY_PREFIX.length()).trim();
-		}
-
-		private void displayPosition(String channelString) {
-			displayPosition(parseChannel(channelString));
-		}
-
-		private void displayPosition(C channel) {
-			System.out.println("position(" + channel + ")=" + getPosition(channel));
-		}
-
-		private double getPosition(C channel) {
-			return servoSource.getServo(channel).getPosition();
-		}
-
-		private boolean isQuery(String command) {
-			return command.startsWith(QUERY_PREFIX);
-		}
-
 		@Override
 		protected C parseChannel(String s) {
 			return ServoCommandLineDriver.this.parseChannel(s);
 		}
 	};
+
+	private CommandHandler positionQueryCommandHandler() {
+		return new PrefixCommandHandler("?") {
+			@Override
+			protected void executeCommand(String channelString) {
+				displayPosition(parseChannel(channelString));
+			}
+
+			private void displayPosition(C channel) {
+				System.out.println("position(" + channel + ")=" + position(channel));
+			}
+
+			private double position(C channel) {
+				return servoSource.getServo(channel).getPosition();
+			}
+		};
+	}
 
 	protected abstract ServoSource<C> servoSource();
 	protected abstract C parseChannel(String s);
