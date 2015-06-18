@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core.gson;
+package com.iamcontent.io.gson;
 
 import java.lang.reflect.Type;
 

@@ -15,10 +15,10 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core.gson;
+package com.iamcontent.io.gson;
 
-import static com.iamcontent.core.gson.DoubleRangeDeserializer.customGsonBuilder;
-import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
+import static com.iamcontent.io.gson.DoubleRangeDeserializer.customGsonBuilder;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,5 +44,9 @@ public class DoubleRangeDeserializerTest {
 
 	public static String rangeJson(String limit1, String limit2) {
 		return "{'limit1':" + limit1 + ",'limit2':" + limit2 + "}";
+	}
+
+	public static void assertExactlyEquals(double expected, double actual) {
+		assertEquals(expected, actual, 0.0);
 	}
 }

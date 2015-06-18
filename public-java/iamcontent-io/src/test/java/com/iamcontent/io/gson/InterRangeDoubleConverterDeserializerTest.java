@@ -15,11 +15,11 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core.gson;
+package com.iamcontent.io.gson;
 
-import static com.iamcontent.core.gson.DoubleRangeDeserializerTest.rangeJson;
-import static com.iamcontent.core.gson.InterRangeDoubleConverterDeserializer.customGsonBuilder;
-import static com.iamcontent.core.math.MathUtilsTest.assertExactlyEquals;
+import static com.iamcontent.io.gson.DoubleRangeDeserializerTest.assertExactlyEquals;
+import static com.iamcontent.io.gson.DoubleRangeDeserializerTest.rangeJson;
+import static com.iamcontent.io.gson.InterRangeDoubleConverterDeserializer.customGsonBuilder;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;

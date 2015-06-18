@@ -33,5 +33,4 @@ public class ResourceUtils {
 		copy(inputStreamReader(in), onto);
 	}
 
-
 }

@@ -15,9 +15,9 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.core.gson;
+package com.iamcontent.io.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.getMemberAsDouble;
+import static com.iamcontent.io.gson.GsonUtils.getMemberAsDouble;
 
 import java.lang.reflect.Type;
 

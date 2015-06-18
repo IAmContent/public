@@ -17,8 +17,8 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.JSON_FILE_EXTENSION;
 import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.io.gson.GsonUtils.JSON_FILE_EXTENSION;
 
 import java.io.Reader;
 

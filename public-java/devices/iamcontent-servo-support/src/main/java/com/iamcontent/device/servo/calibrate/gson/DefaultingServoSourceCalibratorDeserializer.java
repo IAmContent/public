@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.core.gson.GsonUtils.getMemberAsObject;
+import static com.iamcontent.io.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
