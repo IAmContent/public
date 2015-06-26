@@ -19,15 +19,11 @@ package com.iamcontent.robot.robonova1;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-import static com.iamcontent.device.servo.ServoSources.reChanneledServoSource;
-import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
 
-import com.google.common.base.Function;
-import com.iamcontent.device.channel.ChannelIdTranslations;
+import com.iamcontent.core.geom.Geometry.ThreeDimension;
+import com.iamcontent.device.analog.in.AnalogInputSource;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.ServoSources;
-import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.device.servo.calibrate.gson.JsonBasedServoSourceCalibratorReader;
+import com.iamcontent.device.servo.StandardServoConfiguration;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -41,37 +37,29 @@ public class CustomRobonova implements Robonova {
 	public static final String TUNING_CALIBRATOR_NAME = CONFIG_FOLDER + "robonova-servo-tuning-calibration";
 	public static final String CHANNEL_TRANSLATION_NAME = CONFIG_FOLDER + "channels";
 
+	private final StandardServoConfiguration<ServoId> servoConfiguration = servoConfiguration();
+	
 	@Override
 	public ServoSource<ServoId> servos() {
-		return tunedServos();
+		return servoConfiguration.tunedServos();
 	}
 
-	protected ServoSource<ServoId> tunedServos() {
-		return ServoSources.calibratedServoSource(rechanneledServos(), tuningCalibrator());
+	@Override
+	public AnalogInputSource<ThreeDimension> accelerometer() {
+		return tunedAccelerometer();
 	}
-
-	protected ServoSource<ServoId> rechanneledServos() {
-		return reChanneledServoSource(calibratedServos(), channelTranslation());
-	}
-
-	protected ServoSource<Integer> calibratedServos() {
-		return ServoSources.calibratedServoSource(rawServos(), numberedChannelCalibrator(SERVO_CALIBRATOR_NAME));
-	}
-
-	protected ServoSource<Integer> rawServos() {
-		return ServoSources.rawServoSource(defaultServoController());
+	
+	protected StandardServoConfiguration<ServoId> servoConfiguration() {
+		return new StandardServoConfiguration<ServoId>(defaultServoController(), SERVO_CALIBRATOR_NAME, CHANNEL_TRANSLATION_NAME, TUNING_CALIBRATOR_NAME, ServoId.class);
 	}
 
 	protected ServoController<Integer> defaultServoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
 
-	protected Function<ServoId, Integer> channelTranslation() {
-		return ChannelIdTranslations.function(CHANNEL_TRANSLATION_NAME, ServoId.class, Integer.class);
+	private AnalogInputSource<ThreeDimension> tunedAccelerometer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	protected ServoSourceCalibrator<ServoId> tuningCalibrator() {
-		return JsonBasedServoSourceCalibratorReader.read(TUNING_CALIBRATOR_NAME, ServoId.class);
-	}
-	
+
 }

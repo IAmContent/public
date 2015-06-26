@@ -22,7 +22,7 @@ package com.iamcontent.core.geom;
  * @author Greg Elderfield
  */
 public class Geometry {
-	public enum Dimension3 {
+	public enum ThreeDimension {
 		X, Y, Z
 	}
 }
