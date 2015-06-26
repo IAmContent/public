@@ -15,48 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.rechannel;
+package com.iamcontent.device.analog.inout;
 
-import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.channel.ChannelSpecificDelegator;
 
 /**
- * A {@link Servo} that invokes a delegate {@link Servo} but has its own channel id, which may be different from its delegate
+ * An {@link AnalogIO} that invokes a delegate {@link AnalogIO} but has its own channel id, which may be different from its delegate
  * and might not even have the same channel class.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a {@link ReChanneledServo}. 
+ * @param <C> The type used to identify the channel of a {@link ReChanneledAnalogIO}. 
  */
-public class ReChanneledServo<C> implements Servo<C> {
-	private final Servo<?> delegateServo;
-	private final C channel;
+public class ReChanneledAnalogIO<C> extends ChannelSpecificDelegator<AnalogIO<?>, C> implements AnalogIO<C> {
 	
-	public ReChanneledServo(Servo<?> delegateServo, C channel) {
-		this.delegateServo = delegateServo;
-		this.channel = channel;
+	public ReChanneledAnalogIO(AnalogIO<?> delegate, C channel) {
+		super(delegate, channel);
 	}
 
 	@Override
-	public C getChannel() {
-		return channel;
+	public double getValue() {
+		return delegate().getValue();
 	}
 
 	@Override
-	public void setPosition(double position) {
-		delegateServo.setPosition(position);
-	}
-
-	@Override
-	public double getPosition() {
-		return delegateServo.getPosition();
-	}
-
-	@Override
-	public void setSpeed(double speed) {
-		delegateServo.setSpeed(speed);
-	}
-
-	@Override
-	public void setAcceleration(double acceleration) {
-		delegateServo.setAcceleration(acceleration);
+	public void setValue(double v) {
+		delegate().setValue(v);
 	}
 }

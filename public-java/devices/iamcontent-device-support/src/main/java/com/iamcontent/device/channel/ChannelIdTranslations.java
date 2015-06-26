@@ -15,19 +15,21 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.channel;
+
+import com.google.common.base.Function;
+import com.iamcontent.io.gson.JsonBasedMapReader;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * A source of Functions to translate channel identifiers.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of a servo. 
  */
-public interface Servo<C> {
-	C getChannelId();
+public class ChannelIdTranslations {
 	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+	public static <F, T> Function<F, T> function(String translationName, Class<F> fromChannelClass, Class<T> toChannelClass) {
+		return JsonBasedMapReader.function(translationName, fromChannelClass, toChannelClass);
+	}
+	
+	private ChannelIdTranslations() {
+	}
 }

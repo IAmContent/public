@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, support@jarchitect.co.uk
+  @author Greg Elderfield, iamcontent@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,19 +15,25 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.analog.out;
+
+import com.iamcontent.device.channel.ChannelSpecificDelegator;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * An {@link AnalogOutput} that invokes a delegate {@link AnalogOutput} but has its own channel id, which may be different from its delegate
+ * and might not even have the same channel class.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a {@link ReChanneledAnalogOutput}. 
  */
-public interface Servo<C> {
-	C getChannelId();
+public class ReChanneledAnalogOutput<C> extends ChannelSpecificDelegator<AnalogOutput<?>, C> implements AnalogOutput<C> {
 	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+	public ReChanneledAnalogOutput(AnalogOutput<?> delegate, C channel) {
+		super(delegate, channel);
+	}
+
+	@Override
+	public void setValue(double v) {
+		delegate().setValue(v);
+	}
 }

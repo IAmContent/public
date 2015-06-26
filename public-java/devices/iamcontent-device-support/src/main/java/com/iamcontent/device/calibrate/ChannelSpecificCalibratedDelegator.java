@@ -15,19 +15,27 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.calibrate;
+
+import com.google.common.base.Function;
+import com.iamcontent.device.calibrate.CalibratedDelegator;
+import com.iamcontent.device.channel.ChannelSpecific;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * A {@link CalibratedDelegator} that is {@link ChannelSpecific}. 
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify a channel. 
+ * @param <D> The type of the delegate object. 
  */
-public interface Servo<C> {
-	C getChannelId();
+public abstract class ChannelSpecificCalibratedDelegator<C, D extends ChannelSpecific<C>> extends CalibratedDelegator<D> implements ChannelSpecific<C> {
 	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+	public ChannelSpecificCalibratedDelegator(D delegate, Function<Double, Double> calibration) {
+		super(delegate, calibration);
+	}
+
+	@Override
+	public C getChannelId() {
+		return delegate().getChannelId();
+	}
 }

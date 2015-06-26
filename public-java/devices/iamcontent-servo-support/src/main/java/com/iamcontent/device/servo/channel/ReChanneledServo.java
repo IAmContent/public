@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, support@jarchitect.co.uk
+  @author Greg Elderfield, iamcontent@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,49 +15,41 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.raw;
+package com.iamcontent.device.servo.channel;
 
+import com.iamcontent.device.channel.ChannelSpecificDelegator;
 import com.iamcontent.device.servo.Servo;
 
 /**
- * A {@link Servo} that directly delegates its operations to a {@link ServoController} without altering the
- * arguments of the operations.
+ * A {@link Servo} that invokes a delegate {@link Servo} but has its own channel id, which may be different from its delegate
+ * and might not even have the same channel class.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a {@link ReChanneledServo}. 
  */
-public class RawServo<C> implements Servo<C> {
+public class ReChanneledServo<C> extends ChannelSpecificDelegator<Servo<?>, C> implements Servo<C> {
 	
-	private final ServoController<C> controller;
-	private final C channel;
-	
-	public RawServo(ServoController<C> controller, C channel) {
-		this.controller = controller;
-		this.channel = channel;
-	}
-
-	@Override
-	public C getChannelId() {
-		return channel;
+	public ReChanneledServo(Servo<?> delegateServo, C channel) {
+		super(delegateServo, channel);
 	}
 
 	@Override
 	public void setPosition(double position) {
-		controller.setPosition(channel, position);
+		delegate().setPosition(position);
 	}
 
 	@Override
 	public double getPosition() {
-		return controller.getPosition(channel);
+		return delegate().getPosition();
 	}
 
 	@Override
 	public void setSpeed(double speed) {
-		controller.setSpeed(channel, speed);
+		delegate().setSpeed(speed);
 	}
 
 	@Override
 	public void setAcceleration(double acceleration) {
-		controller.setAcceleration(channel, acceleration);
+		delegate().setAcceleration(acceleration);
 	}
 }

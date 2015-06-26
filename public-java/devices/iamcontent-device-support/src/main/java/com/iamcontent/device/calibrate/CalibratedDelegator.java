@@ -15,30 +15,34 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.calibrate;
+package com.iamcontent.device.calibrate;
 
-import com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReader;
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.iamcontent.core.lang.Delegator;
 
 /**
- * A source of {@link ServoSourceCalibrator} objects.
+ * A {@link Delegator} that is calibrated by a function. 
  * @author Greg Elderfield
+ * 
+ * @param <D> The type of the delegate object. 
  */
-public class Calibrators {
-	public static final String CALIBRATION_PROPERTY_KEY = "iamcontent.servo.calibration";
-	public static final String DEFAULT_CALIBRATION_NAME = "servo/default-calibration";
+public abstract class CalibratedDelegator<D> extends Delegator<D> {
 	
-	public static ServoSourceCalibrator<Integer> defaultNumberedChannelCalibrator() {
-		return numberedChannelCalibrator(defaultCalibrationName());
+	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
+	
+	private final Function<Double, Double> calibration;
+	
+	public CalibratedDelegator(D delegate, Function<Double, Double> calibration) {
+		super(delegate);
+		this.calibration = identityIfNull(calibration);
 	}
 
-	public static ServoSourceCalibrator<Integer> numberedChannelCalibrator(String calibratorName) {
-		return JsonBasedCalibratorReader.numberedChannelCalibrator(calibratorName);
+	protected Double applyCalibration(Double input) {
+		return calibration.apply(input);
 	}
-	
-	private static String defaultCalibrationName() {
-		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
-	}
-	
-	private Calibrators() {
+
+	protected static Function<Double, Double> identityIfNull(Function<Double, Double> f) {
+		return f==null ? IDENTITY_FUNCTION : f;
 	}
 }

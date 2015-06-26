@@ -21,8 +21,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="com.iamcontent.device.servo.Servos" project="iamcontent-servo-support" 
-    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/Servos.java" binary="false" 
+  <class id="3" language="java" name="com.iamcontent.device.servo.ServoSources" project="iamcontent-servo-support" 
+    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/ServoSources.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="254" y="217"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 

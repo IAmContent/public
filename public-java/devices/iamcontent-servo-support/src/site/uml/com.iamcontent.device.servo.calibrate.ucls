@@ -56,10 +56,10 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.iamcontent.device.servo.calibrate.Calibrators" 
+  <class id="6" language="java" name="com.iamcontent.device.servo.calibrate.ServoSourceCalibrators" 
     project="iamcontent-servo-support" 
-    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/Calibrators.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/ServoSourceCalibrators.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="232" y="71"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -78,26 +78,26 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <dependency id="8">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <generalization id="9">    
+  <generalization id="8">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <dependency id="10">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
   </dependency>  
+  <realization id="10">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
   <realization id="11">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <realization id="12">    
-    <end type="SOURCE" refId="4"/>    
+  <dependency id="12">    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
-  </realization>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    

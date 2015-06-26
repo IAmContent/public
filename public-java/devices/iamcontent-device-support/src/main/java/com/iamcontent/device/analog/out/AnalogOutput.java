@@ -15,19 +15,16 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.analog.out;
+
+import com.iamcontent.device.channel.ChannelSpecific;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * Represents the operations that can be performed on an analog output channel.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify an analog output channel. 
  */
-public interface Servo<C> {
-	C getChannelId();
-	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+public interface AnalogOutput<C> extends ChannelSpecific<C> {
+	void setValue(double v);
 }

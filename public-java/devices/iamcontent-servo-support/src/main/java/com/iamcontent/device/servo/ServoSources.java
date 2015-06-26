@@ -21,15 +21,15 @@ import com.google.common.base.Function;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
+import com.iamcontent.device.servo.channel.ReChanneledServo;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
-import com.iamcontent.device.servo.rechannel.ReChanneledServo;
 
 /**
  * Methods to facilitate {@link Servo} usage.
  * @author Greg Elderfield
  */
-public final class Servos {
+public final class ServoSources {
 	/**
 	 * @return A {@link ServoSource} of {@link RawServo}s for the given {@link ServoController}.
 	 */
@@ -72,6 +72,6 @@ public final class Servos {
 		};
 	}
 	
-	private Servos() {
+	private ServoSources() {
 	}
 }

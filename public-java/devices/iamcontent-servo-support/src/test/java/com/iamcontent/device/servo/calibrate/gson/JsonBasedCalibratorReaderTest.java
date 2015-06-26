@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.device.servo.calibrate.Calibrators.DEFAULT_CALIBRATION_NAME;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.DEFAULT_CALIBRATION_NAME;
 import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializerTest.checkCalibrator;
 
 import org.junit.Test;
@@ -31,13 +31,13 @@ public class JsonBasedCalibratorReaderTest {
 
 	@Test
 	public void testDefaultCalibrator() {
-		final ServoSourceCalibrator<Integer> actual = JsonBasedCalibratorReader.numberedChannelCalibrator(DEFAULT_CALIBRATION_NAME);
+		final ServoSourceCalibrator<Integer> actual = JsonBasedServoSourceCalibratorReader.numberedChannelCalibrator(DEFAULT_CALIBRATION_NAME);
 		checkDefaultCalibrator(actual);
 	}
 
 	@Test
 	public void testPerServoExampleCalibrator() {
-		final ServoSourceCalibrator<Integer> actual = JsonBasedCalibratorReader.numberedChannelCalibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME);
+		final ServoSourceCalibrator<Integer> actual = JsonBasedServoSourceCalibratorReader.numberedChannelCalibrator(PER_SERVO_EXAMPLE_CALIBRATION_NAME);
 		checkPerServoExampleCalibrator(actual);
 	}
 
@@ -64,6 +64,6 @@ public class JsonBasedCalibratorReaderTest {
 
 	@Test(expected=IORuntimeException.class)
 	public void testNonExistentCalibrator() {
-		JsonBasedCalibratorReader.numberedChannelCalibrator("non-existent");
+		JsonBasedServoSourceCalibratorReader.numberedChannelCalibrator("non-existent");
 	}
 }

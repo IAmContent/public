@@ -24,7 +24,7 @@ import org.junit.Before;
 
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.Servos;
+import com.iamcontent.device.servo.ServoSources;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -74,7 +74,7 @@ public class RawPololuMaestroServoSourceIT extends AbstractPololuMaestroServoCar
 	}
 
 	protected static ServoSource<Integer> rawServoSource() {
-		return Servos.rawServoSource(defaultServoController());
+		return ServoSources.rawServoSource(defaultServoController());
 	}
 
 	private static ServoController<Integer> defaultServoController() {

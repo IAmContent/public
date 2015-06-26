@@ -15,22 +15,15 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.rechannel;
+package com.iamcontent.device.analog.out;
 
-import com.google.common.base.Function;
-import com.iamcontent.device.servo.Servo;
-import com.iamcontent.io.gson.JsonBasedMapReader;
+import com.iamcontent.device.channel.ChannelSource;
 
 /**
- * A source of Functions to translate {@link Servo} channel identifiers.
+ * Represents a source of {@link AnalogOutput}s.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify an analog output channel. 
  */
-public class ChannelTranslations {
-	
-	public static <F, T> Function<F, T> function(String translationName, Class<F> fromChannelClass, Class<T> toChannelClass) {
-		return JsonBasedMapReader.function(translationName, fromChannelClass, toChannelClass);
-	}
-	
-	private ChannelTranslations() {
-	}
+public interface AnalogOutputSource<C> extends ChannelSource<C, AnalogOutput<C>> {
 }

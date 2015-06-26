@@ -15,19 +15,15 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.device.analog.inout;
+
+import com.iamcontent.device.channel.ChannelSource;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * Represents a source of {@link AnalogIO}s.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify an analog input/output channel. 
  */
-public interface Servo<C> {
-	C getChannelId();
-	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+public interface AnalogIOSource<C> extends ChannelSource<C, AnalogIO<C>> {
 }

@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <enumeration id="1" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm.Actuator" 
+  <enumeration id="1" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command" 
     project="iamcontent-robotic-arm-edge" 
     file="/iamcontent-robotic-arm-edge/src/main/java/com/iamcontent/robot/arm/edge/RoboticEdgeArm.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="234" y="361"/>    
+    <position height="-1" width="-1" x="617" y="209"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="false" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="2" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command" 
-    project="iamcontent-robotic-arm-edge" 
-    file="/iamcontent-robotic-arm-edge/src/main/java/com/iamcontent/robot/arm/edge/RoboticEdgeArm.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="619" y="215"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="false" protected="false" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="3" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm" 
+  <class id="2" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm" 
     project="iamcontent-robotic-arm-edge" 
     file="/iamcontent-robotic-arm-edge/src/main/java/com/iamcontent/robot/arm/edge/RoboticEdgeArm.java" binary="false" 
     corner="BOTTOM_RIGHT">    
@@ -34,26 +23,35 @@
       <operations public="true" package="true" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <association id="4">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="5" name="actuator">        
-        <position height="18" width="50" x="395" y="304"/>      
-      </attribute>      
-      <multiplicity id="6" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="false"/>  
-  </association>  
-  <nesting id="7">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </nesting>  
-  <nesting id="8">    
-    <end type="SOURCE" refId="3"/>    
+  <enumeration id="3" language="java" name="com.iamcontent.robot.arm.edge.RoboticEdgeArm.Actuator" 
+    project="iamcontent-robotic-arm-edge" 
+    file="/iamcontent-robotic-arm-edge/src/main/java/com/iamcontent/robot/arm/edge/RoboticEdgeArm.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="230" y="328"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <nesting id="4">    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </nesting>  
+  <nesting id="5">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </nesting>  
+  <association id="6">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="7" name="actuator">        
+        <position height="18" width="50" x="393" y="284"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="false"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    

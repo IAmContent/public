@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, support@jarchitect.co.uk
+  @author Greg Elderfield, iamcontent@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,19 +15,25 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo;
+package com.iamcontent.core.lang;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * Base class for a class that delegates to another instance.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <D> The type of the delegate object. 
  */
-public interface Servo<C> {
-	C getChannelId();
-	
-	void setPosition(double position);
-	double getPosition();
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+public abstract class Delegator<D> {
+	private final D delegate;
+
+	public Delegator(D delegate) {
+		checkNotNull(delegate, "Delegate cannot be null.");
+		this.delegate = delegate;
+	}
+
+	protected D delegate() {
+		return delegate;
+	}
 }

@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, support@jarchitect.co.uk
+  @author Greg Elderfield, iamcontent@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,49 +15,27 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.raw;
+package com.iamcontent.device.channel;
 
-import com.iamcontent.device.servo.Servo;
+import com.iamcontent.core.lang.Delegator;
 
 /**
- * A {@link Servo} that directly delegates its operations to a {@link ServoController} without altering the
- * arguments of the operations.
+ * A class to represent an object that invokes a delegate and has its own channel id.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <D> The type of the delegate. 
+ * @param <C> The type used to identify the channel of the {@link ChannelSpecificDelegator}. 
  */
-public class RawServo<C> implements Servo<C> {
-	
-	private final ServoController<C> controller;
+public class ChannelSpecificDelegator<D, C> extends Delegator<D> implements ChannelSpecific<C> {
 	private final C channel;
 	
-	public RawServo(ServoController<C> controller, C channel) {
-		this.controller = controller;
+	public ChannelSpecificDelegator(D delegate, C channel) {
+		super(delegate);
 		this.channel = channel;
 	}
 
 	@Override
 	public C getChannelId() {
 		return channel;
-	}
-
-	@Override
-	public void setPosition(double position) {
-		controller.setPosition(channel, position);
-	}
-
-	@Override
-	public double getPosition() {
-		return controller.getPosition(channel);
-	}
-
-	@Override
-	public void setSpeed(double speed) {
-		controller.setSpeed(channel, speed);
-	}
-
-	@Override
-	public void setAcceleration(double acceleration) {
-		controller.setAcceleration(channel, acceleration);
 	}
 }

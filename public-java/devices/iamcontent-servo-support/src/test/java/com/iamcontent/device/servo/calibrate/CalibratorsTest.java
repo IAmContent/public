@@ -17,10 +17,10 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
-import static com.iamcontent.device.servo.calibrate.Calibrators.CALIBRATION_PROPERTY_KEY;
-import static com.iamcontent.device.servo.calibrate.Calibrators.DEFAULT_CALIBRATION_NAME;
-import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
-import static com.iamcontent.device.servo.calibrate.Calibrators.defaultNumberedChannelCalibrator;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.CALIBRATION_PROPERTY_KEY;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.DEFAULT_CALIBRATION_NAME;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.defaultNumberedChannelCalibrator;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.PER_SERVO_EXAMPLE_CALIBRATION_NAME;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkDefaultCalibrator;
 import static com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReaderTest.checkPerServoExampleCalibrator;

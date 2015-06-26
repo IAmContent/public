@@ -19,16 +19,16 @@ package com.iamcontent.robot.robonova1;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-import static com.iamcontent.device.servo.Servos.reChanneledServoSource;
-import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
+import static com.iamcontent.device.servo.ServoSources.reChanneledServoSource;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
 
 import com.google.common.base.Function;
+import com.iamcontent.device.channel.ChannelIdTranslations;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.Servos;
+import com.iamcontent.device.servo.ServoSources;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.device.servo.calibrate.gson.JsonBasedCalibratorReader;
+import com.iamcontent.device.servo.calibrate.gson.JsonBasedServoSourceCalibratorReader;
 import com.iamcontent.device.servo.raw.ServoController;
-import com.iamcontent.device.servo.rechannel.ChannelTranslations;
 
 /**
  * A specific implementation of Greg Elderfield's Robonova-1.
@@ -47,7 +47,7 @@ public class CustomRobonova implements Robonova {
 	}
 
 	protected ServoSource<ServoId> tunedServos() {
-		return Servos.calibratedServoSource(rechanneledServos(), tuningCalibrator());
+		return ServoSources.calibratedServoSource(rechanneledServos(), tuningCalibrator());
 	}
 
 	protected ServoSource<ServoId> rechanneledServos() {
@@ -55,11 +55,11 @@ public class CustomRobonova implements Robonova {
 	}
 
 	protected ServoSource<Integer> calibratedServos() {
-		return Servos.calibratedServoSource(rawServos(), numberedChannelCalibrator(SERVO_CALIBRATOR_NAME));
+		return ServoSources.calibratedServoSource(rawServos(), numberedChannelCalibrator(SERVO_CALIBRATOR_NAME));
 	}
 
 	protected ServoSource<Integer> rawServos() {
-		return Servos.rawServoSource(defaultServoController());
+		return ServoSources.rawServoSource(defaultServoController());
 	}
 
 	protected ServoController<Integer> defaultServoController() {
@@ -67,11 +67,11 @@ public class CustomRobonova implements Robonova {
 	}
 
 	protected Function<ServoId, Integer> channelTranslation() {
-		return ChannelTranslations.function(CHANNEL_TRANSLATION_NAME, ServoId.class, Integer.class);
+		return ChannelIdTranslations.function(CHANNEL_TRANSLATION_NAME, ServoId.class, Integer.class);
 	}
 	
 	protected ServoSourceCalibrator<ServoId> tuningCalibrator() {
-		return JsonBasedCalibratorReader.read(TUNING_CALIBRATOR_NAME, ServoId.class);
+		return JsonBasedServoSourceCalibratorReader.read(TUNING_CALIBRATOR_NAME, ServoId.class);
 	}
 	
 }

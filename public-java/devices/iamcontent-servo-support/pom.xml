@@ -22,14 +22,19 @@
     		<artifactId>iamcontent-core</artifactId>
             <version>${project.version}</version>
     	</dependency>
+        <dependency>
+            <groupId>com.iamcontent.public-java.devices</groupId>
+            <artifactId>iamcontent-device-support</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iamcontent.public-java</groupId>
+            <artifactId>iamcontent-io</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     	<dependency>
     		<groupId>com.google.guava</groupId>
     		<artifactId>guava</artifactId>
-    	</dependency>
-    	<dependency>
-    		<groupId>com.iamcontent.public-java</groupId>
-    		<artifactId>iamcontent-io</artifactId>
-    		<version>${project.version}</version>
     	</dependency>
     	
     	<dependency>

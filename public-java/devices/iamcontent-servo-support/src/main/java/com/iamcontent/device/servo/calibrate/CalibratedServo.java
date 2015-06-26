@@ -50,8 +50,8 @@ public class CalibratedServo<C> implements Servo<C> {
 	}
 
 	@Override
-	public C getChannel() {
-		return delegateServo.getChannel();
+	public C getChannelId() {
+		return delegateServo.getChannelId();
 	}
 	
 	@Override

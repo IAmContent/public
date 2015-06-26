@@ -37,12 +37,12 @@ import com.iamcontent.io.util.AbstractResourceReader;
  * @param <C> The type used to identify the channel of a servo.
  * @param <S> The type of the {@link ServoCalibrator} used for each {@link Servo}.
  */
-public class JsonBasedCalibratorReader<C, S extends ServoCalibrator>  extends AbstractResourceReader<ServoSourceCalibrator<C>> {
+public class JsonBasedServoSourceCalibratorReader<C, S extends ServoCalibrator>  extends AbstractResourceReader<ServoSourceCalibrator<C>> {
 
 	private final Class<C> channelClass;
 	private final Class<S> servoCalibratorClass;
 
-	public JsonBasedCalibratorReader(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
+	public JsonBasedServoSourceCalibratorReader(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
 		super(calibratorName, JSON_FILE_EXTENSION);
 		this.channelClass = channelClass;
 		this.servoCalibratorClass = servoCalibratorClass;
@@ -66,8 +66,8 @@ public class JsonBasedCalibratorReader<C, S extends ServoCalibrator>  extends Ab
 		return gson().fromJson(r, DefaultingServoSourceCalibrator.class);
 	}
 
-	private static <C, S extends ServoCalibrator> JsonBasedCalibratorReader<C, S> newInstance(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
-		return new JsonBasedCalibratorReader<C, S>(calibratorName, channelClass, servoCalibratorClass);
+	private static <C, S extends ServoCalibrator> JsonBasedServoSourceCalibratorReader<C, S> newInstance(String calibratorName, Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return new JsonBasedServoSourceCalibratorReader<C, S>(calibratorName, channelClass, servoCalibratorClass);
 	}
 	
 	private Gson gson() {

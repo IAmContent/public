@@ -20,10 +20,10 @@ package com.iamcontent.device.controller.pololu.maestro;
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.DEFAULT_CALIBRATOR_NAME;
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-import static com.iamcontent.device.servo.calibrate.Calibrators.numberedChannelCalibrator;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
 
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.Servos;
+import com.iamcontent.device.servo.ServoSources;
 import com.iamcontent.device.servo.command.ServoCommandLineDriver;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -44,11 +44,11 @@ public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 
 	@Override
 	protected ServoSource<Integer> servoSource() {
-		return Servos.calibratedServoSource(rawServoSource(), numberedChannelCalibrator(DEFAULT_CALIBRATOR_NAME));
+		return ServoSources.calibratedServoSource(rawServoSource(), numberedChannelCalibrator(DEFAULT_CALIBRATOR_NAME));
 	}
 
 	private static ServoSource<Integer> rawServoSource() {
-		return Servos.rawServoSource(defaultServoController());
+		return ServoSources.rawServoSource(defaultServoController());
 	}
 
 	private static ServoController<Integer> defaultServoController() {
