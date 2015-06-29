@@ -18,7 +18,7 @@
 package com.iamcontent.device.analog.in;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.calibrate.CalibrationFunctionSource;
+import com.iamcontent.device.channel.PerChannelSource;
 
 /**
  * Methods to create {@link AnalogInputSource}s.
@@ -27,14 +27,26 @@ import com.iamcontent.device.calibrate.CalibrationFunctionSource;
 public final class AnalogInputSources {
 
 	/**
-	 * @return An {@link AnalogInputSource}, calibrated by applying the given calibration function to values before they are returned. 
+	 * @return An {@link AnalogInputSource} of {@link RawAnalogInput}s for the given {@link AnalogInputController}.
 	 */
-	public static <C> AnalogInputSource<C> calibratedAnalogInputSource(final AnalogInputSource<C> delegate, final CalibrationFunctionSource<C> calibration) {
+	public static <C> AnalogInputSource<C> rawAnalogInputSource(final AnalogInputController<C> controller) {
 		return new AnalogInputSource<C>() {
 			@Override
-			public AnalogInput<C> getChannel(C channel) {
-				final AnalogInput<C> input = delegate.getChannel(channel);
-				final Function<Double, Double> calibrationFunction = calibration.getCalibrationFunction(channel);
+			public AnalogInput forChannel(C channelId) {
+				return new RawAnalogInput<C>(controller, channelId);
+			}
+		};
+	}
+	
+	/**
+	 * @return An {@link AnalogInputSource}, calibrated by applying the given calibration function to values before they are returned. 
+	 */
+	public static <C> AnalogInputSource<C> calibratedAnalogInputSource(final AnalogInputSource<C> delegate, final PerChannelSource<C, Function<Double, Double>> calibration) {
+		return new AnalogInputSource<C>() {
+			@Override
+			public AnalogInput forChannel(C channelId) {
+				final AnalogInput input = delegate.forChannel(channelId);
+				final Function<Double, Double> calibrationFunction = calibration.forChannel(channelId);
 				return new CalibratedAnalogInput<C>(input, calibrationFunction);
 			}
 		};
@@ -47,10 +59,9 @@ public final class AnalogInputSources {
 	public static <C, D> AnalogInputSource<C> reChanneledAnalogInputSource(final AnalogInputSource<D> delegate, final Function<C, D> channelTranslation) {
 		return new AnalogInputSource<C>() {
 			@Override
-			public AnalogInput<C> getChannel(C channel) {
-				final D delegateChannel = channelTranslation.apply(channel);
-				final AnalogInput<D> delegateInput = delegate.getChannel(delegateChannel);
-				return new ReChanneledAnalogInput<C>(delegateInput, channel);
+			public AnalogInput forChannel(C channelId) {
+				final D delegateChannel = channelTranslation.apply(channelId);
+				return delegate.forChannel(delegateChannel);
 			}
 		};
 	}

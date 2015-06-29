@@ -27,16 +27,16 @@ import com.iamcontent.device.analog.out.CalibratedAnalogOutput;
  * 
  * @param <C> The type used to identify the channel. 
  */
-public class CalibratedAnalogIO<C> extends CalibratedAnalogOutput<C> implements AnalogIO<C> {
+public class CalibratedAnalogIO<C> extends CalibratedAnalogOutput<C> implements AnalogIO {
 	
 	private final Function<Double, Double> inputCalibration;
 	
-	public CalibratedAnalogIO(AnalogIO<C> delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
+	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
 		super(delegate, outputCalibration);
 		this.inputCalibration = identityIfNull(inputCalibration);
 	}
 
-	public CalibratedAnalogIO(AnalogIO<C> delegate, Converter<Double, Double> calibration) {
+	public CalibratedAnalogIO(AnalogIO delegate, Converter<Double, Double> calibration) {
 		this(delegate, calibration, calibration.reverse());
 	}
 
@@ -52,7 +52,7 @@ public class CalibratedAnalogIO<C> extends CalibratedAnalogOutput<C> implements 
 		return inputCalibration.apply(v);
 	}
 	
-	protected AnalogIO<C> delegate() {
-		return (AnalogIO<C>) super.delegate();
+	protected AnalogIO delegate() {
+		return (AnalogIO) super.delegate();
 	}
 }

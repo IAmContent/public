@@ -15,27 +15,14 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.calibrate;
-
-import com.google.common.base.Function;
-import com.iamcontent.device.calibrate.CalibratedDelegator;
-import com.iamcontent.device.channel.ChannelSpecific;
+package com.iamcontent.device.analog.out;
 
 /**
- * A {@link CalibratedDelegator} that is {@link ChannelSpecific}. 
+ * Defines an analog output controller that accepts 'raw' (i.e. non-normalized, device-specific) values.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify a channel. 
- * @param <D> The type of the delegate object. 
+ * @param <C> The type used to identify the channel of an analog output. 
  */
-public abstract class ChannelSpecificCalibratedDelegator<C, D extends ChannelSpecific<C>> extends CalibratedDelegator<D> implements ChannelSpecific<C> {
-	
-	public ChannelSpecificCalibratedDelegator(D delegate, Function<Double, Double> calibration) {
-		super(delegate, calibration);
-	}
-
-	@Override
-	public C getChannelId() {
-		return delegate().getChannelId();
-	}
+public interface AnalogOutputController<C> {
+	void setValue(C channel, double value);
 }

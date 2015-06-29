@@ -17,12 +17,14 @@
  */
 package com.iamcontent.device.analog.inout;
 
-import com.iamcontent.device.analog.in.AnalogInput;
-import com.iamcontent.device.analog.out.AnalogOutput;
+import com.iamcontent.device.analog.in.AnalogInputController;
+import com.iamcontent.device.analog.out.AnalogOutputController;
 
 /**
- * Represents the operations that can be performed on an analog input/output channel.
+ * Defines an analog I/O controller that deals with 'raw' (i.e. non-normalized, device-specific) values.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of an analog input/output. 
  */
-public interface AnalogIO extends AnalogInput, AnalogOutput {
+public interface AnalogIOController<C> extends AnalogInputController<C>, AnalogOutputController<C> {
 }

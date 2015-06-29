@@ -18,7 +18,7 @@
 package com.iamcontent.device.analog.in;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.calibrate.ChannelSpecificCalibratedDelegator;
+import com.iamcontent.device.calibrate.CalibratedDelegator;
 
 /**
  * An {@link AnalogInput} that is calibrated by applying the given calibration function to values before they are returned. 
@@ -26,9 +26,9 @@ import com.iamcontent.device.calibrate.ChannelSpecificCalibratedDelegator;
  * 
  * @param <C> The type used to identify the channel. 
  */
-public class CalibratedAnalogInput<C> extends ChannelSpecificCalibratedDelegator<C, AnalogInput<C>> implements AnalogInput<C> {
+public class CalibratedAnalogInput<C> extends CalibratedDelegator<AnalogInput> implements AnalogInput {
 	
-	public CalibratedAnalogInput(AnalogInput<C> delegate, Function<Double, Double> calibration) {
+	public CalibratedAnalogInput(AnalogInput delegate, Function<Double, Double> calibration) {
 		super(delegate, calibration);
 	}
 

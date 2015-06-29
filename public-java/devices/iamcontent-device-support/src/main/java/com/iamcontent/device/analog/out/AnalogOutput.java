@@ -17,14 +17,10 @@
  */
 package com.iamcontent.device.analog.out;
 
-import com.iamcontent.device.channel.ChannelSpecific;
-
 /**
  * Represents the operations that can be performed on an analog output channel.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify an analog output channel. 
  */
-public interface AnalogOutput<C> extends ChannelSpecific<C> {
+public interface AnalogOutput {
 	void setValue(double v);
 }

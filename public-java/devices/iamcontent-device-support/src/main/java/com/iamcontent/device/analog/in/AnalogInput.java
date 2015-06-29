@@ -17,14 +17,10 @@
  */
 package com.iamcontent.device.analog.in;
 
-import com.iamcontent.device.channel.ChannelSpecific;
-
 /**
  * Represents the operations that can be performed on an analog input channel.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify an analog input channel. 
  */
-public interface AnalogInput<C> extends ChannelSpecific<C> {
+public interface AnalogInput {
 	double getValue();
 }

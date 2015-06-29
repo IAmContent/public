@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, iamcontent@jarchitect.co.uk
+  @author Greg Elderfield, support@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,30 +15,14 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
-
-import com.iamcontent.device.channel.ChannelSpecificDelegator;
+package com.iamcontent.device.analog.in;
 
 /**
- * An {@link AnalogIO} that invokes a delegate {@link AnalogIO} but has its own channel id, which may be different from its delegate
- * and might not even have the same channel class.
+ * Defines an analog input controller that returns 'raw' (i.e. non-normalized, device-specific) values.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a {@link ReChanneledAnalogIO}. 
+ * @param <C> The type used to identify the channel of an analog input. 
  */
-public class ReChanneledAnalogIO<C> extends ChannelSpecificDelegator<AnalogIO<?>, C> implements AnalogIO<C> {
-	
-	public ReChanneledAnalogIO(AnalogIO<?> delegate, C channel) {
-		super(delegate, channel);
-	}
-
-	@Override
-	public double getValue() {
-		return delegate().getValue();
-	}
-
-	@Override
-	public void setValue(double v) {
-		delegate().setValue(v);
-	}
+public interface AnalogInputController<C> {
+	double getValue(C channel);
 }

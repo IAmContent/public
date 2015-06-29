@@ -29,5 +29,5 @@ public interface CalibrationFunctionSource<C> {
 	/**
 	 * @return The calibration function for the given channel.
 	 */
-	Function<Double, Double> getCalibrationFunction(C channel);
+	Function<Double, Double> getValueCalibration(C channel);
 }

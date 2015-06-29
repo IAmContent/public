@@ -15,15 +15,27 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.channel;
+package com.iamcontent.device.analog.out;
 
 /**
- * Represents a source of channels.
+ * An {@link AnalogOutput} that directly delegates its operations to a {@link AnalogOutputController} without altering the
+ * arguments of the operations.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify a channel. 
- * @param <T> The type of channel. 
+ * @param <C> The type used to identify the channel of an {@link AnalogOutput}. 
  */
-public interface ChannelSource<C, T extends ChannelSpecific<C>> {
-	T getChannel(C channelId);
+public class RawAnalogOutput<C> implements AnalogOutput {
+	
+	protected final AnalogOutputController<C> controller;
+	protected final C channelId;
+	
+	public RawAnalogOutput(AnalogOutputController<C> controller, C channelId) {
+		this.controller = controller;
+		this.channelId = channelId;
+	}
+
+	@Override
+	public void setValue(double v) {
+		controller.setValue(channelId, v);
+	}
 }

@@ -15,14 +15,27 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
-
-import com.iamcontent.device.analog.in.AnalogInput;
-import com.iamcontent.device.analog.out.AnalogOutput;
+package com.iamcontent.device.analog.in;
 
 /**
- * Represents the operations that can be performed on an analog input/output channel.
+ * An {@link AnalogInput} that directly delegates its operations to a {@link AnalogInputController} without altering the
+ * results of the operations.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of an {@link AnalogInput}. 
  */
-public interface AnalogIO extends AnalogInput, AnalogOutput {
+public class RawAnalogInput<C> implements AnalogInput {
+	
+	private final AnalogInputController<C> controller;
+	private final C channelId;
+	
+	public RawAnalogInput(AnalogInputController<C> controller, C channelId) {
+		this.controller = controller;
+		this.channelId = channelId;
+	}
+
+	@Override
+	public double getValue() {
+		return controller.getValue(channelId);
+	}
 }

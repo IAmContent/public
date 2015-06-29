@@ -18,7 +18,7 @@
 package com.iamcontent.device.analog.out;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.calibrate.ChannelSpecificCalibratedDelegator;
+import com.iamcontent.device.calibrate.CalibratedDelegator;
 
 /**
  * An {@link AnalogOutput} that is calibrated by applying the given calibration function to values before they are set. 
@@ -26,9 +26,9 @@ import com.iamcontent.device.calibrate.ChannelSpecificCalibratedDelegator;
  * 
  * @param <C> The type used to identify the channel. 
  */
-public class CalibratedAnalogOutput<C> extends ChannelSpecificCalibratedDelegator<C, AnalogOutput<C>> implements AnalogOutput<C> {
+public class CalibratedAnalogOutput<C> extends CalibratedDelegator<AnalogOutput> implements AnalogOutput {
 	
-	public CalibratedAnalogOutput(AnalogOutput<C> delegate, Function<Double, Double> calibration) {
+	public CalibratedAnalogOutput(AnalogOutput delegate, Function<Double, Double> calibration) {
 		super(delegate, calibration);
 	}
 

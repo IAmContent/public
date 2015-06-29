@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.analog.out;
 
-import com.iamcontent.device.channel.ChannelSource;
+import com.iamcontent.device.channel.PerChannelSource;
 
 /**
  * Represents a source of {@link AnalogOutput}s.
@@ -25,5 +25,5 @@ import com.iamcontent.device.channel.ChannelSource;
  * 
  * @param <C> The type used to identify an analog output channel. 
  */
-public interface AnalogOutputSource<C> extends ChannelSource<C, AnalogOutput<C>> {
+public interface AnalogOutputSource<C> extends PerChannelSource<C, AnalogOutput> {
 }

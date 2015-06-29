@@ -26,15 +26,14 @@ import com.iamcontent.core.lang.Delegator;
  * @param <D> The type of the delegate. 
  * @param <C> The type used to identify the channel of the {@link ChannelSpecificDelegator}. 
  */
-public class ChannelSpecificDelegator<D, C> extends Delegator<D> implements ChannelSpecific<C> {
-	private final C channel;
+public class ChannelSpecificDelegator<D, C> extends Delegator<D> {
+	protected final C channel;
 	
 	public ChannelSpecificDelegator(D delegate, C channel) {
 		super(delegate);
 		this.channel = channel;
 	}
 
-	@Override
 	public C getChannelId() {
 		return channel;
 	}

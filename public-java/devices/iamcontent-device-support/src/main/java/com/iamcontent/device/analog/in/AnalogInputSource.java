@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.analog.in;
 
-import com.iamcontent.device.channel.ChannelSource;
+import com.iamcontent.device.channel.PerChannelSource;
 
 /**
  * Represents a source of {@link AnalogInput}s.
@@ -25,5 +25,5 @@ import com.iamcontent.device.channel.ChannelSource;
  * 
  * @param <C> The type used to identify an analog input channel. 
  */
-public interface AnalogInputSource<C> extends ChannelSource<C, AnalogInput<C>> {
+public interface AnalogInputSource<C> extends PerChannelSource<C, AnalogInput> {
 }

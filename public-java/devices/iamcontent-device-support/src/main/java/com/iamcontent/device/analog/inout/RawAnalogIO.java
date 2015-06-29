@@ -1,7 +1,7 @@
 /**
   IAmContent Public Libraries.
   Copyright (C) 2015 Greg Elderfield
-  @author Greg Elderfield, iamcontent@jarchitect.co.uk
+  @author Greg Elderfield, support@jarchitect.co.uk
  
   This program is free software; you can redistribute it and/or modify it under the terms of the
   GNU General Public License as published by the Free Software Foundation; either version 2 of 
@@ -15,25 +15,29 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.out;
+package com.iamcontent.device.analog.inout;
 
-import com.iamcontent.device.channel.ChannelSpecificDelegator;
+import com.iamcontent.device.analog.out.RawAnalogOutput;
 
 /**
- * An {@link AnalogOutput} that invokes a delegate {@link AnalogOutput} but has its own channel id, which may be different from its delegate
- * and might not even have the same channel class.
+ * An {@link AnalogIO} that directly delegates its operations to an {@link AnalogIOController} without altering the
+ * results of the operations.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a {@link ReChanneledAnalogOutput}. 
+ * @param <C> The type used to identify the channel of an {@link AnalogIO}. 
  */
-public class ReChanneledAnalogOutput<C> extends ChannelSpecificDelegator<AnalogOutput<?>, C> implements AnalogOutput<C> {
+public class RawAnalogIO<C> extends RawAnalogOutput<C> implements AnalogIO {
 	
-	public ReChanneledAnalogOutput(AnalogOutput<?> delegate, C channel) {
-		super(delegate, channel);
+	public RawAnalogIO(AnalogIOController<C> controller, C channelId) {
+		super(controller, channelId);
 	}
 
 	@Override
-	public void setValue(double v) {
-		delegate().setValue(v);
+	public double getValue() {
+		return ioController().getValue(channelId);
+	}
+
+	private AnalogIOController<C> ioController() {
+		return (AnalogIOController<C>) controller;
 	}
 }
