@@ -69,7 +69,7 @@ public class CalibratedPololuMaestroServoSourceIT extends AbstractPololuMaestroS
 		return getServo(channel).getPosition();
 	}
 	
-	private Servo<Integer> getServo(int channel) {
+	private Servo getServo(int channel) {
 		return calibratedServoSource.getServo(channel);
 	}
 

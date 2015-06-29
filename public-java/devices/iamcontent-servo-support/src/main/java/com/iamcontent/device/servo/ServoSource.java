@@ -24,5 +24,5 @@ package com.iamcontent.device.servo;
  * @param <C> The type used to identify the channel of a servo. 
  */
 public interface ServoSource<C> {
-	Servo<C> getServo(C channel);
+	Servo getServo(C channelId);
 }

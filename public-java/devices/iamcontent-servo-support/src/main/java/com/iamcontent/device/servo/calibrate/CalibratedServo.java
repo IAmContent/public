@@ -30,17 +30,17 @@ import com.iamcontent.device.servo.Servo;
  * 
  * @param <C> The type used to identify the channel of a servo. 
  */
-public class CalibratedServo<C> implements Servo<C> {
+public class CalibratedServo implements Servo {
 	
 	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
 	
-	private final Servo<C> delegateServo;
+	private final Servo delegateServo;
 	private final Function<Double, Double> toDelegatePositionConverter;
 	private final Function<Double, Double> fromDelegatePositionConverter;
 	private final Function<Double, Double> toDelegateSpeedConverter;
 	private final Function<Double, Double> toDelegateAccelerationConverter;
 	
-	public CalibratedServo(Servo<C> delegateServo, ServoCalibrator calibrator) {
+	public CalibratedServo(Servo delegateServo, ServoCalibrator calibrator) {
 		checkArguments(delegateServo, calibrator);
 		this.delegateServo = delegateServo;
 		this.toDelegatePositionConverter = identityIfNull(calibrator.getPositionConverter());
@@ -49,11 +49,6 @@ public class CalibratedServo<C> implements Servo<C> {
 		this.toDelegateAccelerationConverter = identityIfNull(calibrator.getAccelerationConverter());
 	}
 
-	@Override
-	public C getChannelId() {
-		return delegateServo.getChannelId();
-	}
-	
 	@Override
 	public void setPosition(double position) {
 		delegateServo.setPosition(toDelegatePosition(position));
@@ -92,7 +87,7 @@ public class CalibratedServo<C> implements Servo<C> {
 		return toDelegateAccelerationConverter.apply(acceleration);
 	}
 
-	private static void checkArguments(Servo<?> delegateServo, ServoCalibrator calibrator) {
+	private static void checkArguments(Servo delegateServo, ServoCalibrator calibrator) {
 		checkNotNull(delegateServo, "Delegate servo cannot be null.");
 		checkNotNull(calibrator, "Calibrator cannot be null.");
 		checkNotNull(calibrator.getPositionConverter(), "PositionConverter of calibrator cannot be null.");

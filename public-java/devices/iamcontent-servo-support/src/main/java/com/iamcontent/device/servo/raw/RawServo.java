@@ -26,7 +26,7 @@ import com.iamcontent.device.servo.Servo;
  * 
  * @param <C> The type used to identify the channel of a servo. 
  */
-public class RawServo<C> implements Servo<C> {
+public class RawServo<C> implements Servo {
 	
 	private final ServoController<C> controller;
 	private final C channel;
@@ -34,11 +34,6 @@ public class RawServo<C> implements Servo<C> {
 	public RawServo(ServoController<C> controller, C channel) {
 		this.controller = controller;
 		this.channel = channel;
-	}
-
-	@Override
-	public C getChannelId() {
-		return channel;
 	}
 
 	@Override

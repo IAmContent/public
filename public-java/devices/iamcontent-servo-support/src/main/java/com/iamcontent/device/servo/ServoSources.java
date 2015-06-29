@@ -21,7 +21,6 @@ import com.google.common.base.Function;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.device.servo.channel.ReChanneledServo;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -36,7 +35,7 @@ public final class ServoSources {
 	public static <C> ServoSource<C> rawServoSource(final ServoController<C> controller) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo<C> getServo(C channel) {
+			public Servo getServo(C channel) {
 				return new RawServo<C>(controller, channel);
 			}
 		};
@@ -49,10 +48,10 @@ public final class ServoSources {
 	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator<C> calibrator) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo<C> getServo(C channel) {
-				final Servo<C> delegateServo = delegate.getServo(channel);
+			public Servo getServo(C channel) {
+				final Servo delegateServo = delegate.getServo(channel);
 				final ServoCalibrator servoCalibrator = calibrator.getServoCalibrator(channel);
-				return new CalibratedServo<C>(delegateServo, servoCalibrator);
+				return new CalibratedServo(delegateServo, servoCalibrator);
 			}
 		};
 	}
@@ -64,10 +63,9 @@ public final class ServoSources {
 	public static <C, D> ServoSource<C> reChanneledServoSource(final ServoSource<D> delegate, final Function<C, D> channelTranslation) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo<C> getServo(C channel) {
+			public Servo getServo(C channel) {
 				final D delegateChannel = channelTranslation.apply(channel);
-				final Servo<D> delegateServo = delegate.getServo(delegateChannel);
-				return new ReChanneledServo<C>(delegateServo, channel);
+				return delegate.getServo(delegateChannel);
 			}
 		};
 	}

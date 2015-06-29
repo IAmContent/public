@@ -69,7 +69,7 @@ public class RawPololuMaestroServoSourceIT extends AbstractPololuMaestroServoCar
 		return getServo(channel).getPosition();
 	}
 	
-	private Servo<Integer> getServo(int channel) {
+	private Servo getServo(int channel) {
 		return rawServoSource.getServo(channel);
 	}
 
