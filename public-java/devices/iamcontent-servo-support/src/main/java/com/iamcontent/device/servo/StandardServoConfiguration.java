@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo;
 
-import static com.iamcontent.device.servo.ServoSources.reChanneledServoSource;
+import static com.iamcontent.device.servo.ServoSources.*;
 import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
 
 import com.google.common.base.Function;
@@ -34,42 +34,47 @@ import com.iamcontent.device.servo.raw.ServoController;
 public class StandardServoConfiguration<C> {
 	
 	private final ServoController<Integer> servoController;
-	private final String servoCalibratorName;
-	private final String channelTranslationName;
-	private final String tuningCalibratorName;
-	private final Class<C> channelIdClass;
+	
+	private final ServoSource<Integer> rawServos;
+	private final ServoSource<Integer> normalizedServos;
+	private final ServoSource<C> rechanneledServos;
+	private final ServoSource<C> tunedServos;
 	
 	public StandardServoConfiguration(ServoController<Integer> servoController, String servoCalibratorName, String channelTranslationName,
 			String tuningCalibratorName, Class<C> channelIdClass) {
 		
 		this.servoController = servoController;
-		this.servoCalibratorName = servoCalibratorName;
-		this.channelTranslationName = channelTranslationName;
-		this.tuningCalibratorName = tuningCalibratorName;
-		this.channelIdClass = channelIdClass;
+		this.rawServos = rawServoSource(servoController);
+		this.normalizedServos = calibratedServoSource(rawServos, numberedChannelCalibrator(servoCalibratorName));
+		this.rechanneledServos = reChanneledServoSource(normalizedServos, channelTranslation(channelTranslationName, channelIdClass));
+		this.tunedServos = calibratedServoSource(rechanneledServos, tuningCalibrator(tuningCalibratorName, channelIdClass));
 	}
 
-	public ServoSource<C> tunedServos() {
-		return ServoSources.calibratedServoSource(rechanneledServos(), tuningCalibrator());
+	public ServoController<Integer> getServoController() {
+		return servoController;
 	}
 
-	protected ServoSource<C> rechanneledServos() {
-		return reChanneledServoSource(calibratedServos(), channelTranslation());
+	public ServoSource<Integer> getRawServos() {
+		return rawServos;
 	}
 
-	protected ServoSource<Integer> calibratedServos() {
-		return ServoSources.calibratedServoSource(rawServos(), numberedChannelCalibrator(servoCalibratorName));
+	public ServoSource<Integer> getNormalizedServos() {
+		return normalizedServos;
 	}
 
-	protected ServoSource<Integer> rawServos() {
-		return ServoSources.rawServoSource(servoController);
+	public ServoSource<C> getRechanneledServos() {
+		return rechanneledServos;
 	}
 
-	protected Function<C, Integer> channelTranslation() {
+	public ServoSource<C> getTunedServos() {
+		return tunedServos;
+	}
+
+	protected Function<C, Integer> channelTranslation(String channelTranslationName, Class<C> channelIdClass) {
 		return ChannelIdTranslations.function(channelTranslationName, channelIdClass, Integer.class);
 	}
 	
-	protected ServoSourceCalibrator<C> tuningCalibrator() {
+	protected ServoSourceCalibrator<C> tuningCalibrator(String tuningCalibratorName, Class<C> channelIdClass) {
 		return JsonBasedServoSourceCalibratorReader.read(tuningCalibratorName, channelIdClass);
 	}
 }

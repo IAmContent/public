@@ -41,7 +41,7 @@ public class CustomRobonova implements Robonova {
 	
 	@Override
 	public ServoSource<ServoId> servos() {
-		return servoConfiguration.tunedServos();
+		return servoConfiguration.getTunedServos();
 	}
 
 	@Override
@@ -58,8 +58,6 @@ public class CustomRobonova implements Robonova {
 	}
 
 	private AnalogInputSource<ThreeDimension> tunedAccelerometer() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
