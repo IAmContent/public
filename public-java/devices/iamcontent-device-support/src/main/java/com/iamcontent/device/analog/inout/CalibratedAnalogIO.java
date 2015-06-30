@@ -24,10 +24,8 @@ import com.iamcontent.device.analog.out.CalibratedAnalogOutput;
 /**
  * An {@link AnalogIO} that is calibrated by applying the given calibration functions to values before they are set or returned. 
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel. 
  */
-public class CalibratedAnalogIO<C> extends CalibratedAnalogOutput<C> implements AnalogIO {
+public class CalibratedAnalogIO extends CalibratedAnalogOutput implements AnalogIO {
 	
 	private final Function<Double, Double> inputCalibration;
 	

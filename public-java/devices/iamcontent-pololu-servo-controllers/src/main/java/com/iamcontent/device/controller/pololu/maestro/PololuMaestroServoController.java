@@ -38,12 +38,12 @@ public class PololuMaestroServoController implements ServoController<Integer> {
 	}
 
 	@Override
-	public void setPosition(Integer channel, double value) {
+	public void setValue(Integer channel, double value) {
 		card.setRawPosition(asShort(channel), (short)value);
 	}
 
 	@Override
-	public double getPosition(Integer channel) {
+	public double getValue(Integer channel) {
 		return card.getRawPosition(asShort(channel));
 	}
 

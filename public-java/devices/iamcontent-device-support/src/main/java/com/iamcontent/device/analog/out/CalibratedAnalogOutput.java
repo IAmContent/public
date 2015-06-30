@@ -23,10 +23,8 @@ import com.iamcontent.device.calibrate.CalibratedDelegator;
 /**
  * An {@link AnalogOutput} that is calibrated by applying the given calibration function to values before they are set. 
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel. 
  */
-public class CalibratedAnalogOutput<C> extends CalibratedDelegator<AnalogOutput> implements AnalogOutput {
+public class CalibratedAnalogOutput extends CalibratedDelegator<AnalogOutput> implements AnalogOutput {
 	
 	public CalibratedAnalogOutput(AnalogOutput delegate, Function<Double, Double> calibration) {
 		super(delegate, calibration);

@@ -18,9 +18,9 @@
 package com.iamcontent.device.servo;
 
 import com.google.common.base.Function;
+import com.iamcontent.device.channel.PerChannelSource;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
-import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -35,22 +35,22 @@ public final class ServoSources {
 	public static <C> ServoSource<C> rawServoSource(final ServoController<C> controller) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo getServo(C channel) {
+			public Servo forChannel(C channel) {
 				return new RawServo<C>(controller, channel);
 			}
 		};
 	}
 
 	/**
-	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given {@link ServoSourceCalibrator}. 
+	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given per-channel calibrator. 
 	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
-	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator<C> calibrator) {
+	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final PerChannelSource<C, ServoCalibrator> calibrator) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo getServo(C channel) {
-				final Servo delegateServo = delegate.getServo(channel);
-				final ServoCalibrator servoCalibrator = calibrator.getServoCalibrator(channel);
+			public Servo forChannel(C channel) {
+				final Servo delegateServo = delegate.forChannel(channel);
+				final ServoCalibrator servoCalibrator = calibrator.forChannel(channel);
 				return new CalibratedServo(delegateServo, servoCalibrator);
 			}
 		};
@@ -63,9 +63,9 @@ public final class ServoSources {
 	public static <C, D> ServoSource<C> reChanneledServoSource(final ServoSource<D> delegate, final Function<C, D> channelTranslation) {
 		return new ServoSource<C>() {
 			@Override
-			public Servo getServo(C channel) {
+			public Servo forChannel(C channel) {
 				final D delegateChannel = channelTranslation.apply(channel);
-				return delegate.getServo(delegateChannel);
+				return delegate.forChannel(delegateChannel);
 			}
 		};
 	}

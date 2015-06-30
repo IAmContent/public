@@ -17,12 +17,13 @@
  */
 package com.iamcontent.device.servo;
 
+import com.iamcontent.device.channel.PerChannelSource;
+
 /**
  * Represents a source of {@link Servo}s.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
-public interface ServoSource<C> {
-	Servo getServo(C channelId);
+public interface ServoSource<C> extends PerChannelSource<C, Servo>{
 }

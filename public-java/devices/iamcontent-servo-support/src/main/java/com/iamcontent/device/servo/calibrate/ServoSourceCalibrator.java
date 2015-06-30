@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
+import com.iamcontent.device.channel.PerChannelSource;
 import com.iamcontent.device.servo.ServoSource;
 
 /**
@@ -25,9 +26,5 @@ import com.iamcontent.device.servo.ServoSource;
  * 
  * @param <C> The type used to identify the channel of a servo. 
  */
-public interface ServoSourceCalibrator<C> {
-	/**
-	 * @return The {@link ServoCalibrator} for the given channel.
-	 */
-	ServoCalibrator getServoCalibrator(C channel);
+public interface ServoSourceCalibrator<C> extends PerChannelSource<C, ServoCalibrator> {
 }

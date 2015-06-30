@@ -17,60 +17,29 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.base.Function;
-import com.google.common.base.Functions;
+import com.iamcontent.device.analog.inout.CalibratedAnalogIO;
 import com.iamcontent.device.servo.Servo;
 
 /**
  * A {@link Servo} that alters its parameter values according to its {@link ServoCalibrator} and invokes a delegate {@link Servo}
  * with the altered parameter values.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of a servo. 
  */
-public class CalibratedServo implements Servo {
+public class CalibratedServo extends CalibratedAnalogIO implements Servo {
 	
-	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
-	
-	private final Servo delegateServo;
-	private final Function<Double, Double> toDelegatePositionConverter;
-	private final Function<Double, Double> fromDelegatePositionConverter;
 	private final Function<Double, Double> toDelegateSpeedConverter;
 	private final Function<Double, Double> toDelegateAccelerationConverter;
 	
 	public CalibratedServo(Servo delegateServo, ServoCalibrator calibrator) {
-		checkArguments(delegateServo, calibrator);
-		this.delegateServo = delegateServo;
-		this.toDelegatePositionConverter = identityIfNull(calibrator.getPositionConverter());
-		this.fromDelegatePositionConverter = identityIfNull(calibrator.getPositionConverter().reverse());
+		super(delegateServo, calibrator.getPositionConverter());
 		this.toDelegateSpeedConverter = identityIfNull(calibrator.getSpeedConverter());
 		this.toDelegateAccelerationConverter = identityIfNull(calibrator.getAccelerationConverter());
 	}
 
 	@Override
-	public void setPosition(double position) {
-		delegateServo.setPosition(toDelegatePosition(position));
-	}
-
-	private double toDelegatePosition(double position) {
-		return toDelegatePositionConverter.apply(position);
-	}
-
-	@Override
-	public double getPosition() {
-		return fromDelegatePosition(delegateServo.getPosition());
-	}
-	
-	private double fromDelegatePosition(double position) {
-		return fromDelegatePositionConverter.apply(position);
-	}
-
-	@Override
 	public void setSpeed(double speed) {
-		if (toDelegateSpeedConverter!=null)
-			delegateServo.setSpeed(toDelegateSpeed(speed));
+		servo().setSpeed(toDelegateSpeed(speed));
 	}
 
 	private double toDelegateSpeed(double speed) {
@@ -79,21 +48,14 @@ public class CalibratedServo implements Servo {
 
 	@Override
 	public void setAcceleration(double acceleration) {
-		if (toDelegateAccelerationConverter!=null)
-			delegateServo.setAcceleration(toDelegateAcceleration(acceleration));
+		servo().setAcceleration(toDelegateAcceleration(acceleration));
 	}
-	
+
 	private double toDelegateAcceleration(double acceleration) {
 		return toDelegateAccelerationConverter.apply(acceleration);
 	}
-
-	private static void checkArguments(Servo delegateServo, ServoCalibrator calibrator) {
-		checkNotNull(delegateServo, "Delegate servo cannot be null.");
-		checkNotNull(calibrator, "Calibrator cannot be null.");
-		checkNotNull(calibrator.getPositionConverter(), "PositionConverter of calibrator cannot be null.");
-	}
-
-	private static Function<Double, Double> identityIfNull(Function<Double, Double> f) {
-		return f==null ? IDENTITY_FUNCTION : f;
+	
+	private Servo servo() {
+		return (Servo) delegate();
 	}
 }

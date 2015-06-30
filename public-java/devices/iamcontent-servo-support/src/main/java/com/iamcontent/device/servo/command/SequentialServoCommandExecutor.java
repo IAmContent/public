@@ -55,16 +55,16 @@ public class SequentialServoCommandExecutor<C> implements ServoCommandExecutor<C
 
 	private void setAcceleration(C channel, Double acceleration) {
 		if (acceleration!=null)
-			servoSource.getServo(channel).setAcceleration(acceleration);
+			servoSource.forChannel(channel).setAcceleration(acceleration);
 	}
 
 	private void setSpeed(C channel, Double speed) {
 		if (speed!=null)
-			servoSource.getServo(channel).setSpeed(speed);
+			servoSource.forChannel(channel).setSpeed(speed);
 	}
 
 	private void setPosition(C channel, Double position) {
 		if (position!=null)
-			servoSource.getServo(channel).setPosition(position);
+			servoSource.forChannel(channel).setValue(position);
 	}
 }

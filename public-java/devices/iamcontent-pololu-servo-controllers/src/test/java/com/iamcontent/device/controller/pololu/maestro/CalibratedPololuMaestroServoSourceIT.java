@@ -61,16 +61,16 @@ public class CalibratedPololuMaestroServoSourceIT extends AbstractPololuMaestroS
 
 	@Override
 	protected void setPosition(int channel, double position) {
-		getServo(channel).setPosition(position);
+		getServo(channel).setValue(position);
 	}
 
 	@Override
 	protected double getPosition(int channel) {
-		return getServo(channel).getPosition();
+		return getServo(channel).getValue();
 	}
 	
 	private Servo getServo(int channel) {
-		return calibratedServoSource.getServo(channel);
+		return calibratedServoSource.forChannel(channel);
 	}
 
 	private static ServoSource<Integer> calibratedServoSource() {

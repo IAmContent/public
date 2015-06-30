@@ -61,16 +61,16 @@ public class RawPololuMaestroServoSourceIT extends AbstractPololuMaestroServoCar
 
 	@Override
 	protected void setPosition(int channel, double position) {
-		getServo(channel).setPosition(position);
+		getServo(channel).setValue(position);
 	}
 
 	@Override
 	protected double getPosition(int channel) {
-		return getServo(channel).getPosition();
+		return getServo(channel).getValue();
 	}
 	
 	private Servo getServo(int channel) {
-		return rawServoSource.getServo(channel);
+		return rawServoSource.forChannel(channel);
 	}
 
 	protected static ServoSource<Integer> rawServoSource() {

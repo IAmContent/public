@@ -47,7 +47,7 @@ public final class AnalogOutputSources {
 			public AnalogOutput forChannel(C channelId) {
 				final AnalogOutput output = delegate.forChannel(channelId);
 				final Function<Double, Double> calibrationFunction = calibration.forChannel(channelId);
-				return new CalibratedAnalogOutput<C>(output, calibrationFunction);
+				return new CalibratedAnalogOutput(output, calibrationFunction);
 			}
 		};
 	}

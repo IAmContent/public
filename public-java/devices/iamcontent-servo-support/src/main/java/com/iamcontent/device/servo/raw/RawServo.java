@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.servo.raw;
 
+import com.iamcontent.device.analog.inout.RawAnalogIO;
 import com.iamcontent.device.servo.Servo;
 
 /**
@@ -24,35 +25,25 @@ import com.iamcontent.device.servo.Servo;
  * arguments of the operations.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
-public class RawServo<C> implements Servo {
+public class RawServo<C> extends RawAnalogIO<C> implements Servo {
 	
-	private final ServoController<C> controller;
-	private final C channel;
-	
-	public RawServo(ServoController<C> controller, C channel) {
-		this.controller = controller;
-		this.channel = channel;
-	}
-
-	@Override
-	public void setPosition(double position) {
-		controller.setPosition(channel, position);
-	}
-
-	@Override
-	public double getPosition() {
-		return controller.getPosition(channel);
+	public RawServo(ServoController<C> controller, C channelId) {
+		super(controller, channelId);
 	}
 
 	@Override
 	public void setSpeed(double speed) {
-		controller.setSpeed(channel, speed);
+		servoController().setSpeed(channelId, speed);
 	}
 
 	@Override
 	public void setAcceleration(double acceleration) {
-		controller.setAcceleration(channel, acceleration);
+		servoController().setAcceleration(channelId, acceleration);
+	}
+	
+	private ServoController<C> servoController() {
+		return (ServoController<C>) controller;
 	}
 }

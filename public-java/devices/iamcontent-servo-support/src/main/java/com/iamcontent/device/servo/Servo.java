@@ -17,13 +17,13 @@
  */
 package com.iamcontent.device.servo;
 
+import com.iamcontent.device.analog.inout.AnalogIO;
+
 /**
  * Represents the operations that can be performed on a Servo.
  * @author Greg Elderfield
  */
-public interface Servo {
-	void setPosition(double position);
-	double getPosition();
+public interface Servo extends AnalogIO {
 	void setSpeed(double speed);
 	void setAcceleration(double acceleration);
 }

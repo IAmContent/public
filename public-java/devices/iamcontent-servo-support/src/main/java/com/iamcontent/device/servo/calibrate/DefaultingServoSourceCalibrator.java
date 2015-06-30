@@ -45,7 +45,7 @@ public class DefaultingServoSourceCalibrator<C> implements ServoSourceCalibrator
 	}
 	
 	@Override
-	public ServoCalibrator getServoCalibrator(C channel) {
+	public ServoCalibrator forChannel(C channel) {
 		final ServoCalibrator c = perServoCalibrators.get(channel);
 		return c!=null ? c : defaultCalibrator;
 	}

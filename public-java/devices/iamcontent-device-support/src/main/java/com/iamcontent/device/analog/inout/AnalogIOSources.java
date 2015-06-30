@@ -48,7 +48,7 @@ public final class AnalogIOSources {
 			public AnalogIO forChannel(C channelId) {
 				final AnalogIO input = delegate.forChannel(channelId);
 				final Converter<Double, Double> converter = calibration.forChannel(channelId);
-				return new CalibratedAnalogIO<C>(input, converter);
+				return new CalibratedAnalogIO(input, converter);
 			}
 		};
 	}

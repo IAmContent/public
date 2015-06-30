@@ -80,8 +80,8 @@ public class DefaultingServoSourceCalibratorDeserializerTest {
 	}
 
 	public static <C> void checkCalibrator(ServoSourceCalibrator<Integer> actual, int channel, double expectedFromLimit1, double expectedFromLimit2, double expectedToLimit1, double expectedToLimit2) {
-		final DoubleRange source = sourceRange(actual.getServoCalibrator(channel).getPositionConverter());
-		final DoubleRange target = targetRange(actual.getServoCalibrator(channel).getPositionConverter());
+		final DoubleRange source = sourceRange(actual.forChannel(channel).getPositionConverter());
+		final DoubleRange target = targetRange(actual.forChannel(channel).getPositionConverter());
 		final String message = "Channel " + channel;
 		assertExactlyEquals(message, expectedFromLimit1, source.getLimit1());
 		assertExactlyEquals(message, expectedFromLimit2, source.getLimit2());
