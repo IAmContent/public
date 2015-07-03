@@ -18,7 +18,7 @@
 package com.iamcontent.robot.robonova1;
 
 import com.iamcontent.core.geom.Geometry.ThreeDimension;
-import com.iamcontent.device.analog.in.AnalogInputSource;
+import com.iamcontent.device.io.analog.AnalogIOSource;
 import com.iamcontent.device.servo.ServoSource;
 
 /**
@@ -27,5 +27,5 @@ import com.iamcontent.device.servo.ServoSource;
  */
 public interface Robonova {
 	ServoSource<ServoId> servos();
-	AnalogInputSource<ThreeDimension> accelerometer();
+	AnalogIOSource<ThreeDimension> accelerometer();
 }

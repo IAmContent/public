@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
+package com.iamcontent.device.io.analog;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Function;

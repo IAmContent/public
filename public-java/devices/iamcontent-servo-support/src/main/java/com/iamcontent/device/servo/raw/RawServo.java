@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.raw;
 
-import com.iamcontent.device.analog.inout.RawAnalogIO;
+import com.iamcontent.device.io.analog.RawAnalogIO;
 import com.iamcontent.device.servo.Servo;
 
 /**

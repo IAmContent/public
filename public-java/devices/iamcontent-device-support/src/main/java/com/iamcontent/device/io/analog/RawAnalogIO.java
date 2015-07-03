@@ -15,21 +15,21 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.out;
+package com.iamcontent.device.io.analog;
 
 /**
- * An {@link AnalogOutput} that directly delegates its operations to a {@link AnalogOutputController} without altering the
- * arguments of the operations.
+ * An {@link AnalogIO} that directly delegates its operations to an {@link AnalogIOController} without altering the
+ * results of the operations.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of an {@link AnalogOutput}. 
+ * @param <C> The type used to identify the channel of an {@link AnalogIO}. 
  */
-public class RawAnalogOutput<C> implements AnalogOutput {
+public class RawAnalogIO<C> implements AnalogIO {
 	
-	protected final AnalogOutputController<C> controller;
+	protected final AnalogIOController<C> controller;
 	protected final C channelId;
 	
-	public RawAnalogOutput(AnalogOutputController<C> controller, C channelId) {
+	public RawAnalogIO(AnalogIOController<C> controller, C channelId) {
 		this.controller = controller;
 		this.channelId = channelId;
 	}
@@ -37,5 +37,10 @@ public class RawAnalogOutput<C> implements AnalogOutput {
 	@Override
 	public void setValue(double v) {
 		controller.setValue(channelId, v);
+	}
+
+	@Override
+	public double getValue() {
+		return controller.getValue(channelId);
 	}
 }

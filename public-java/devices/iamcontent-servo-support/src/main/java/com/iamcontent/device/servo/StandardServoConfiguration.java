@@ -17,7 +17,9 @@
  */
 package com.iamcontent.device.servo;
 
-import static com.iamcontent.device.servo.ServoSources.*;
+import static com.iamcontent.device.servo.ServoSources.calibratedServoSource;
+import static com.iamcontent.device.servo.ServoSources.rawServoSource;
+import static com.iamcontent.device.servo.ServoSources.reChanneledServoSource;
 import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
 
 import com.google.common.base.Function;

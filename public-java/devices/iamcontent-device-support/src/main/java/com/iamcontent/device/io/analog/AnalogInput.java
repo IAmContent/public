@@ -15,14 +15,12 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
-
-import com.iamcontent.device.analog.in.AnalogInput;
-import com.iamcontent.device.analog.out.AnalogOutput;
+package com.iamcontent.device.io.analog;
 
 /**
- * Represents the operations that can be performed on an analog input/output channel.
+ * Represents the operations that can be performed on an analog input channel.
  * @author Greg Elderfield
  */
-public interface AnalogIO extends AnalogInput, AnalogOutput {
+public interface AnalogInput {
+	double getValue();
 }

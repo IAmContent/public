@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo;
 
-import com.iamcontent.device.analog.inout.AnalogIO;
+import com.iamcontent.device.io.analog.AnalogIO;
 
 /**
  * Represents the operations that can be performed on a Servo.

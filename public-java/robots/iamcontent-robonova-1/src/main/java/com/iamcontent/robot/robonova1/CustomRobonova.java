@@ -21,7 +21,7 @@ import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServo
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
 
 import com.iamcontent.core.geom.Geometry.ThreeDimension;
-import com.iamcontent.device.analog.in.AnalogInputSource;
+import com.iamcontent.device.io.analog.AnalogIOSource;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.StandardServoConfiguration;
 import com.iamcontent.device.servo.raw.ServoController;
@@ -38,6 +38,7 @@ public class CustomRobonova implements Robonova {
 	public static final String CHANNEL_TRANSLATION_NAME = CONFIG_FOLDER + "channels";
 
 	private final StandardServoConfiguration<ServoId> servoConfiguration = servoConfiguration();
+	private final AnalogIOSource<ThreeDimension> tunedAccelerometer = tunedAccelerometer();
 	
 	@Override
 	public ServoSource<ServoId> servos() {
@@ -45,8 +46,8 @@ public class CustomRobonova implements Robonova {
 	}
 
 	@Override
-	public AnalogInputSource<ThreeDimension> accelerometer() {
-		return tunedAccelerometer();
+	public AnalogIOSource<ThreeDimension> accelerometer() {
+		return tunedAccelerometer;
 	}
 	
 	protected StandardServoConfiguration<ServoId> servoConfiguration() {
@@ -57,7 +58,7 @@ public class CustomRobonova implements Robonova {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
 
-	private AnalogInputSource<ThreeDimension> tunedAccelerometer() {
+	private AnalogIOSource<ThreeDimension> tunedAccelerometer() {
 		return null;
 	}
 }

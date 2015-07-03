@@ -15,15 +15,16 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
+package com.iamcontent.device.io.analog;
 
-import com.iamcontent.device.channel.PerChannelSource;
 
 /**
- * Represents a source of {@link AnalogIO}s.
+ * Defines an analog I/O controller that deals with 'raw' (i.e. non-normalized, device-specific) values.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify an analog input/output channel. 
+ * @param <C> The type used to identify the channel of an analog input/output. 
  */
-public interface AnalogIOSource<C> extends PerChannelSource<C, AnalogIO> {
+public interface AnalogIOController<C> {
+	double getValue(C channel);
+	void setValue(C channel, double value);
 }

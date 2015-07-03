@@ -15,24 +15,38 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.out;
+package com.iamcontent.device.io.analog;
 
+import com.google.common.base.Converter;
 import com.google.common.base.Function;
 import com.iamcontent.device.calibrate.CalibratedDelegator;
 
 /**
- * An {@link AnalogOutput} that is calibrated by applying the given calibration function to values before they are set. 
+ * An {@link AnalogIO} that is calibrated by applying the given calibration functions to values before they are set or returned. 
  * @author Greg Elderfield
  */
-public class CalibratedAnalogOutput extends CalibratedDelegator<AnalogOutput> implements AnalogOutput {
+public class CalibratedAnalogIO extends CalibratedDelegator<AnalogIO> implements AnalogIO {
 	
-	public CalibratedAnalogOutput(AnalogOutput delegate, Function<Double, Double> calibration) {
-		super(delegate, calibration);
+	private final Function<Double, Double> inputCalibration;
+	
+	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
+		super(delegate, outputCalibration);
+		this.inputCalibration = identityIfNull(inputCalibration);
+	}
+
+	public CalibratedAnalogIO(AnalogIO delegate, Converter<Double, Double> calibration) {
+		this(delegate, calibration, calibration.reverse());
 	}
 
 	@Override
 	public void setValue(double v) {
 		final double c = applyCalibration(v);
 		delegate().setValue(c);
+	}
+	
+	@Override
+	public double getValue() {
+		final double v = delegate().getValue();
+		return inputCalibration.apply(v);
 	}
 }

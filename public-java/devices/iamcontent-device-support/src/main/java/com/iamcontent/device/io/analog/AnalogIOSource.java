@@ -15,29 +15,15 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.inout;
+package com.iamcontent.device.io.analog;
 
-import com.iamcontent.device.analog.out.RawAnalogOutput;
+import com.iamcontent.device.channel.PerChannelSource;
 
 /**
- * An {@link AnalogIO} that directly delegates its operations to an {@link AnalogIOController} without altering the
- * results of the operations.
+ * Represents a source of {@link AnalogIO}s.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of an {@link AnalogIO}. 
+ * @param <C> The type used to identify an analog input/output channel. 
  */
-public class RawAnalogIO<C> extends RawAnalogOutput<C> implements AnalogIO {
-	
-	public RawAnalogIO(AnalogIOController<C> controller, C channelId) {
-		super(controller, channelId);
-	}
-
-	@Override
-	public double getValue() {
-		return ioController().getValue(channelId);
-	}
-
-	private AnalogIOController<C> ioController() {
-		return (AnalogIOController<C>) controller;
-	}
+public interface AnalogIOSource<C> extends PerChannelSource<C, AnalogIO> {
 }

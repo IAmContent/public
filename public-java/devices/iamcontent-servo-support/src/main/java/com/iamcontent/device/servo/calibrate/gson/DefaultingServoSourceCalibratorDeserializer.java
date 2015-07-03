@@ -35,7 +35,7 @@ import com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
 
 /**
- * An abstract Gson {@link JsonDeserializer} for {@link DefaultingServoSourceCalibrator} objects.
+ * A Gson {@link JsonDeserializer} for {@link DefaultingServoSourceCalibrator} objects.
  * @author Greg Elderfield
  * 
  * @param <C> The type used to identify the channel of a servo.

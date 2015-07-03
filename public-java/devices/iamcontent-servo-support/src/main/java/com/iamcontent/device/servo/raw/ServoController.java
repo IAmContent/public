@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.raw;
 
-import com.iamcontent.device.analog.inout.AnalogIOController;
+import com.iamcontent.device.io.analog.AnalogIOController;
 
 /**
  * Defines a Servo controller that accepts 'raw' (i.e. non-normalized) values.

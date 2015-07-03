@@ -15,12 +15,12 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.analog.out;
+package com.iamcontent.device.io.analog;
+
 
 /**
- * Represents the operations that can be performed on an analog output channel.
+ * Represents the operations that can be performed on an analog input/output channel.
  * @author Greg Elderfield
  */
-public interface AnalogOutput {
-	void setValue(double v);
+public interface AnalogIO extends AnalogInput, AnalogOutput {
 }
