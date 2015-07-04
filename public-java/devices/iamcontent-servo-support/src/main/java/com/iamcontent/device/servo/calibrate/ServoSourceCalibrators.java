@@ -35,6 +35,10 @@ public class ServoSourceCalibrators {
 		return JsonBasedServoSourceCalibratorReader.numberedChannelCalibrator(calibratorName);
 	}
 	
+	public static <C> ServoSourceCalibrator<C> channelCalibrator(String calibratorName, Class<C> channelClass) {
+		return JsonBasedServoSourceCalibratorReader.read(calibratorName, channelClass);
+	}
+	
 	private static String defaultCalibrationName() {
 		return System.getProperty(CALIBRATION_PROPERTY_KEY, DEFAULT_CALIBRATION_NAME);
 	}

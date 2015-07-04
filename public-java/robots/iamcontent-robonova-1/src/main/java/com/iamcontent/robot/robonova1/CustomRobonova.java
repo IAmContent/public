@@ -19,11 +19,15 @@ package com.iamcontent.robot.robonova1;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
+import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.channelCalibrator;
 
+import com.google.common.base.Function;
 import com.iamcontent.core.geom.Geometry.ThreeDimension;
+import com.iamcontent.device.channel.ChannelIdTranslations;
 import com.iamcontent.device.io.analog.AnalogIOSource;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.StandardServoConfiguration;
+import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -51,11 +55,23 @@ public class CustomRobonova implements Robonova {
 	}
 	
 	protected StandardServoConfiguration<ServoId> servoConfiguration() {
-		return new StandardServoConfiguration<ServoId>(defaultServoController(), SERVO_CALIBRATOR_NAME, CHANNEL_TRANSLATION_NAME, TUNING_CALIBRATOR_NAME, ServoId.class);
+		return new StandardServoConfiguration<ServoId>(defaultServoController(), normalizingServoCalibrator(), channelTranslation(), tuningCalibrator());
 	}
 
 	protected ServoController<Integer> defaultServoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
+	}
+	
+	private ServoSourceCalibrator<Integer> normalizingServoCalibrator() {
+		return channelCalibrator(SERVO_CALIBRATOR_NAME, Integer.class);
+	}
+
+	protected Function<ServoId, Integer> channelTranslation() {
+		return ChannelIdTranslations.function(CHANNEL_TRANSLATION_NAME, ServoId.class, Integer.class);
+	}
+
+	protected ServoSourceCalibrator<ServoId> tuningCalibrator() {
+		return channelCalibrator(TUNING_CALIBRATOR_NAME, ServoId.class);
 	}
 
 	private AnalogIOSource<ThreeDimension> tunedAccelerometer() {
