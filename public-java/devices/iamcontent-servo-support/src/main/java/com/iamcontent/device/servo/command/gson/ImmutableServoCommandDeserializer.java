@@ -49,7 +49,7 @@ public class ImmutableServoCommandDeserializer<C> implements JsonDeserializer<Im
 		return new ImmutableServoCommand<C>(channel, position, speed, acceleration);
 	}
 
-	public static <C> GsonBuilder customGsonBuilder(Class<C> channelClass) {
+	public static <C> GsonBuilder immutableServoCommandGsonBuilder(Class<C> channelClass) {
 		return register(new GsonBuilder(), channelClass);
 	}
 	

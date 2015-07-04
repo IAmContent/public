@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
+import static com.iamcontent.device.servo.calibrate.gson.ProportionalServoCalibratorDeserializer.proportionalServoCalibratorGsonBuilder;
 import static com.iamcontent.io.gson.GsonUtils.getMemberAsObject;
 
 import java.lang.reflect.Type;
@@ -60,8 +61,8 @@ public class DefaultingServoSourceCalibratorDeserializer<C, S extends ServoCalib
 		return Collections.<C, ServoCalibrator>emptyMap();
 	}
 
-	public static <C, S extends ServoCalibrator> GsonBuilder customGsonBuilder(Class<C> channelClass, Class<S> servoCalibratorClass) {
-		return register(ProportionalServoCalibratorDeserializer.customGsonBuilder(), channelClass, servoCalibratorClass);
+	public static <C, S extends ServoCalibrator> GsonBuilder defaultingServoSourceCalibratorGsonBuilder(Class<C> channelClass, Class<S> servoCalibratorClass) {
+		return register(proportionalServoCalibratorGsonBuilder(), channelClass, servoCalibratorClass);
 	}
 	
 	public static <C, S extends ServoCalibrator> GsonBuilder register(GsonBuilder builder, Class<C> channelClass, Class<S> servoCalibratorClass) {

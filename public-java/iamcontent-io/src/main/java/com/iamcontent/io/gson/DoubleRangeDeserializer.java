@@ -47,7 +47,7 @@ public class DoubleRangeDeserializer implements JsonDeserializer<DoubleRange> {
 		return builder.registerTypeAdapter(DoubleRange.class, INSTANCE);
 	}
 
-	public static GsonBuilder customGsonBuilder() {
+	public static GsonBuilder doubleRangeGsonBuilder() {
 		return register(new GsonBuilder());
 	}
 }

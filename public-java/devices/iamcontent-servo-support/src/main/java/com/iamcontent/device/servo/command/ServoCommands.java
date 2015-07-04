@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.command;
 
-import static com.iamcontent.device.servo.command.gson.ImmutableServoCommandDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.command.gson.ImmutableServoCommandDeserializer.immutableServoCommandGsonBuilder;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class ServoCommands {
 	}
 
 	private static <C> Gson gson(Class<C> channelClass) {
-		return customGsonBuilder(channelClass).create();
+		return immutableServoCommandGsonBuilder(channelClass).create();
 	}
 
 	@SuppressWarnings("unchecked")

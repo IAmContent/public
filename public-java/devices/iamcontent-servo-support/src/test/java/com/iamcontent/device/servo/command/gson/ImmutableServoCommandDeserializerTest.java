@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.command.gson;
 
-import static com.iamcontent.device.servo.command.gson.ImmutableServoCommandDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.command.gson.ImmutableServoCommandDeserializer.immutableServoCommandGsonBuilder;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -53,7 +53,7 @@ public class ImmutableServoCommandDeserializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gson = customGsonBuilder(TestChannel.class).create();
+		gson = immutableServoCommandGsonBuilder(TestChannel.class).create();
 	}
 
 	@Test

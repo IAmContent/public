@@ -17,7 +17,7 @@
  */
 package com.iamcontent.device.servo.calibrate.gson;
 
-import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.customGsonBuilder;
+import static com.iamcontent.device.servo.calibrate.gson.DefaultingServoSourceCalibratorDeserializer.defaultingServoSourceCalibratorGsonBuilder;
 import static com.iamcontent.io.gson.GsonUtils.JSON_FILE_EXTENSION;
 
 import java.io.Reader;
@@ -71,6 +71,6 @@ public class JsonBasedServoSourceCalibratorReader<C, S extends ServoCalibrator> 
 	}
 	
 	private Gson gson() {
-		return customGsonBuilder(channelClass, servoCalibratorClass).create();
+		return defaultingServoSourceCalibratorGsonBuilder(channelClass, servoCalibratorClass).create();
 	}
 }

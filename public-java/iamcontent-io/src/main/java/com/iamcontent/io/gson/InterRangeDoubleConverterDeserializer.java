@@ -17,6 +17,7 @@
  */
 package com.iamcontent.io.gson;
 
+import static com.iamcontent.io.gson.DoubleRangeDeserializer.doubleRangeGsonBuilder;
 import static com.iamcontent.io.gson.GsonUtils.getMemberAsObject;
 import static com.iamcontent.io.gson.GsonUtils.getMemberAsString;
 
@@ -52,7 +53,7 @@ public class InterRangeDoubleConverterDeserializer implements JsonDeserializer<I
 		return builder.registerTypeAdapter(InterRangeDoubleConverter.class, INSTANCE);
 	}
 
-	public static GsonBuilder customGsonBuilder() {
-		return register(DoubleRangeDeserializer.customGsonBuilder());
+	public static GsonBuilder interRangeDoubleConverterGsonBuilder() {
+		return register(doubleRangeGsonBuilder());
 	}
 }
