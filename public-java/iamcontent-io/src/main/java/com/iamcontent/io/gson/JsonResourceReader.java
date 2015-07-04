@@ -17,31 +17,31 @@
  */
 package com.iamcontent.io.gson;
 
-import static com.iamcontent.core.LangUtils.listType;
+import static com.iamcontent.io.gson.GsonUtils.JSON_FILE_EXTENSION;
 
-import java.util.List;
+import java.io.Reader;
+import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
+import com.iamcontent.io.util.AbstractResourceReader;
 
 /**
- * Creates {@link List}s according to JSON file resources.
+ * An {@link AbstractResourceReader} for JSON file resources.
  * @author Greg Elderfield
  */
-public class JsonBasedListReader<E> extends JsonResourceReader<List<E>> {
+public class JsonResourceReader<T> extends AbstractResourceReader<T> {
 
-	public JsonBasedListReader(String name, Class<E> elementClass, Gson gson) {
-		super(name, listType(elementClass), gson);
+	private final Type type;
+	private final Gson gson;
+	
+	public JsonResourceReader(String name, Type type, Gson gson) {
+		super(name, JSON_FILE_EXTENSION);
+		this.type = type;
+		this.gson = gson;
 	}
 
-	public static <E> List<E> list(String name, Class<E> elementClass) {
-		return list(name, elementClass, new Gson());
-	}
-
-	public static <E> List<E> list(String name, Class<E> elementClass, Gson gson) {
-		return newInstance(name, elementClass, gson).read();
-	}
-
-	private static <E> JsonBasedListReader<E> newInstance(String name, Class<E> elementClass, Gson gson) {
-		return new JsonBasedListReader<E>(name, elementClass, gson);
+	@Override
+	protected T readFrom(Reader r) {
+		return gson.fromJson(r, type);
 	}
 }

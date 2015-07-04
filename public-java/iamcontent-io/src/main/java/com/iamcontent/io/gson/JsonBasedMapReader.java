@@ -17,31 +17,22 @@
  */
 package com.iamcontent.io.gson;
 
-import static com.iamcontent.io.gson.GsonUtils.JSON_FILE_EXTENSION;
+import static com.iamcontent.core.LangUtils.mapType;
 
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.util.Map;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.gson.Gson;
-import com.iamcontent.core.LangUtils;
-import com.iamcontent.io.util.AbstractResourceReader;
 
 /**
  * Creates {@link Map}s according to JSON file resources.
  * @author Greg Elderfield
  */
-public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> {
-
-	private final Type mapType;
-	private final Gson gson;
+public class JsonBasedMapReader<K, V> extends JsonResourceReader<Map<K, V>> {
 
 	public JsonBasedMapReader(String name, Class<K> keyClass, Class<V> valueClass, Gson gson) {
-		super(name, JSON_FILE_EXTENSION);
-		this.mapType = LangUtils.mapType(keyClass, valueClass);
-		this.gson = gson;
+		super(name, mapType(keyClass, valueClass), gson);
 	}
 
 	public static <F, T> Map<F, T> map(String name, Class<F> keyClass, Class<T> valueClass) {
@@ -61,11 +52,6 @@ public class JsonBasedMapReader<K, V> extends AbstractResourceReader<Map<K, V>> 
 		return Functions.forMap(map);
 	}
 	
-	@Override
-	protected Map<K, V> readFrom(Reader r) {
-		return gson.fromJson(r, mapType);
-	}
-
 	private static <F, T> JsonBasedMapReader<F, T> newInstance(String name, Class<F> keyClass, Class<T> valueClass, Gson gson) {
 		return new JsonBasedMapReader<F, T>(name, keyClass, valueClass, gson);
 	}
