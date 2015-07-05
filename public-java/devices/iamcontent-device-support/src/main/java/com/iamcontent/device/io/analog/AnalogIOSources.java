@@ -19,7 +19,6 @@ package com.iamcontent.device.io.analog;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
-import com.iamcontent.device.channel.PerChannelSource;
 
 /**
  * Methods to create {@link AnalogIOSource}s.
@@ -42,7 +41,7 @@ public final class AnalogIOSources {
 	/**
 	 * @return An {@link AnalogIOSource}, calibrated by applying the given calibration function to values before they are returned. 
 	 */
-	public static <C> AnalogIOSource<C> calibratedAnalogIOSource(final AnalogIOSource<C> delegate, final PerChannelSource<C, Converter<Double, Double>> calibration) {
+	public static <C> AnalogIOSource<C> calibratedAnalogIOSource(final AnalogIOSource<C> delegate, final AnalogIOSourceCalibrator<C> calibration) {
 		return new AnalogIOSource<C>() {
 			@Override
 			public AnalogIO forChannel(C channelId) {

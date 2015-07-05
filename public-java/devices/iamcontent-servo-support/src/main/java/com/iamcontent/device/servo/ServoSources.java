@@ -18,9 +18,9 @@
 package com.iamcontent.device.servo;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.channel.PerChannelSource;
 import com.iamcontent.device.servo.calibrate.CalibratedServo;
 import com.iamcontent.device.servo.calibrate.ServoCalibrator;
+import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.raw.RawServo;
 import com.iamcontent.device.servo.raw.ServoController;
 
@@ -45,7 +45,7 @@ public final class ServoSources {
 	 * @return A {@link ServoSource} of {@link CalibratedServo}s, calibrated by the given per-channel calibrator. 
 	 * Each {@link Servo} from the returned source delegates to its corresponding {@link Servo} from the given {@link ServoSource}.
 	 */
-	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final PerChannelSource<C, ServoCalibrator> calibrator) {
+	public static <C> ServoSource<C> calibratedServoSource(final ServoSource<C> delegate, final ServoSourceCalibrator<C> calibrator) {
 		return new ServoSource<C>() {
 			@Override
 			public Servo forChannel(C channel) {
