@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.io.analog;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.iamcontent.device.io.analog.AnalogIOSources.calibratedAnalogIOSource;
 import static com.iamcontent.device.io.analog.AnalogIOSources.rawAnalogIOSource;
 import static com.iamcontent.device.io.analog.AnalogIOSources.reChanneledAnalogIOSource;
@@ -25,7 +26,7 @@ import com.google.common.base.Function;
 
 /**
  * A 'standard' configuration of {@link AnalogIO}s, where each raw {@link AnalogIO} is calibrated to a normal range (0..1), then
- * re-channeled and then calibrated once more (tuned) (or some subset of this configuration).
+ * re-channeled and then calibrated once more (tuned), or some subset of this configuration.
  * 
  * @author Greg Elderfield
  * 
@@ -42,11 +43,12 @@ public class StandardAnalogIOConfiguration<R,C> {
 
 	public StandardAnalogIOConfiguration(AnalogIOController<R> analogIOController, AnalogIOSourceCalibrator<R> normalizingAnalogIOCalibrator,
 			Function<C, R> channelTranslation, AnalogIOSourceCalibrator<C> tuningCalibrator) {
+		
 		tunedRechanneledIOs = 
 				calibratedAnalogIOSource(
 						normalRechanneledIOs = reChanneledAnalogIOSource(
 								normalIOs = calibratedAnalogIOSource(
-										rawIOs = rawAnalogIOSource(this.controller = analogIOController), 
+										rawIOs = rawAnalogIOSource(controller = analogIOController), 
 										normalizingAnalogIOCalibrator), 
 								channelTranslation),
 						tuningCalibrator);
@@ -54,9 +56,10 @@ public class StandardAnalogIOConfiguration<R,C> {
 
 	public StandardAnalogIOConfiguration(AnalogIOController<R> analogIOController, AnalogIOSourceCalibrator<R> normalizingAnalogIOCalibrator,
 			Function<C, R> channelTranslation) {
+		
 		normalRechanneledIOs = reChanneledAnalogIOSource(
 				normalIOs = calibratedAnalogIOSource(
-						rawIOs = rawAnalogIOSource(this.controller = analogIOController), 
+						rawIOs = rawAnalogIOSource(controller = analogIOController), 
 						normalizingAnalogIOCalibrator), 
 				channelTranslation);
 		tunedRechanneledIOs = null;
@@ -64,35 +67,29 @@ public class StandardAnalogIOConfiguration<R,C> {
 
 	public StandardAnalogIOConfiguration(AnalogIOController<R> analogIOController, AnalogIOSourceCalibrator<R> normalizingAnalogIOCalibrator) {
 		normalIOs = calibratedAnalogIOSource(
-				rawIOs = rawAnalogIOSource(this.controller = analogIOController), 
+				rawIOs = rawAnalogIOSource(controller = analogIOController), 
 				normalizingAnalogIOCalibrator);
 		normalRechanneledIOs = null;
 		tunedRechanneledIOs = null;
 	}
 
 	public AnalogIOController<R> getController() {
-		return throwIfNull(controller);
+		return checkNotNull(controller);
 	}
 
 	public AnalogIOSource<R> getRawIOs() {
-		return throwIfNull(rawIOs);
+		return checkNotNull(rawIOs);
 	}
 
 	public AnalogIOSource<R> getNormalIOs() {
-		return throwIfNull(normalIOs);
+		return checkNotNull(normalIOs);
 	}
 
 	public AnalogIOSource<C> getNormalRechanneledIOs() {
-		return throwIfNull(normalRechanneledIOs);
+		return checkNotNull(normalRechanneledIOs);
 	}
 
 	public AnalogIOSource<C> getTunedRechanneledIOs() {
-		return throwIfNull(tunedRechanneledIOs);
-	}
-	
-	protected static <X> X throwIfNull(X x) {
-		if (x==null)
-			throw new UnsupportedOperationException("This field has not been set in this configuration.");
-		return x;
+		return checkNotNull(tunedRechanneledIOs);
 	}
 }

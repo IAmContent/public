@@ -41,12 +41,12 @@ public class CustomRobonova implements Robonova {
 	public static final String TUNING_CALIBRATOR_NAME = CONFIG_FOLDER + "robonova-servo-tuning-calibration";
 	public static final String CHANNEL_TRANSLATION_NAME = CONFIG_FOLDER + "channels";
 
-	private final StandardServoConfiguration<ServoId> servoConfiguration = servoConfiguration();
+	private final StandardServoConfiguration<Integer,ServoId> servoConfiguration = servoConfiguration();
 	private final AnalogIOSource<ThreeDimension> tunedAccelerometer = tunedAccelerometer();
 	
 	@Override
 	public ServoSource<ServoId> servos() {
-		return servoConfiguration.getTunedServos();
+		return servoConfiguration.getTunedRechanneledServos();
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class CustomRobonova implements Robonova {
 		return tunedAccelerometer;
 	}
 	
-	protected StandardServoConfiguration<ServoId> servoConfiguration() {
-		return new StandardServoConfiguration<ServoId>(defaultServoController(), normalizingServoCalibrator(), channelTranslation(), tuningCalibrator());
+	protected StandardServoConfiguration<Integer,ServoId> servoConfiguration() {
+		return new StandardServoConfiguration<Integer,ServoId>(defaultServoController(), normalizingServoCalibrator(), channelTranslation(), tuningCalibrator());
 	}
 
 	protected ServoController<Integer> defaultServoController() {
