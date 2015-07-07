@@ -23,6 +23,7 @@ import static com.iamcontent.device.io.analog.AnalogIOSources.rawAnalogIOSource;
 import static com.iamcontent.device.io.analog.AnalogIOSources.reChanneledAnalogIOSource;
 
 import com.google.common.base.Function;
+import com.iamcontent.device.io.analog.calibrate.AnalogIOSourceCalibrator;
 
 /**
  * A 'standard' configuration of {@link AnalogIO}s, where each raw {@link AnalogIO} is calibrated to a normal range (0..1), then

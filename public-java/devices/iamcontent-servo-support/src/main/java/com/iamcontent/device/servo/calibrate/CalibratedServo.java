@@ -18,7 +18,7 @@
 package com.iamcontent.device.servo.calibrate;
 
 import com.google.common.base.Function;
-import com.iamcontent.device.io.analog.CalibratedAnalogIO;
+import com.iamcontent.device.io.analog.calibrate.CalibratedAnalogIO;
 import com.iamcontent.device.servo.Servo;
 
 /**

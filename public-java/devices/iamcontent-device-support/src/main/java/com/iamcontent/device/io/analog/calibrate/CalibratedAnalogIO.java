@@ -15,11 +15,12 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.io.analog.calibrate;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
 import com.iamcontent.device.calibrate.CalibratedDelegator;
+import com.iamcontent.device.io.analog.AnalogIO;
 
 /**
  * An {@link AnalogIO} that is calibrated by applying the given calibration functions to values before they are set or returned. 
@@ -29,13 +30,17 @@ public class CalibratedAnalogIO extends CalibratedDelegator<AnalogIO> implements
 	
 	private final Function<Double, Double> inputCalibration;
 	
-	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
-		super(delegate, outputCalibration);
-		this.inputCalibration = identityIfNull(inputCalibration);
+	public CalibratedAnalogIO(AnalogIO delegate, AnalogIOCalibrator calibrator) {
+		this(delegate, calibrator.getValueConverter());
 	}
 
 	public CalibratedAnalogIO(AnalogIO delegate, Converter<Double, Double> calibration) {
 		this(delegate, calibration, calibration.reverse());
+	}
+
+	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
+		super(delegate, outputCalibration);
+		this.inputCalibration = identityIfNull(inputCalibration);
 	}
 
 	@Override

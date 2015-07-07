@@ -17,8 +17,10 @@
  */
 package com.iamcontent.device.io.analog;
 
-import com.google.common.base.Converter;
 import com.google.common.base.Function;
+import com.iamcontent.device.io.analog.calibrate.AnalogIOCalibrator;
+import com.iamcontent.device.io.analog.calibrate.AnalogIOSourceCalibrator;
+import com.iamcontent.device.io.analog.calibrate.CalibratedAnalogIO;
 
 /**
  * Methods to create {@link AnalogIOSource}s.
@@ -46,8 +48,8 @@ public final class AnalogIOSources {
 			@Override
 			public AnalogIO forChannel(C channelId) {
 				final AnalogIO input = delegate.forChannel(channelId);
-				final Converter<Double, Double> converter = calibration.forChannel(channelId);
-				return new CalibratedAnalogIO(input, converter);
+				final AnalogIOCalibrator calibrator = calibration.forChannel(channelId);
+				return new CalibratedAnalogIO(input, calibrator);
 			}
 		};
 	}

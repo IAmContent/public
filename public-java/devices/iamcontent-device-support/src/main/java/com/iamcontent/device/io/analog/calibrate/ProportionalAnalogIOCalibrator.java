@@ -15,16 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.io.analog.calibrate;
+
+import static com.iamcontent.core.math.InterRangeDoubleConverter.fromNormalRangeConverter;
 
 import com.google.common.base.Converter;
-import com.iamcontent.device.channel.PerChannelSource;
+import com.iamcontent.core.math.DoubleRange;
+import com.iamcontent.core.math.InterRangeDoubleConverter.Mode;
 
 /**
- * Calibrates a single {@link AnalogIOSource}.
- * @author Greg Elderfield
+ * A {@link AnalogIOCalibrator} that proportionally scales its input values and output values.
  * 
- * @param <C> The type used to identify the channel of an AnalogIO. 
+ * @author Greg Elderfield
  */
-public interface AnalogIOSourceCalibrator<C> extends PerChannelSource<C, Converter<Double, Double>> {
+public class ProportionalAnalogIOCalibrator extends ImmutableAnalogIOCalibrator {
+
+	public ProportionalAnalogIOCalibrator(DoubleRange positionOutputRange) {
+		super(normalConverter(positionOutputRange));
+	}
+
+	public ProportionalAnalogIOCalibrator(Converter<Double, Double> positionConverter) {
+		super(positionConverter);
+	}
+
+	protected static Converter<Double, Double> normalConverter(DoubleRange r) {
+		return fromNormalRangeConverter(r, Mode.LIMIT_RESULT_TO_RANGE);
+	}
 }
