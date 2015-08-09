@@ -20,6 +20,7 @@
         </license>
     </licenses>
     <modules>
-    	<module>iamcontent-usb</module>
+        <module>iamcontent-usb</module>
+        <module>iamcontent-io-channels</module>
     </modules>
 </project>

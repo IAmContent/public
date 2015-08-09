@@ -24,7 +24,7 @@
     	</dependency>
         <dependency>
             <groupId>com.iamcontent.public-java.devices</groupId>
-            <artifactId>iamcontent-device-support</artifactId>
+            <artifactId>iamcontent-io-channels</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
