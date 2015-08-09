@@ -1,5 +1,0 @@
-[
-  {channel:"ALPHA", position:3.3, speed:2.2, acceleration:1.1},
-  {channel:"GAMMA", position:6.6, speed:5.5},
-  {channel:"BETA", position:8.8, acceleration:7.7}
-]
