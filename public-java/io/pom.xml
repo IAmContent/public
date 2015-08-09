@@ -22,5 +22,6 @@
     <modules>
         <module>iamcontent-usb</module>
         <module>iamcontent-io-channels</module>
+        <module>iamcontent-servos</module>
     </modules>
 </project>

@@ -21,7 +21,6 @@
     </licenses>
 
 	<modules>
-		<module>iamcontent-servo-support</module>
 		<module>iamcontent-owi-motor-controllers</module>
 		<module>iamcontent-pololu-servo-controllers</module>
 	</modules>
