@@ -17,14 +17,16 @@
  */
 package com.iamcontent.io.usb.topology;
 
-import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
-import static com.iamcontent.io.util.IOUtils.appendQuietly;
+import static com.iamcontent.io.usb.license.License.displayLicense;
+
+import java.io.IOException;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.iamcontent.io.usb.UsbRuntimeException;
 
 /**
  * Prints the USB topology tree from the root hub downwards.
@@ -48,7 +50,7 @@ public class UsbTopologyTreePrinter extends UsbTopologyExplorer {
 	}
 
 	public static void main(String[] args) {
-		licenseWriter().printNonInteractiveInstructions();
+		displayLicense();
 		final UsbTopologyTreePrinter printer = new UsbTopologyTreePrinter();
 		printer.exploreRootUsbHub();
 	}
@@ -63,6 +65,14 @@ public class UsbTopologyTreePrinter extends UsbTopologyExplorer {
 	@Override
 	public void visit(UsbDevice usbDevice) {
 		appendQuietly(out, padding + usbDevice.toString() + "\n");
+	}
+	
+	public static void appendQuietly(Appendable out, String s) {
+		try {
+			out.append(s);
+		} catch (IOException e) {
+			throw new UsbRuntimeException(e);
+		}
 	}
 
 	private void increasePadding() {

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.iamcontent.public-java.devices</groupId>
     <artifactId>iamcontent-device-support</artifactId>
-        <description>IAmContent Jar for Device Support.</description>
+    <description>IAmContent Jar for Device Support.</description>
     <parent>
         <groupId>com.iamcontent.public-java</groupId>
         <artifactId>devices</artifactId>

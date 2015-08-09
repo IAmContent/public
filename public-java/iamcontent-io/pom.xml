@@ -24,10 +24,6 @@
             <version>${project.version}</version>
         </dependency>
 		<dependency>
-			<groupId>org.usb4java</groupId>
-			<artifactId>usb4java-javax</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <package id="1" language="java" name="com.iamcontent.io.usb" project="iamcontent-io" 
-    file="/iamcontent-io/src/test/java/com/iamcontent/io/usb" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="1" language="java" name="com.iamcontent.io.usb" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="160" y="73"/>    
     <display autosize="true" stereotype="false" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="2" language="java" name="com.iamcontent.io.usb.topology" project="iamcontent-io" 
-    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/topology" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="2" language="java" name="com.iamcontent.io.usb.topology" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb/topology" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="160" y="177"/>    
     <display autosize="true" stereotype="false" sort-features="false" accessors="true"/>  
   </package>  

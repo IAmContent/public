@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="com.iamcontent.io.usb.topology.UsbDeviceFinder" project="iamcontent-io" 
-    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/topology/UsbDeviceFinder.java" binary="false" 
+  <class id="1" language="java" name="com.iamcontent.io.usb.topology.UsbDeviceFinder" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb/topology/UsbDeviceFinder.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="220" y="327"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.iamcontent.io.usb.UsbDevicePredicates" project="iamcontent-io" 
-    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/UsbDevicePredicates.java" binary="false" 
+  <class id="2" language="java" name="com.iamcontent.io.usb.UsbDevicePredicates" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb/UsbDevicePredicates.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="656" y="119"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
@@ -21,8 +21,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.iamcontent.io.usb.topology.UsbTopologyTreePrinter" project="iamcontent-io" 
-    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/topology/UsbTopologyTreePrinter.java" binary="false" 
+  <class id="3" language="java" name="com.iamcontent.io.usb.topology.UsbTopologyTreePrinter" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb/topology/UsbTopologyTreePrinter.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="605" y="327"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
@@ -31,8 +31,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.iamcontent.io.usb.topology.UsbTopologyExplorer" project="iamcontent-io" 
-    file="/iamcontent-io/src/main/java/com/iamcontent/io/usb/topology/UsbTopologyExplorer.java" binary="false" 
+  <class id="4" language="java" name="com.iamcontent.io.usb.topology.UsbTopologyExplorer" project="iamcontent-usb" 
+    file="/iamcontent-usb/src/main/java/com/iamcontent/io/usb/topology/UsbTopologyExplorer.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="220" y="122"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 

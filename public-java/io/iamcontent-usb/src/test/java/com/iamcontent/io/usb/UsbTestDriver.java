@@ -17,7 +17,7 @@
  */
 package com.iamcontent.io.usb;
 
-import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
+import static com.iamcontent.io.usb.license.License.displayLicense;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class UsbTestDriver {
 
 	public static void main(String[] args) {
 		try {
-			licenseWriter().printNonInteractiveInstructions();
+			displayLicense();
 			seekAndDisplay(args(args));
 		} catch (ArrayIndexOutOfBoundsException e) {
 			usage("Too few parameters.");
