@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<channelMappingHolder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <channelMappings>
+        <mapping>
+            <fromChannel xsi:type="fromChannel">ELBOW</fromChannel>
+            <toChannel xsi:type="toChannel">ORANGE</toChannel>
+        </mapping>
+        <mapping>
+            <fromChannel xsi:type="fromChannel">WRIST</fromChannel>
+            <toChannel xsi:type="toChannel">ORANGE</toChannel>
+        </mapping>
+        <mapping>
+            <fromChannel xsi:type="fromChannel">KNEE</fromChannel>
+            <toChannel xsi:type="toChannel">RED</toChannel>
+        </mapping>
+        <mapping>
+            <fromChannel xsi:type="fromChannel">ANKLE</fromChannel>
+            <toChannel xsi:type="toChannel">null</toChannel>
+        </mapping>
+    </channelMappings>
+</channelMappingHolder>

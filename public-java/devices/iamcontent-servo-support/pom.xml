@@ -41,5 +41,12 @@
     		<groupId>junit</groupId>
     		<artifactId>junit</artifactId>
     	</dependency>
+        <dependency>
+            <groupId>com.iamcontent.public-java</groupId>
+            <artifactId>iamcontent-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

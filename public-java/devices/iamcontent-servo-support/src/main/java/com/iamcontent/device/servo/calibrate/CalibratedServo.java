@@ -32,7 +32,7 @@ public class CalibratedServo extends CalibratedAnalogIO implements Servo {
 	private final Function<Double, Double> toDelegateAccelerationConverter;
 	
 	public CalibratedServo(Servo delegateServo, ServoCalibrator calibrator) {
-		super(delegateServo, calibrator.getPositionConverter());
+		super(delegateServo, calibrator.getValueConverter());
 		this.toDelegateSpeedConverter = identityIfNull(calibrator.getSpeedConverter());
 		this.toDelegateAccelerationConverter = identityIfNull(calibrator.getAccelerationConverter());
 	}

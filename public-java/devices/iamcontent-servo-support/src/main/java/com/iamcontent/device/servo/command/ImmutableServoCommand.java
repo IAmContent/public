@@ -28,13 +28,13 @@ import java.io.Serializable;
 public class ImmutableServoCommand<C> implements ServoCommand<C>, Serializable {
 
 	private final C channel;
-	private final Double position;
+	private final Double value;
 	private final Double speed;
 	private final Double acceleration;
 	
-	public ImmutableServoCommand(C channel, Double position, Double speed, Double acceleration) {
+	public ImmutableServoCommand(C channel, Double value, Double speed, Double acceleration) {
 		this.channel = channel;
-		this.position = position;
+		this.value = value;
 		this.speed = speed;
 		this.acceleration = acceleration;
 	}
@@ -45,8 +45,8 @@ public class ImmutableServoCommand<C> implements ServoCommand<C>, Serializable {
 	}
 
 	@Override
-	public Double getPosition() {
-		return position;
+	public Double getValue() {
+		return value;
 	}
 
 	@Override

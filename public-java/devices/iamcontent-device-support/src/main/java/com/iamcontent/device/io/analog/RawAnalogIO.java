@@ -35,12 +35,12 @@ public class RawAnalogIO<C> implements AnalogIO {
 	}
 
 	@Override
-	public void setValue(double v) {
-		controller.setValue(channelId, v);
-	}
-
-	@Override
 	public double getValue() {
 		return controller.getValue(channelId);
+	}
+	
+	@Override
+	public void setValue(double v) {
+		controller.setValue(channelId, v);
 	}
 }

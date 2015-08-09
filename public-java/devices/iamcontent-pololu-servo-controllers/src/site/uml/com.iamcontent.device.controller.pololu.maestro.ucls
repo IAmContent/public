@@ -16,7 +16,7 @@
     project="iamcontent-pololu-servo-controllers" 
     file="/iamcontent-pololu-servo-controllers/src/main/java/com/iamcontent/device/controller/pololu/maestro/PololuCommandLineDriver.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="707" y="201"/>    
+    <position height="-1" width="-1" x="795" y="224"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -56,27 +56,23 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </interface>  
-  <association id="6">    
+  <realization id="6">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="7">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="7" name="card">        
+      <attribute id="8" name="card">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="8" minimum="0" maximum="1">        
+      <multiplicity id="9" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="9">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <realization id="10">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <dependency id="11">    
+  <dependency id="10">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  

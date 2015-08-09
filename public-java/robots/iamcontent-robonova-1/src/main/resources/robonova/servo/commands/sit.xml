@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <command>
+        <channel xsi:type="servoId">LEFT_SHOULDER_FLEXOR</channel>
+        <value>0.5</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_SHOULDER_FLEXOR</channel>
+        <value>0.5</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_SHOULDER_ABDUCTOR</channel>
+        <value>0.1</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_SHOULDER_ABDUCTOR</channel>
+        <value>0.1</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_ELBOW_FLEXOR</channel>
+        <value>0.6</value>
+        <speed></speed>
+        <acceleration></acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_ELBOW_FLEXOR</channel>
+        <value>0.6</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+  
+    <command>
+        <channel xsi:type="servoId">LEFT_HIP_ABDUCTOR</channel>
+        <value>0.18</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_HIP_ABDUCTOR</channel>
+        <value>0.18</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_HIP_FLEXOR</channel>
+        <value>1</value>
+        <speed>1</speed>
+        <acceleration>0.05</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_HIP_FLEXOR</channel>
+        <value>1</value>
+        <speed>1</speed>
+        <acceleration>0.05</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_KNEE_FLEXOR</channel>
+        <value>1</value>
+        <speed>1.0</speed>
+        <acceleration>0.05</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_KNEE_FLEXOR</channel>
+        <value>1</value>
+        <speed>1.0</speed>
+        <acceleration>0.05</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_ANKLE_PLANTARFLEXOR</channel>
+        <value>0.07</value>
+        <speed>1</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_ANKLE_PLANTARFLEXOR</channel>
+        <value>0.07</value>
+        <speed>1</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">LEFT_ANKLE_INVERTER</channel>
+        <value>0.15</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="servoId">RIGHT_ANKLE_INVERTER</channel>
+        <value>0.15</value>
+        <speed>1.0</speed>
+        <acceleration>0.02</acceleration>
+    </command>
+</commands>

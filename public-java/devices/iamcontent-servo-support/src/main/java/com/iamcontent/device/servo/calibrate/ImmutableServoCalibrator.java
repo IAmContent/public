@@ -26,20 +26,20 @@ import com.google.common.base.Function;
  */
 public class ImmutableServoCalibrator implements ServoCalibrator {
 
-	private final Converter<Double, Double> positionConverter;
+	private final Converter<Double, Double> valueConverter;
 	private final Function<Double, Double> speedConverter;
 	private final Function<Double, Double> accelerationConverter;
 	
-	public ImmutableServoCalibrator(Converter<Double, Double> positionConverter, Function<Double, Double> speedConverter,
+	public ImmutableServoCalibrator(Converter<Double, Double> valueConverter, Function<Double, Double> speedConverter,
 			Function<Double, Double> accelerationConverter) {
-		this.positionConverter = positionConverter;
+		this.valueConverter = valueConverter;
 		this.speedConverter = speedConverter;
 		this.accelerationConverter = accelerationConverter;
 	}
 
 	@Override
-	public Converter<Double, Double> getPositionConverter() {
-		return positionConverter;
+	public Converter<Double, Double> getValueConverter() {
+		return valueConverter;
 	}
 
 	@Override

@@ -17,20 +17,15 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
-import com.google.common.base.Converter;
 import com.google.common.base.Function;
+import com.iamcontent.device.io.analog.calibrate.AnalogIOCalibrator;
 import com.iamcontent.device.servo.Servo;
 
 /**
  * Calibrates a single {@link Servo}.
  * @author Greg Elderfield
  */
-public interface ServoCalibrator {
-
-	/**
-	 * @return A converter that converts between input positions and output positions.
-	 */
-	Converter<Double, Double> getPositionConverter();
+public interface ServoCalibrator extends AnalogIOCalibrator {
 
 	/**
 	 * @return A function that converts from input speed to output speed.

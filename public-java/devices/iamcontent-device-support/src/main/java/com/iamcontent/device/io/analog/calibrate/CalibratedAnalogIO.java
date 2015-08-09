@@ -19,15 +19,19 @@ package com.iamcontent.device.io.analog.calibrate;
 
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
-import com.iamcontent.device.calibrate.CalibratedDelegator;
+import com.google.common.base.Functions;
+import com.iamcontent.core.lang.Delegator;
 import com.iamcontent.device.io.analog.AnalogIO;
 
 /**
  * An {@link AnalogIO} that is calibrated by applying the given calibration functions to values before they are set or returned. 
  * @author Greg Elderfield
  */
-public class CalibratedAnalogIO extends CalibratedDelegator<AnalogIO> implements AnalogIO {
+public class CalibratedAnalogIO extends Delegator<AnalogIO> implements AnalogIO {
 	
+	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
+
+	private final Function<Double, Double> outputCalibration;
 	private final Function<Double, Double> inputCalibration;
 	
 	public CalibratedAnalogIO(AnalogIO delegate, AnalogIOCalibrator calibrator) {
@@ -39,13 +43,14 @@ public class CalibratedAnalogIO extends CalibratedDelegator<AnalogIO> implements
 	}
 
 	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
-		super(delegate, outputCalibration);
+		super(delegate);
+		this.outputCalibration = identityIfNull(outputCalibration);
 		this.inputCalibration = identityIfNull(inputCalibration);
 	}
-
+	
 	@Override
 	public void setValue(double v) {
-		final double c = applyCalibration(v);
+		final double c = outputCalibration.apply(v);
 		delegate().setValue(c);
 	}
 	
@@ -53,5 +58,9 @@ public class CalibratedAnalogIO extends CalibratedDelegator<AnalogIO> implements
 	public double getValue() {
 		final double v = delegate().getValue();
 		return inputCalibration.apply(v);
+	}
+	
+	protected static Function<Double, Double> identityIfNull(Function<Double, Double> f) {
+		return f==null ? IDENTITY_FUNCTION : f;
 	}
 }

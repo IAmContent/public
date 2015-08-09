@@ -19,18 +19,16 @@ package com.iamcontent.robot.robonova1;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.channelCalibrator;
 
-import com.google.common.base.Function;
 import com.iamcontent.core.geom.Geometry.ThreeDimension;
-import com.iamcontent.device.channel.ChannelIdTranslations;
 import com.iamcontent.device.io.analog.AnalogIOController;
 import com.iamcontent.device.io.analog.AnalogIOSource;
-import com.iamcontent.device.io.analog.StandardAnalogIOConfiguration;
 import com.iamcontent.device.io.analog.calibrate.AnalogIOSourceCalibrator;
+import com.iamcontent.device.io.analog.config.AnalogIOConfiguration;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.StandardServoConfiguration;
-import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
+import com.iamcontent.device.servo.config.ServoConfigFunctions;
+import com.iamcontent.device.servo.config.ServoConfiguration;
+import com.iamcontent.device.servo.config.jaxb.JaxbServoConfig;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -39,19 +37,13 @@ import com.iamcontent.device.servo.raw.ServoController;
  */
 public class CustomRobonova implements Robonova {
 
-	private static final String BASE_CONFIG_FOLDER = "robonova/";
-	private static final String SERVO_CONFIG_FOLDER = BASE_CONFIG_FOLDER + "servo/";
-	private static final String IO_CONFIG_FOLDER = BASE_CONFIG_FOLDER + "io/";
+	private static final String SERVO_CONFIG_FILE = "robonova-servo-config.xml";
+//	private static final String IO_CONFIG_FILE = "robonova-io-config.xml";
 	
-	private static final String SERVO_CALIBRATOR_NAME = SERVO_CONFIG_FOLDER + "pololu-maestro-calibration-for-Hitec-HSR4898HB-servos";
-	private static final String SERVO_TUNING_CALIBRATOR_NAME = SERVO_CONFIG_FOLDER + "robonova-servo-tuning-calibration";
-	private static final String SERVO_CHANNEL_TRANSLATION_NAME = SERVO_CONFIG_FOLDER + "channels";
-	
-	private static final String ACCELEROMETER_CHANNEL_TRANSLATION_NAME = IO_CONFIG_FOLDER + "accelerometer-channels";
 
 	private final ServoController<Integer> controller = defaultServoController();
-	private final StandardServoConfiguration<Integer, ServoId> servoConfiguration = servoConfiguration(controller);
-	private final StandardAnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig = accelerometerConfig(controller);
+	private final ServoConfiguration<Integer, ServoId> servoConfiguration = servoConfiguration(controller);
+	private final AnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig = accelerometerConfig(controller);
 	
 	@Override
 	public ServoSource<ServoId> servos() {
@@ -60,38 +52,27 @@ public class CustomRobonova implements Robonova {
 
 	@Override
 	public AnalogIOSource<ThreeDimension> accelerometer() {
-		return accelerometerConfig.getNormalRechanneledIOs();
+		return accelerometerConfig.getTunedRechanneledIOs();
 	}
 	
-	protected StandardServoConfiguration<Integer, ServoId> servoConfiguration(ServoController<Integer> servoController) {
-		return new StandardServoConfiguration<Integer, ServoId>(servoController, normalizingServoCalibrator(), servoChannelTranslation(), servoTuningCalibrator());
+	protected ServoConfiguration<Integer, ServoId> servoConfiguration(ServoController<Integer> servoController) {
+		return new ServoConfiguration<Integer, ServoId>(servoController, servoConfigFunctions());
 	}
 
-	private StandardAnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig(AnalogIOController<Integer> ioController) {
-		return new StandardAnalogIOConfiguration<Integer, ThreeDimension>(ioController, normalizingIOCalibrator());
+
+	private static ServoConfigFunctions<Integer, ServoId> servoConfigFunctions() {
+		return JaxbServoConfig.configFunctionsFromFile(SERVO_CONFIG_FILE, Integer.class, ServoId.class);
+	}
+
+	private AnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig(AnalogIOController<Integer> ioController) {
+		return new AnalogIOConfiguration<Integer, ThreeDimension>(ioController, normalizingIOCalibrator());
 	}
 	
 	protected ServoController<Integer> defaultServoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
 	
-	private ServoSourceCalibrator<Integer> normalizingServoCalibrator() {
-		return channelCalibrator(SERVO_CALIBRATOR_NAME, Integer.class);
-	}
-
-	protected Function<ServoId, Integer> servoChannelTranslation() {
-		return ChannelIdTranslations.function(SERVO_CHANNEL_TRANSLATION_NAME, ServoId.class, Integer.class);
-	}
-
-	protected ServoSourceCalibrator<ServoId> servoTuningCalibrator() {
-		return channelCalibrator(SERVO_TUNING_CALIBRATOR_NAME, ServoId.class);
-	}
-	
 	private AnalogIOSourceCalibrator<Integer> normalizingIOCalibrator() {
 		return null;
-	}
-
-	protected Function<ThreeDimension, Integer> accelerometerChannelTranslation() {
-		return ChannelIdTranslations.function(ACCELEROMETER_CHANNEL_TRANSLATION_NAME, ThreeDimension.class, Integer.class);
 	}
 }

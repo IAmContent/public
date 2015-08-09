@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<analogIOSourceCalibratorHolder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sourceCalibrator>
+        <defaultCalibrator>
+		    <valueConverter>
+		        <fromRange limit1="1.1" limit2="2.2"/>
+		        <toRange limit1="3.3" limit2="4.4"/>
+		    </valueConverter>
+        </defaultCalibrator>
+        <perChannelCalibrators>
+            <calibrator>
+                <channel xsi:type="channel">ELBOW</channel>
+                <valueConverter>
+                    <fromRange limit1="5.5" limit2="6.6"/>
+                    <toRange limit1="7.7" limit2="8.8"/>
+                </valueConverter>
+            </calibrator>
+            <calibrator>
+                <channel xsi:type="channel">WRIST</channel>
+                <valueConverter>
+                    <toRange limit1="9.9" limit2="10.1"/>
+                </valueConverter>
+            </calibrator>
+        </perChannelCalibrators>
+    </sourceCalibrator>
+</analogIOSourceCalibratorHolder>

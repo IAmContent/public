@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <command>
+        <channel xsi:type="testServoChannel">WRIST</channel>
+        <value>1.1</value>
+        <speed>2.2</speed>
+        <acceleration>3.3</acceleration>
+    </command>
+    <command>
+        <channel xsi:type="testServoChannel">ANKLE</channel>
+        <value>4.4</value>
+    </command>
+</commands>

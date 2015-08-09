@@ -73,7 +73,7 @@ public class UsbTestDriver {
 	
 	private static void usage(final String reason) {
 		System.err.println(reason);
-		System.err.println("Usage: java -cp<classpath>" + UsbTestDriver.class.getName() + " <vendorId> <productId>" );
+		System.err.println("Usage: java -cp<classpath> " + UsbTestDriver.class.getName() + " <vendorId> <productId>" );
 		System.err.println("Please try again.");
 	}
 }

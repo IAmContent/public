@@ -17,10 +17,10 @@
  */
 package com.iamcontent.device.servo.command;
 
-import static com.iamcontent.device.servo.command.SequentialServoCommandExecutor.executor;
-import static com.iamcontent.device.servo.command.ServoCommands.servoCommands;
+import static com.iamcontent.device.servo.command.SimpleServoCommandExecutor.executor;
+import static com.iamcontent.device.servo.config.jaxb.JaxbServoCommand.servoCommandsFromFile;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -65,7 +65,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 		return Iterables.transform(commandStrings(), parsingFunction);
 	}
 
-	private final ParseStringIntoServoCommandFunction<C> parsingFunction = new ParseStringIntoServoCommandFunction<C>() {
+	private final ParseStringIntoServoCommand<C> parsingFunction = new ParseStringIntoServoCommand<C>() {
 		@Override
 		public ServoCommand<C> apply(String command) {
 			try {
@@ -103,12 +103,17 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 		return new PrefixCommandHandler("!") {
 			@Override
 			protected void executeCommand(String commandName) {
-				final String fileName = commandFolder() + commandName;
-				executeCommands(servoCommands(fileName, channelClass));
+				execute(servoCommands(commandName));
 			}
 
-			private void executeCommands(final List<ServoCommand<C>> commands) {
-				executor.execute(commands);
+			private Collection<ServoCommand<C>> servoCommands(String commandName) {
+				final String fileName = commandFolder() + commandName + ".xml";
+				return servoCommandsFromFile(fileName, channelClass);
+			}
+
+			private void execute(Collection<ServoCommand<C>> commands) {
+				for (ServoCommand<? extends C> c : commands)
+					executor.execute(c);
 			}
 		};
 	}

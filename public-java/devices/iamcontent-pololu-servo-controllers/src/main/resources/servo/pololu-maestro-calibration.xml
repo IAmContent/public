@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <configFunctions>
+        <normalizingCalibrator>
+            <defaultCalibrator>
+                <valueConverter>
+                    <toRange limit1="4000" limit2="8000"/>
+                </valueConverter>
+                <speedConverter>
+                    <toRange limit1="0" limit2="200"/>
+                </speedConverter>
+                <accelerationConverter>
+                    <toRange limit1="0" limit2="255"/>
+                </accelerationConverter>
+            </defaultCalibrator>
+            <perChannelCalibrators/>
+        </normalizingCalibrator>
+    </configFunctions>
+</config>

@@ -35,7 +35,7 @@ public interface ServoCommand<C> {
 	/**
 	 * @return The relative position for the {@link Servo}, between 0.0 and 1.0, or null if the position is not changed by this command
 	 */
-	Double getPosition();
+	Double getValue();
 	
 	/**
 	 * @return The relative speed for the {@link Servo}, between 0.0 and 1.0, or null if the speed is not changed by this command

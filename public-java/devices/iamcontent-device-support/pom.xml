@@ -18,6 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>com.iamcontent.public-java</groupId>
+            <artifactId>iamcontent-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iamcontent.public-java</groupId>
             <artifactId>iamcontent-io</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -29,6 +34,13 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>com.iamcontent.public-java</groupId>
+        	<artifactId>iamcontent-core</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		    <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

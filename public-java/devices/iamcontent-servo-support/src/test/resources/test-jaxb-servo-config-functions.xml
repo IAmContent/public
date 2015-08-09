@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <configFunctions>
+	    <normalizingCalibrator>
+	        <defaultCalibrator>
+			    <valueConverter>
+			        <fromRange limit1="1.1" limit2="2.2"/>
+			        <toRange limit1="3.3" limit2="4.4"/>
+			    </valueConverter>
+	            <speedConverter>
+	                <fromRange limit1="1.5" limit2="1.6"/>
+	                <toRange limit1="1.7" limit2="1.8"/>
+	            </speedConverter>
+	            <accelerationConverter>
+	                <fromRange limit1="1.9" limit2="1.11"/>
+	                <toRange limit1="1.22" limit2="1.33"/>
+	            </accelerationConverter>
+	        </defaultCalibrator>
+	        <perChannelCalibrators>
+	            <calibrator>
+	                <channel xsi:type="xs:int">3</channel>
+	                <valueConverter>
+	                    <fromRange limit1="5.5" limit2="6.6"/>
+	                    <toRange limit1="7.7" limit2="8.8"/>
+	                </valueConverter>
+	                <speedConverter>
+	                    <toRange limit1="2.7" limit2="2.8"/>
+	                </speedConverter>
+	                <accelerationConverter>
+	                    <toRange limit1="2.22" limit2="2.33"/>
+	                </accelerationConverter>
+	            </calibrator>
+	        </perChannelCalibrators>
+	    </normalizingCalibrator>
+	    
+	    <channelTranslation>
+	        <mapping>
+	            <fromChannel xsi:type="newChannel">ELBOW</fromChannel>
+	            <toChannel xsi:type="xs:int">4</toChannel>
+	        </mapping>
+	        <mapping>
+	            <fromChannel xsi:type="newChannel">WRIST</fromChannel>
+	            <toChannel xsi:type="xs:int">2</toChannel>
+	        </mapping>
+	        <mapping>
+	            <fromChannel xsi:type="newChannel">KNEE</fromChannel>
+	            <toChannel xsi:type="xs:int">1</toChannel>
+	        </mapping>
+	        <mapping>
+	            <fromChannel xsi:type="newChannel">ANKLE</fromChannel>
+	            <toChannel xsi:type="xs:int">3</toChannel>
+	        </mapping>
+	    </channelTranslation>
+	    
+        <tuningCalibrator>
+            <defaultCalibrator>
+                <valueConverter>
+                    <fromRange limit1="1.11" limit2="2.22"/>
+                    <toRange limit1="3.33" limit2="4.44"/>
+                </valueConverter>
+            </defaultCalibrator>
+            <perChannelCalibrators>
+            </perChannelCalibrators>
+         </tuningCalibrator>
+    </configFunctions>
+</config>

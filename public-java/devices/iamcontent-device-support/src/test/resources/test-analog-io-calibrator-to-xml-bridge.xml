@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<analogIOCalibratorHolder>
+    <channelCalibrator>
+	    <valueConverter mode="DO_NOT_LIMIT_RESULT_TO_RANGE">
+	        <fromRange limit1="1.1" limit2="2.2"/>
+	        <toRange limit1="3.3" limit2="4.4"/>
+	    </valueConverter>
+    </channelCalibrator>
+</analogIOCalibratorHolder>

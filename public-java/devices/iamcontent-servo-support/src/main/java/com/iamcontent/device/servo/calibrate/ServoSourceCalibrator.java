@@ -18,13 +18,14 @@
 package com.iamcontent.device.servo.calibrate;
 
 import com.iamcontent.device.channel.PerChannelSource;
+import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
 
 /**
  * Calibrates a single {@link ServoSource}.
  * @author Greg Elderfield
  * 
- * @param <C> The type used to identify the channel of a servo. 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
 public interface ServoSourceCalibrator<C> extends PerChannelSource<C, ServoCalibrator> {
 }

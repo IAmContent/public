@@ -17,15 +17,10 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
-import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.DEFAULT_CALIBRATOR_NAME;
-import static com.iamcontent.device.controller.pololu.maestro.RawPololuMaestroServoSourceIT.rawServoSource;
-import static com.iamcontent.device.servo.calibrate.ServoSourceCalibrators.numberedChannelCalibrator;
-
 import org.junit.Before;
 
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.ServoSources;
 
 /**
  * A simple integration test, which doubles as an example of how to drive a Pololu Maestro card as a calibrated {@link ServoSource}.
@@ -46,7 +41,7 @@ public class CalibratedPololuMaestroServoSourceIT extends AbstractPololuMaestroS
 
 	@Before
 	public void setUp() {
-		calibratedServoSource = calibratedServoSource();
+		calibratedServoSource = DefaultPololuServoConfig.normalServos();
 	}
 
 	@Override
@@ -71,9 +66,5 @@ public class CalibratedPololuMaestroServoSourceIT extends AbstractPololuMaestroS
 	
 	private Servo getServo(int channel) {
 		return calibratedServoSource.forChannel(channel);
-	}
-
-	private static ServoSource<Integer> calibratedServoSource() {
-		return ServoSources.calibratedServoSource(rawServoSource(), numberedChannelCalibrator(DEFAULT_CALIBRATOR_NAME));
 	}
 }

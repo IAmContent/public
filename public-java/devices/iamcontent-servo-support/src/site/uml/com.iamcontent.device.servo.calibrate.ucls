@@ -23,29 +23,18 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="com.iamcontent.device.servo.calibrate.ProportionalServoCalibrator" 
-    project="iamcontent-servo-support" 
-    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/ProportionalServoCalibrator.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="900" y="348"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="com.iamcontent.device.servo.calibrate.ImmutableServoCalibrator" 
+  <class id="3" language="java" name="com.iamcontent.device.servo.calibrate.ImmutableServoCalibrator" 
     project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/ImmutableServoCalibrator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="900" y="234"/>    
+    <position height="-1" width="-1" x="904" y="237"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator" 
+  <class id="4" language="java" name="com.iamcontent.device.servo.calibrate.DefaultingServoSourceCalibrator" 
     project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/DefaultingServoSourceCalibrator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -56,29 +45,18 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.iamcontent.device.servo.calibrate.ServoSourceCalibrators" 
-    project="iamcontent-servo-support" 
-    file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/ServoSourceCalibrators.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="232" y="71"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="com.iamcontent.device.servo.calibrate.CalibratedServo" 
+  <class id="5" language="java" name="com.iamcontent.device.servo.calibrate.CalibratedServo" 
     project="iamcontent-servo-support" 
     file="/iamcontent-servo-support/src/main/java/com/iamcontent/device/servo/calibrate/CalibratedServo.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="231" y="240"/>    
+    <position height="-1" width="-1" x="236" y="238"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <interface id="8" language="java" name="com.iamcontent.device.channel.PerChannelSource" 
+  <interface id="6" language="java" name="com.iamcontent.device.channel.PerChannelSource" 
     project="iamcontent-device-support" 
     file="/iamcontent-device-support/src/main/java/com/iamcontent/device/channel/PerChannelSource.java" binary="false" 
     corner="BOTTOM_RIGHT">    
@@ -89,30 +67,60 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
+  <interface id="7" language="java" name="com.google.common.base.Function" project="iamcontent-servo-support" 
+    file="C:/mvn-repo/com/google/guava/guava/18.0/guava-18.0.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="236" y="403"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="com.google.common.base.Converter" project="iamcontent-servo-support" 
+    file="C:/mvn-repo/com/google/guava/guava/18.0/guava-18.0.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="525" y="404"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
   <dependency id="9">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <realization id="10">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
-  </realization>  
-  <generalization id="11">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <realization id="12">    
     <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <generalization id="13">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <generalization id="10">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
-  <dependency id="14">    
+  <dependency id="11">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="12">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="14">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="15">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <realization id="17">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="false"/>    
