@@ -32,6 +32,11 @@
             <artifactId>iamcontent-io</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.iamcontent.public-java.io</groupId>
+            <artifactId>iamcontent-cli</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     	<dependency>
     		<groupId>com.google.guava</groupId>
     		<artifactId>guava</artifactId>
