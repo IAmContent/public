@@ -17,13 +17,13 @@
     </licenses>
     <dependencies>
     	<dependency>
-    		<groupId>com.google.guava</groupId>
-    		<artifactId>guava</artifactId>
+    		<groupId>com.iamcontent.public-java.io</groupId>
+    		<artifactId>iamcontent-io-core</artifactId>
+            <version>${project.version}</version>
     	</dependency>
     	<dependency>
-    		<groupId>com.iamcontent.public-java</groupId>
-    		<artifactId>iamcontent-io</artifactId>
-            <version>${project.version}</version>
+    		<groupId>com.google.guava</groupId>
+    		<artifactId>guava</artifactId>
     	</dependency>
     	
         <dependency>

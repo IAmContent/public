@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.iamcontent.public-java</groupId>
-	<artifactId>iamcontent-io</artifactId>
-	<description>IAmContent I/O Library.</description>
+	<groupId>com.iamcontent.public-java.io</groupId>
+	<artifactId>iamcontent-io-core</artifactId>
+	<description>IAmContent Core I/O Library.</description>
 	<parent>
-		<groupId>com.iamcontent</groupId>
-		<artifactId>public-java</artifactId>
+		<groupId>com.iamcontent.public-java</groupId>
+		<artifactId>io</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<licenses>

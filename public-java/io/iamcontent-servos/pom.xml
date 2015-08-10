@@ -28,8 +28,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.iamcontent.public-java</groupId>
-            <artifactId>iamcontent-io</artifactId>
+            <groupId>com.iamcontent.public-java.io</groupId>
+            <artifactId>iamcontent-io-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
