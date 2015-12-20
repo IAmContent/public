@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.robot.robonova1;
+package com.iamcontent.robot.robonova1.custom1;
 
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
@@ -28,18 +28,16 @@ import com.iamcontent.device.io.analog.config.AnalogIOConfiguration;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.config.ServoConfigFunctions;
 import com.iamcontent.device.servo.config.ServoConfiguration;
-import com.iamcontent.device.servo.config.jaxb.JaxbServoConfig;
 import com.iamcontent.device.servo.raw.ServoController;
+import com.iamcontent.robot.robonova1.Robonova;
+import com.iamcontent.robot.robonova1.ServoId;
+import com.iamcontent.robot.robonova1.custom1.servo.ServoConfig;
 
 /**
  * A specific implementation of Greg Elderfield's Robonova-1.
  * @author Greg Elderfield
  */
 public class CustomRobonova implements Robonova {
-
-	private static final String SERVO_CONFIG_FILE = "robonova-servo-config.xml";
-//	private static final String IO_CONFIG_FILE = "robonova-io-config.xml";
-	
 
 	private final ServoController<Integer> controller = defaultServoController();
 	private final ServoConfiguration<Integer, ServoId> servoConfiguration = servoConfiguration(controller);
@@ -61,7 +59,7 @@ public class CustomRobonova implements Robonova {
 
 
 	private static ServoConfigFunctions<Integer, ServoId> servoConfigFunctions() {
-		return JaxbServoConfig.configFunctionsFromFile(SERVO_CONFIG_FILE, Integer.class, ServoId.class);
+		return new ServoConfig();
 	}
 
 	private AnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig(AnalogIOController<Integer> ioController) {

@@ -17,6 +17,8 @@
  */
 package com.iamcontent.device.servo.calibrate;
 
+import static com.iamcontent.core.math.InterRangeDoubleConverter.rangeFromNormalTo;
+import static com.iamcontent.core.math.InterRangeDoubleConverter.REVERSE_NORMAL_CONVERTER;
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
 
@@ -30,11 +32,22 @@ public class ImmutableServoCalibrator implements ServoCalibrator {
 	private final Function<Double, Double> speedConverter;
 	private final Function<Double, Double> accelerationConverter;
 	
+	public static final ImmutableServoCalibrator NULL_SERVO_CALIBRATOR = new ImmutableServoCalibrator(null);
+	public static final ImmutableServoCalibrator REVERSED_SERVO_CALIBRATOR = new ImmutableServoCalibrator(REVERSE_NORMAL_CONVERTER);
+
+	public ImmutableServoCalibrator(Converter<Double, Double> valueConverter) {
+		this(valueConverter, null, null);
+	}
+	
 	public ImmutableServoCalibrator(Converter<Double, Double> valueConverter, Function<Double, Double> speedConverter,
 			Function<Double, Double> accelerationConverter) {
 		this.valueConverter = valueConverter;
 		this.speedConverter = speedConverter;
 		this.accelerationConverter = accelerationConverter;
+	}
+	
+	public static ImmutableServoCalibrator calibrateValueFromNormalTo(double limit1, double limit2) {
+		return new ImmutableServoCalibrator(rangeFromNormalTo(limit1, limit2));
 	}
 
 	@Override

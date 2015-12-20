@@ -18,6 +18,8 @@
 package com.iamcontent.core.math;
 
 import static com.iamcontent.core.math.DoubleRange.NORMAL_RANGE;
+import static com.iamcontent.core.math.DoubleRange.REVERSE_NORMAL_RANGE;
+import static com.iamcontent.core.math.DoubleRange.range;
 
 import com.google.common.base.Converter;
 
@@ -27,6 +29,9 @@ import com.google.common.base.Converter;
  */
 public class InterRangeDoubleConverter extends Converter<Double, Double> {
 
+	public static final Mode DEFAULT_MODE = Mode.LIMIT_RESULT_TO_RANGE;
+	public static final InterRangeDoubleConverter REVERSE_NORMAL_CONVERTER = rangeFromNormalTo(REVERSE_NORMAL_RANGE);
+	
 	/**
 	 * Indicates whether a converted value should be limited to its target range or not.
 	 */
@@ -50,7 +55,7 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 	private final Mode mode;
 
 	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange) {
-		this(fromRange, toRange, Mode.LIMIT_RESULT_TO_RANGE);
+		this(fromRange, toRange, DEFAULT_MODE);
 	}
 	
 	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {
@@ -59,8 +64,20 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 		this.mode = mode;
 	}
 
-	public static InterRangeDoubleConverter fromNormalRangeConverter(DoubleRange toRange, Mode mode) {
+	public static InterRangeDoubleConverter rangeFromNormalTo(double toLimit1, double toLimit2) {
+		return rangeFromNormalTo(range(toLimit1, toLimit2));
+	}
+	
+	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange) {
+		return interRangeConverter(NORMAL_RANGE, toRange, DEFAULT_MODE);
+	}
+
+	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange, Mode mode) {
 		return interRangeConverter(NORMAL_RANGE, toRange, mode);
+	}
+
+	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange) {
+		return interRangeConverter(fromRange, toRange, DEFAULT_MODE);
 	}
 
 	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {

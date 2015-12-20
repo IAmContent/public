@@ -27,6 +27,7 @@ public class DoubleRange implements Serializable {
 	private final double limit1, limit2, min, max;
 	
 	public static final DoubleRange NORMAL_RANGE = range(0.0, 1.0);
+	public static final DoubleRange REVERSE_NORMAL_RANGE = range(1.0, 0.0);
 	
 	public DoubleRange(double limit1, double limit2) {
 		this.limit1 = limit1;

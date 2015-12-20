@@ -39,7 +39,7 @@ public class CalibratedAnalogIO extends Delegator<AnalogIO> implements AnalogIO 
 	}
 
 	public CalibratedAnalogIO(AnalogIO delegate, Converter<Double, Double> calibration) {
-		this(delegate, calibration, calibration.reverse());
+		this(delegate, calibration, reverse(calibration));
 	}
 
 	public CalibratedAnalogIO(AnalogIO delegate, Function<Double, Double> outputCalibration, Function<Double, Double> inputCalibration) {
@@ -62,5 +62,9 @@ public class CalibratedAnalogIO extends Delegator<AnalogIO> implements AnalogIO 
 	
 	protected static Function<Double, Double> identityIfNull(Function<Double, Double> f) {
 		return f==null ? IDENTITY_FUNCTION : f;
+	}
+	
+	private static Converter<Double, Double> reverse(Converter<Double, Double> calibration) {
+		return calibration==null ? null : calibration.reverse();
 	}
 }

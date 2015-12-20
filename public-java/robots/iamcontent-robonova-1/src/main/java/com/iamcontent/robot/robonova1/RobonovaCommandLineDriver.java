@@ -20,6 +20,7 @@ package com.iamcontent.robot.robonova1;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.device.servo.command.ServoCommandLineDriver;
 import com.iamcontent.io.cli.UnknownCommandException;
+import com.iamcontent.robot.robonova1.custom1.CustomRobonova;
 
 /**
  * A {@link ServoCommandLineDriver} for a {@link Robonova}. Useful for manual testing.
