@@ -18,7 +18,6 @@
 package com.iamcontent.device.servo.command;
 
 import static com.iamcontent.device.servo.command.SimpleServoCommandExecutor.executor;
-import static com.iamcontent.device.servo.config.jaxb.JaxbServoCommand.servoCommandsFromFile;
 
 import java.util.Collection;
 
@@ -40,10 +39,8 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 
 	private ServoSource<C> servoSource;
 	private ServoCommandExecutor<C> executor;
-	private Class<C> channelClass;
 
-	public ServoCommandLineDriver(Class<C> channelClass) {
-		this.channelClass = channelClass;
+	public ServoCommandLineDriver() {
 		addCommandHandler(positionQueryCommandHandler());
 		addCommandHandler(namedCommandHandler());
 	}
@@ -103,12 +100,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 		return new PrefixCommandHandler("!") {
 			@Override
 			protected void executeCommand(String commandName) {
-				execute(servoCommands(commandName));
-			}
-
-			private Collection<ServoCommand<C>> servoCommands(String commandName) {
-				final String fileName = commandFolder() + commandName + ".xml";
-				return servoCommandsFromFile(fileName, channelClass);
+				execute(compoundCommand(commandName));
 			}
 
 			private void execute(Collection<ServoCommand<C>> commands) {
@@ -118,10 +110,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 		};
 	}
 
-	protected String commandFolder() {
-		return "servo/commands/";
-	}
-
+	protected abstract Collection<ServoCommand<C>> compoundCommand(String commandName);
 	protected abstract ServoSource<C> servoSource();
 	protected abstract C parseChannel(String s);
 }

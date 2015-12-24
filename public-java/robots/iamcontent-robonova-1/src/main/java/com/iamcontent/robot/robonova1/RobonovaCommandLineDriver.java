@@ -17,9 +17,15 @@
  */
 package com.iamcontent.robot.robonova1;
 
+import static com.iamcontent.core.LangUtils.newInstance;
+import static com.iamcontent.core.LangUtils.packageNameOf;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
 import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.command.CompoundServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandLineDriver;
 import com.iamcontent.io.cli.UnknownCommandException;
+import com.iamcontent.robot.robonova1.command.SitCommand;
 import com.iamcontent.robot.robonova1.custom1.CustomRobonova;
 
 /**
@@ -28,12 +34,9 @@ import com.iamcontent.robot.robonova1.custom1.CustomRobonova;
  */
 public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 
+	private static final String COMMAND_PACKAGE = packageNameOf(SitCommand.class);
 	private final Robonova robonova = new CustomRobonova();
 	
-	public RobonovaCommandLineDriver() {
-		super(ServoId.class);
-	}
-
 	public static void main(String[] args) {
 		final RobonovaCommandLineDriver driver = new RobonovaCommandLineDriver();
 		driver.run();
@@ -107,7 +110,12 @@ public class RobonovaCommandLineDriver extends ServoCommandLineDriver<ServoId> {
 	}
 
 	@Override
-	protected String commandFolder() {
-		return "robonova/servo/commands/";
+	@SuppressWarnings("unchecked")
+	protected CompoundServoCommand<ServoId> compoundCommand(String commandName) {
+		return newInstance(commandClassName(commandName), CompoundServoCommand.class);
+	}
+
+	private String commandClassName(String commandName) {
+		return String.format("%s.%sCommand", COMMAND_PACKAGE, capitalize(commandName));
 	}
 }

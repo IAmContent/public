@@ -39,6 +39,10 @@ public class ImmutableServoCommand<C> implements ServoCommand<C>, Serializable {
 		this.acceleration = acceleration;
 	}
 
+	public static <C> ServoCommand<C> immutableCommand(C channel, Double value, Double speed, Double acceleration) {
+		return new ImmutableServoCommand<C>(channel, value, speed, acceleration);
+	}
+
 	@Override
 	public C getChannel() {
 		return channel;

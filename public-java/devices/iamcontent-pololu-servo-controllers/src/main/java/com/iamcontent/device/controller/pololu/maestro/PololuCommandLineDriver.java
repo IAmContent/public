@@ -17,7 +17,10 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
+import java.util.Collection;
+
 import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.command.ServoCommand;
 import com.iamcontent.device.servo.command.ServoCommandLineDriver;
 
 /**
@@ -28,10 +31,6 @@ public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 
 	private final ServoSource<Integer> normalServos = DefaultPololuServoConfig.normalServos();
 	
-	public PololuCommandLineDriver() {
-		super(Integer.class);
-	}
-
 	public static void main(String[] args) {
 		final PololuCommandLineDriver driver = new PololuCommandLineDriver();
 		driver.run();
@@ -45,5 +44,10 @@ public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 	@Override
 	protected Integer parseChannel(String s) {
 		return new Integer(s);
+	}
+
+	@Override
+	protected Collection<ServoCommand<Integer>> compoundCommand(String commandName) {
+		throw new UnsupportedOperationException("No compound command supported.");
 	}
 }
