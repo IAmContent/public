@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<converterHolder>
-    <converter>
-        <toRange limit1="3.3" limit2="4.4"/>
-    </converter>
-</converterHolder>

@@ -22,11 +22,12 @@ import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaest
 
 import javax.usb.UsbDevice;
 
+import com.google.common.base.Function;
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
 import com.iamcontent.device.servo.config.ServoConfigFunctions;
 import com.iamcontent.device.servo.config.ServoConfiguration;
-import com.iamcontent.device.servo.config.jaxb.JaxbServoConfig;
 import com.iamcontent.device.servo.raw.ServoController;
 
 /**
@@ -50,6 +51,21 @@ public class DefaultPololuServoConfig {
 	}
 
 	public static ServoConfigFunctions<Integer, Void> configFunctions() {
-		return JaxbServoConfig.configFunctionsFromFile("servo/pololu-maestro-calibration.xml", Integer.class, Void.class);
+		return new ServoConfigFunctions<Integer, Void>() {
+			@Override
+			public ServoSourceCalibrator<Integer> normalizingCalibrator() {
+				return new DefaultPololuMaestroServoNormalization();
+			}
+
+			@Override
+			public Function<Void, Integer> channelTranslation() {
+				return null;
+			}
+
+			@Override
+			public ServoSourceCalibrator<Void> tuningCalibrator() {
+				return null;
+			}
+		};
 	}
 }
