@@ -1,7 +1,7 @@
 # iamcontent-core.jar
 ## A publicly available Core library from Greg Elderfield.
 
-This jar contains a few utility classes and functions.
+This jar contains a few utility classes and functions.3
 
 ---
 
