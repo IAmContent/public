@@ -1,4 +1,4 @@
-#Java package: _servo_
+# Java package: _servo_
 
 A _ServoSource_ allows _Servo_ objects to be obtained by their channel ids. The _Servos_ class has convenient factory methods for creating [raw](com.iamcontent.device.servo.raw.md) _ServoSource_ objects and for calibrating them.
 

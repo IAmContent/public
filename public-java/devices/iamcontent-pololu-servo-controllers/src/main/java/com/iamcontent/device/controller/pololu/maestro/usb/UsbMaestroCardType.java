@@ -26,7 +26,7 @@ import static com.iamcontent.io.usb.UsbDevicePredicates.vendorAndProductIdsMatch
 import javax.usb.UsbDevice;
 
 import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
-import com.iamcontent.io.IORuntimeException;
+import com.iamcontent.io.usb.UsbRuntimeException;
 
 /**
  * The USB characteristics of the different types of Pololu Maestro cards.
@@ -66,7 +66,7 @@ public enum UsbMaestroCardType {
 		if (result!=null)
 			return result;
 		else
-			throw new IORuntimeException("USB Device is not a Usb Maestro Card");
+			throw new UsbRuntimeException("USB Device is not a Usb Maestro Card");
 	}
 
 	public static UsbMaestroCardType forUsbDeviceOrNull(UsbDevice device) {

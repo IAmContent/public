@@ -1,4 +1,4 @@
-#Java package: _usb.topology_
+# Java package: _usb.topology_
 
 Provides a mechanism for searching a USB topology for devices.
 

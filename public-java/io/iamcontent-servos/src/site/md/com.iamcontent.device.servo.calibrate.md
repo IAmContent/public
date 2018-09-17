@@ -1,4 +1,4 @@
-#Java package: _servo.calibrate_
+# Java package: _servo.calibrate_
 
 A _CalibratedServo_ wraps another _Servo_ (usually a [RawServo](com.iamcontent.device.servo.raw.md)) and delegates to it after converting position, speed and acceleration values according to a _ServoCalibrator_. A _ServoSourceCalibrator_ can provide _ServoCalibrator_ objects for all of the [Servo](com.iamcontent.device.servo.md) objects of a [ServoSource](com.iamcontent.device.servo.md).
 

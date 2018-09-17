@@ -3,7 +3,7 @@
 
 This jar contains the following packages:
 
-* the [pololu.maestro](src/site/md/com.iamcontent.device.controller.pololu.maestro.md) package - defines the  servo functions required of a Pololu Maestro card and allows these functions to be used with the [iamcontent-servo-support](../iamcontent-servo-support) jar.
+* the [pololu.maestro](src/site/md/com.iamcontent.device.controller.pololu.maestro.md) package - defines the  servo functions required of a Pololu Maestro card and allows these functions to be used with the [iamcontent-servos](../../io/iamcontent-servos) jar.
 * the [pololu.maestro.usb](src/site/md/com.iamcontent.device.controller.pololu.maestro.usb.md) package - implements these servo functions using the Pololu Native USB protocol.
 
 ---

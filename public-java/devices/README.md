@@ -3,7 +3,6 @@
 
 This project contains the following:
 
-* [iamcontent-servo-support.jar](iamcontent-servo-support) - support for controlling servos
 * [iamcontent-pololu-servo-controllers.jar](iamcontent-pololu-servo-controllers) - for controlling servos using Pololu Maestro cards.
 * [iamcontent-owi-motor-controllers.jar](iamcontent-owi-motor-controllers) - for controlling motors using a Owi-535 Motor Controller card. 
 

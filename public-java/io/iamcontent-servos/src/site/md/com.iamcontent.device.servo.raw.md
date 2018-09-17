@@ -1,4 +1,4 @@
-#Java package: _servo.raw_
+# Java package: _servo.raw_
 
 A _ServoController_ sets the position, speed and acceleration values of a group of servos, using raw values that are specific to the firmware of a physical servo controller. The _RawServo_ class is a _Servo_ that directly delegates its operations to a _ServoController_ without altering the values of the operations.
 

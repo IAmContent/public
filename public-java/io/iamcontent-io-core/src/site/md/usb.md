@@ -1,4 +1,4 @@
-#Java package: _usb_
+# Java package: _usb_
 
 Provides a simple facade over the [javax.usb](http://sourceforge.net/projects/javax-usb/) API.
 

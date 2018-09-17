@@ -1,4 +1,4 @@
-# iamcontent-servo-support.jar
+# iamcontent-servos.jar
 ## A publicly available Servo Support library from Greg Elderfield.
 
 This jar contains three main packages of interest:

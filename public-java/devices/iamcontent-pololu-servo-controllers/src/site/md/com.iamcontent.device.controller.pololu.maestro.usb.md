@@ -1,4 +1,4 @@
-#Java package: _pololu.maestro.usb_
+# Java package: _pololu.maestro.usb_
 
 Implements the servo functions required of a Pololu Maestro card using the Pololu Native USB protocol.
 
