@@ -10,9 +10,10 @@ Copyright (C) 2015 Greg Elderfield
 This software comprises the following packages:
 
 * [iamcontent-core.jar](iamcontent-core) - a few utility classes and functions
-* [iamcontent-io.jar](iamcontent-io) - I/O utilities and a usable facade over the javax.usb API.
+* [iamcontent-io.jar](io) - I/O utilities.
+  * [iamcontent-servos.jar](io/iamcontent-servos) -  Supports control of servos
+  * [iamcontent-usb.jar](io/iamcontent-usb) -  Provides a convenient facade and utilities over the javax.usb API
 * [devices](devices)
-  * [iamcontent-servo-support.jar](devices/iamcontent-servo-support) -  Supports control of servos
   * [iamcontent-pololu-servo-controllers.jar](devices/iamcontent-pololu-servo-controllers) -  Servo control using Pololu Maestro cards
   * [iamcontent-owi-motor-controllers.jar](devices/iamcontent-owi-motor-controllers) -  Motor control using the Owi-535 Motor Controller
 * [robots](robots)
