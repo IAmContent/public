@@ -22,6 +22,8 @@ import static com.iamcontent.core.math.DoubleRange.REVERSE_NORMAL_RANGE;
 import static com.iamcontent.core.math.DoubleRange.range;
 
 import com.google.common.base.Converter;
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 
 /**
  * Converts Double objects linearly according to two corresponding {@link Range} objects.
@@ -29,6 +31,7 @@ import com.google.common.base.Converter;
  */
 public class InterRangeDoubleConverter extends Converter<Double, Double> {
 
+	public static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
 	public static final Mode DEFAULT_MODE = Mode.LIMIT_RESULT_TO_RANGE;
 	public static final InterRangeDoubleConverter REVERSE_NORMAL_CONVERTER = rangeFromNormalTo(REVERSE_NORMAL_RANGE);
 	

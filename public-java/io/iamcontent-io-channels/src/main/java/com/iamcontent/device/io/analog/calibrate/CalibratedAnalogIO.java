@@ -17,9 +17,10 @@
  */
 package com.iamcontent.device.io.analog.calibrate;
 
+import static com.iamcontent.core.math.InterRangeDoubleConverter.IDENTITY_FUNCTION;
+
 import com.google.common.base.Converter;
 import com.google.common.base.Function;
-import com.google.common.base.Functions;
 import com.iamcontent.core.lang.Delegator;
 import com.iamcontent.device.io.analog.AnalogIO;
 
@@ -29,8 +30,6 @@ import com.iamcontent.device.io.analog.AnalogIO;
  */
 public class CalibratedAnalogIO extends Delegator<AnalogIO> implements AnalogIO {
 	
-	private static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
-
 	private final Function<Double, Double> outputCalibration;
 	private final Function<Double, Double> inputCalibration;
 	
