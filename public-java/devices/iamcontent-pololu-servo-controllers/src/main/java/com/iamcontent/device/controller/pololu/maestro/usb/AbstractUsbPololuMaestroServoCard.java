@@ -46,17 +46,23 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	private static final byte REQUEST_SET_TARGET = (byte)0x85;
 	private static final byte REQUEST_SET_SERVO_VARIABLE = (byte)0x84;
 	
-	protected static final int BYTES_PER_SERVO_STATUS_BLOCK = 7;
+	private static final int BYTES_PER_SERVO_STATUS_BLOCK = 7;
 
-	protected final EasyUsbDevice device;
-	protected final UsbMaestroCardType type;
+	private final EasyUsbDevice device;
+	private final UsbMaestroCardType type;
+	private final byte[] dataIn;
+	private final byte inRequestCode;
+	private final int offsetOfFirstServoStatusBlock;
 	
 	/**
 	 * Creates an instance with the given UsbDevice.
 	 */
-	public AbstractUsbPololuMaestroServoCard(UsbDevice device) {
+	public AbstractUsbPololuMaestroServoCard(UsbDevice device, byte inRequestCode, int offsetOfFirstServoStatusBlock) {
 		this.device = eased(device);
 		this.type = UsbMaestroCardType.forUsbDeviceOrThrow(device);
+		this.inRequestCode = inRequestCode;
+		this.offsetOfFirstServoStatusBlock = offsetOfFirstServoStatusBlock;
+		this.dataIn = new byte[offsetOfFirstServoStatusBlock + sizeOfAllServoStatusBlocks()];
 	}
 
 	@Override
@@ -79,6 +85,13 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	public short getPosition(short channel) {
 		return getState().getPosition(chan(channel));
 	}
+	
+	@Override
+	public State getState() {
+		final UsbControlIrp request = inRequest(inRequestCode);
+		device.syncSubmit(request);
+		return new PololuState(request.getData());
+	}
 
 	@Override
 	public MaestroCardType getType() {
@@ -89,10 +102,10 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 		return getType().channelCount();
 	}
 
-	protected UsbControlIrp inRequest(byte request, int dataSize) {
+	protected UsbControlIrp inRequest(byte request) {
 		final byte requestType = REQUESTTYPE_TYPE_VENDOR | REQUESTTYPE_DIRECTION_IN;
 		final UsbControlIrp result = device.createUsbControlIrp(requestType, request, (short)0, (short)0);
-		result.setData(new byte[dataSize]);
+		result.setData(dataIn);
 		return result;
 	}
 	
@@ -116,16 +129,14 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	
 	protected class PololuState implements State, Serializable {
 		private final byte[] data;
-		private final int offset;
 		
-		public PololuState(byte[] data, int offset) {
+		public PololuState(byte[] data) {
 			this.data = data;
-			this.offset = offset;
 		}
 
 		@Override
 		public short getPosition(short channel) {
-			final int loIndex = offset + chan(channel) * BYTES_PER_SERVO_STATUS_BLOCK;
+			final int loIndex = offsetOfFirstServoStatusBlock + chan(channel) * BYTES_PER_SERVO_STATUS_BLOCK;
 			return asShort(data[loIndex], data[loIndex + 1]);
 		}
 		

@@ -17,7 +17,6 @@
  */
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
-import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
 
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
@@ -35,16 +34,7 @@ public class UsbPololuMicroMaestroServoCard extends AbstractUsbPololuMaestroServ
 	private static final byte REQUEST_GET_VARIABLES = (byte)0x83;
 	
 	public UsbPololuMicroMaestroServoCard(UsbDevice device) {
-		super(device);
+		super(device, REQUEST_GET_VARIABLES, 98);
 	}
 	
-	@Override
-	public State getState() {
-		final int offset = 98;
-		final int dataSize = offset + sizeOfAllServoStatusBlocks();
-		final UsbControlIrp request = inRequest(REQUEST_GET_VARIABLES, dataSize);
-		device.syncSubmit(request);
-		return new PololuState(request.getData(), offset);
-	}
-
 }
