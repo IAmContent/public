@@ -34,7 +34,7 @@ public enum MaestroCardType {
 		this.channelCount = channelCount;
 	}
 
-	public int getChannelCount() {
+	public int channelCount() {
 		return channelCount;
 	}
 }

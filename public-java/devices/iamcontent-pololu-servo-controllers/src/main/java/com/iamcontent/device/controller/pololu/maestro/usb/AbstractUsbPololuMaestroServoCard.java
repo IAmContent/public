@@ -17,10 +17,13 @@
  */
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
+import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_IN;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_OUT;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
+
+import java.io.Serializable;
 
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
@@ -57,27 +60,33 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	}
 
 	@Override
-	public void setRawPosition(short channel, short position) {
-		device.syncSubmit(outRequest(REQUEST_SET_TARGET, channel, position));
+	public void setPosition(short channel, short position) {
+		device.syncSubmit(outRequest(REQUEST_SET_TARGET, chan(channel), position));
 	}
 
 	@Override
-	public void setRawSpeed(short channel, short speed) {
-		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, channel, speed));
+	public void setSpeed(short channel, short speed) {
+		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, chan(channel), speed));
 	}
 	
 	@Override
-	public void setRawAcceleration(short channel, short acceleration) {
+	public void setAcceleration(short channel, short acceleration) {
 		final int accelerationFlag = 0x80;
-		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, (short)(channel | accelerationFlag), acceleration));
+		device.syncSubmit(outRequest(REQUEST_SET_SERVO_VARIABLE, (short)(chan(channel) | accelerationFlag), acceleration));
 	}
 	
+	@Override
+	public short getPosition(short channel) {
+		return getState().getPosition(chan(channel));
+	}
+
+	@Override
 	public MaestroCardType getType() {
 		return type.getType();
 	}
 	
-	protected int getChannelCount() {
-		return getType().getChannelCount();
+	protected int channelCount() {
+		return getType().channelCount();
 	}
 
 	protected UsbControlIrp inRequest(byte request, int dataSize) {
@@ -93,15 +102,44 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	}
 
 	protected int sizeOfAllServoStatusBlocks() {
-		return getChannelCount() * BYTES_PER_SERVO_STATUS_BLOCK;
+		return channelCount() * BYTES_PER_SERVO_STATUS_BLOCK;
 	}
 
-	protected static short extractPositionFromStatusBlocks(byte[] data, int offset, short channel) {
-		final int loIndex = offset + channel * BYTES_PER_SERVO_STATUS_BLOCK;
-		return asShort(data[loIndex], data[loIndex + 1]);
-	}
-	
 	protected static short asShort(byte lo, byte hi) {
 		return (short) ((hi << 8) | (lo & 0xFF));
+	}
+	
+	protected short chan(short c) {
+		checkElementIndex(c, channelCount());
+		return c;
+	}
+	
+	protected class PololuState implements State, Serializable {
+		private final byte[] data;
+		private final int offset;
+		
+		public PololuState(byte[] data, int offset) {
+			this.data = data;
+			this.offset = offset;
+		}
+
+		@Override
+		public short getPosition(short channel) {
+			final int loIndex = offset + chan(channel) * BYTES_PER_SERVO_STATUS_BLOCK;
+			return asShort(data[loIndex], data[loIndex + 1]);
+		}
+		
+		@Override
+		public String toString() {
+			final short lastIndex = (short)(channelCount() - 1);
+			final StringBuilder builder = new StringBuilder();
+			builder.append("PololuState [positions=[");
+			for (short i=0; i < lastIndex; i++)
+				builder.append(getPosition(i)).append(", ");
+			builder.append(getPosition(lastIndex)).append("]]");
+			return builder.toString();
+		}
+
+		private static final long serialVersionUID = 1L;
 	}
 }

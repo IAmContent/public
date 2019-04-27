@@ -39,11 +39,12 @@ public class UsbPololuMiniMaestroServoCard extends AbstractUsbPololuMaestroServo
 	}
 
 	@Override
-	public short getRawPosition(short channel) {
+	public State getState() {
 		final int offset = 0;
 		final int dataSize = offset + sizeOfAllServoStatusBlocks();
 		final UsbControlIrp request = inRequest(REQUEST_GET_SERVO_SETTINGS, dataSize);
 		device.syncSubmit(request);
-		return extractPositionFromStatusBlocks(request.getData(), offset, channel);
+		return new PololuState(request.getData(), offset);
 	}
+
 }

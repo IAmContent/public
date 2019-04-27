@@ -32,8 +32,7 @@ import com.iamcontent.device.servo.raw.ServoController;
 
 /**
  * A helper for creating a default configuration of {@link Servo}s of the {@link PololuMaestroServoController},
- * calibrated to the normal (0..1) range. Uses the first Pololu Maestro {@link UsbDevice} that is found and calibrates
- * it based on a config file.
+ * calibrated to the normal (0..1) range. Uses the first Pololu Maestro {@link UsbDevice} that is found.
  * @author Greg Elderfield
  */
 public class DefaultPololuServoConfig {

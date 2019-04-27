@@ -37,22 +37,22 @@ public class PololuMaestroServoController implements ServoController<Integer> {
 
 	@Override
 	public void setValue(Integer channel, double value) {
-		card.setRawPosition(asShort(channel), (short)value);
+		card.setPosition(asShort(channel), (short)value);
 	}
 
 	@Override
 	public double getValue(Integer channel) {
-		return card.getRawPosition(asShort(channel));
+		return card.getPosition(asShort(channel));
 	}
 
 	@Override
 	public void setSpeed(Integer channel, double speed) {
-		card.setRawSpeed(asShort(channel), (short)speed);
+		card.setSpeed(asShort(channel), (short)speed);
 	}
 
 	@Override
 	public void setAcceleration(Integer channel, double acceleration) {
-		card.setRawAcceleration(asShort(channel), (short)acceleration);
+		card.setAcceleration(asShort(channel), (short)acceleration);
 	}
 	
 	private static short asShort(Integer i) {

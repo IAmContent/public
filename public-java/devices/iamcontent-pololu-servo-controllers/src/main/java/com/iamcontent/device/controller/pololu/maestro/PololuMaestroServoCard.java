@@ -24,10 +24,17 @@ package com.iamcontent.device.controller.pololu.maestro;
  */
 public interface PololuMaestroServoCard {
 
-	void setRawPosition(short channel, short position);
-	void setRawSpeed(short channel, short speed);
-	void setRawAcceleration(short channel, short acceleration);
+	interface State {
+		short getPosition(short channel);
+	}
+	
+	void setPosition(short channel, short position);
+	void setSpeed(short channel, short speed);
+	void setAcceleration(short channel, short acceleration);
 
-	short getRawPosition(short channel);
+	short getPosition(short channel);
+	State getState();
+	
 	MaestroCardType getType();
+
 }

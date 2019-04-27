@@ -56,22 +56,22 @@ public class UsbPololuMaestroServoCardIT extends AbstractPololuMaestroServoCardI
 
 	@Override
 	protected void setAcceleration(int channel, double acceleration) {
-		card.setRawAcceleration((short) channel, (short) acceleration);
+		card.setAcceleration((short) channel, (short) acceleration);
 	}
 
 	@Override
 	protected void setSpeed(int channel, double speed) {
-		card.setRawSpeed((short) channel, (short)speed);
+		card.setSpeed((short) channel, (short)speed);
 	}
 
 	@Override
 	protected void setPosition(int channel, double position) {
-		card.setRawPosition((short) channel, (short)position);
+		card.setPosition((short) channel, (short)position);
 	}
 
 	@Override
 	protected double getPosition(int channel) {
-		return card.getRawPosition((short) channel);
+		return card.getPosition((short) channel);
 	}
 	
 	protected MaestroCardType getCardType() {
