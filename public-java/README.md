@@ -10,7 +10,7 @@ Copyright (C) 2015 Greg Elderfield
 This software comprises the following packages:
 
 * [iamcontent-core.jar](iamcontent-core) - a few utility classes and functions
-* [iamcontent-io.jar](io) - I/O utilities.
+* [iamcontent-io](io) - I/O utilities.
   * [iamcontent-servos.jar](io/iamcontent-servos) -  Supports control of servos
   * [iamcontent-usb.jar](io/iamcontent-usb) -  Provides a convenient facade and utilities over the javax.usb API
 * [devices](devices)
