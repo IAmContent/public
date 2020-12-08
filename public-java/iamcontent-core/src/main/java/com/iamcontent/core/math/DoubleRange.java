@@ -56,8 +56,8 @@ public class DoubleRange implements Serializable {
 		return max;
 	}
 	
-	public double limit(double d) {
-		return MathUtils.limit(d, min, max);
+	public double clamp(double d) {
+		return MathUtils.clamp(d, min, max);
 	}
 
 	@Override

@@ -17,7 +17,7 @@
  */
 package com.iamcontent.core.math;
 
-import static com.iamcontent.core.math.MathUtils.limit;
+import static com.iamcontent.core.math.MathUtils.clamp;
 import static com.iamcontent.core.math.MathUtils.linearConvert;
 import static org.junit.Assert.assertEquals;
 
@@ -28,29 +28,29 @@ public class MathUtilsTest {
 	private static final double TOLERANCE = 0.000001;
 	
 	@Test
-	public void testLimit_int() {
-		checkIntLimit1to3(1, 0);
-		checkIntLimit1to3(1, 1);
-		checkIntLimit1to3(2, 2);
-		checkIntLimit1to3(3, 3);
-		checkIntLimit1to3(3, 4);
+	public void testClamp_int() {
+		checkIntClamp1to3(1, 0);
+		checkIntClamp1to3(1, 1);
+		checkIntClamp1to3(2, 2);
+		checkIntClamp1to3(3, 3);
+		checkIntClamp1to3(3, 4);
 	}
 
-	private void checkIntLimit1to3(int expected, int in) {
-		assertEquals(expected, limit(in, 1, 3));
+	private void checkIntClamp1to3(int expected, int in) {
+		assertEquals(expected, clamp(in, 1, 3));
 	}
 
 	@Test
-	public void testLimit_double() {
-		checkDoubleLimit1to3(1, 0);
-		checkDoubleLimit1to3(1, 1);
-		checkDoubleLimit1to3(2, 2);
-		checkDoubleLimit1to3(3, 3);
-		checkDoubleLimit1to3(3, 4);
+	public void testClamp_double() {
+		checkDoubleClamp1to3(1, 0);
+		checkDoubleClamp1to3(1, 1);
+		checkDoubleClamp1to3(2, 2);
+		checkDoubleClamp1to3(3, 3);
+		checkDoubleClamp1to3(3, 4);
 	}
 
-	private void checkDoubleLimit1to3(double expected, double in) {
-		assertExactlyEquals(expected, limit(in, 1.0, 3.0));
+	private void checkDoubleClamp1to3(double expected, double in) {
+		assertExactlyEquals(expected, clamp(in, 1.0, 3.0));
 	}
 
 	@Test

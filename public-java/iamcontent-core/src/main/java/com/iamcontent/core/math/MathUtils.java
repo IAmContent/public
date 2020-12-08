@@ -23,11 +23,11 @@ package com.iamcontent.core.math;
  */
 public class MathUtils {
 
-	public static int limit(int i, int min, int max) {
+	public static int clamp(int i, int min, int max) {
 		return Math.min(max, Math.max(i, min));
 	}
 
-	public static double limit(double i, double min, double max) {
+	public static double clamp(double i, double min, double max) {
 		return Math.min(max, Math.max(i, min));
 	}
 

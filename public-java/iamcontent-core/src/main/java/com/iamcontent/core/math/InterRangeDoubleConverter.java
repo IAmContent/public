@@ -32,39 +32,39 @@ import com.google.common.base.Functions;
 public class InterRangeDoubleConverter extends Converter<Double, Double> {
 
 	public static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
-	public static final Mode DEFAULT_MODE = Mode.LIMIT_RESULT_TO_RANGE;
+	public static final ClampingMode DEFAULT_MODE = ClampingMode.CLAMPED;
 	public static final InterRangeDoubleConverter REVERSE_NORMAL_CONVERTER = rangeFromNormalTo(REVERSE_NORMAL_RANGE);
 	
 	/**
-	 * Indicates whether a converted value should be limited to its target range or not.
+	 * Indicates whether a converted value should be clamped to its target range or not.
 	 */
-	public static enum Mode {
-		LIMIT_RESULT_TO_RANGE {
+	public static enum ClampingMode {
+		CLAMPED {
 			@Override
-			double limit(double d, DoubleRange r) {
-				return r.limit(d);
+			double apply(double d, DoubleRange r) {
+				return r.clamp(d);
 			}
 		}, 
-		DO_NOT_LIMIT_RESULT_TO_RANGE {
+		UNCLAMPED {
 			@Override
-			double limit(double d, DoubleRange r) {
+			double apply(double d, DoubleRange r) {
 				return d;
 			}
 		};
-		abstract double limit(double d, DoubleRange r);
+		abstract double apply(double d, DoubleRange r);
 	};
 	
 	private final DoubleRange fromRange, toRange;
-	private final Mode mode;
+	private final ClampingMode clampingMode;
 
 	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange) {
 		this(fromRange, toRange, DEFAULT_MODE);
 	}
 	
-	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {
+	public InterRangeDoubleConverter(DoubleRange fromRange, DoubleRange toRange, ClampingMode clampingMode) {
 		this.fromRange = fromRange;
 		this.toRange = toRange;
-		this.mode = mode;
+		this.clampingMode = clampingMode;
 	}
 
 	public static InterRangeDoubleConverter rangeFromNormalTo(double toLimit1, double toLimit2) {
@@ -75,31 +75,31 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 		return interRangeConverter(NORMAL_RANGE, toRange, DEFAULT_MODE);
 	}
 
-	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange, Mode mode) {
-		return interRangeConverter(NORMAL_RANGE, toRange, mode);
+	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange, ClampingMode clampingMode) {
+		return interRangeConverter(NORMAL_RANGE, toRange, clampingMode);
 	}
 
 	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange) {
 		return interRangeConverter(fromRange, toRange, DEFAULT_MODE);
 	}
 
-	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange, Mode mode) {
-		return new InterRangeDoubleConverter(fromRange, toRange, mode);
+	public static InterRangeDoubleConverter interRangeConverter(DoubleRange fromRange, DoubleRange toRange, ClampingMode clampingMode) {
+		return new InterRangeDoubleConverter(fromRange, toRange, clampingMode);
 	}
 	
 	@Override
 	protected Double doForward(Double v) {
-		return convertAndLimit(v, fromRange, toRange);
+		return convertAndClamp(v, fromRange, toRange);
 	}
 
 	@Override
 	protected Double doBackward(Double v) {
-		return convertAndLimit(v, toRange, fromRange);
+		return convertAndClamp(v, toRange, fromRange);
 	}
 
-	private double convertAndLimit(double d, DoubleRange fromRange, DoubleRange toRange) {
-		final double convertedButUnlimited = linearConvert(d, fromRange, toRange);
-		return mode.limit(convertedButUnlimited, toRange);
+	private double convertAndClamp(double d, DoubleRange fromRange, DoubleRange toRange) {
+		final double convertedButUnclamped = linearConvert(d, fromRange, toRange);
+		return clampingMode.apply(convertedButUnclamped, toRange);
 	}
 
 	private static double linearConvert(double v, DoubleRange inRange, DoubleRange outRange) {
@@ -114,7 +114,7 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 		return toRange;
 	}
 
-	public Mode getMode() {
-		return mode;
+	public ClampingMode getClampingMode() {
+		return clampingMode;
 	}
 }

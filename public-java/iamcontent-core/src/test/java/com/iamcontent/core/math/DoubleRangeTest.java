@@ -42,18 +42,18 @@ public class DoubleRangeTest {
 	}
 
 	@Test
-	public void testLimit() {
-		assertExactlyEquals(1.0, RANGE_1_TO_10.limit(0.0));
-		assertExactlyEquals(1.0, RANGE_1_TO_10.limit(1.0));
-		assertExactlyEquals(4.0, RANGE_1_TO_10.limit(4.0));
-		assertExactlyEquals(10.0, RANGE_1_TO_10.limit(10.0));
-		assertExactlyEquals(10.0, RANGE_1_TO_10.limit(11.0));
+	public void testClamp() {
+		assertExactlyEquals(1.0, RANGE_1_TO_10.clamp(0.0));
+		assertExactlyEquals(1.0, RANGE_1_TO_10.clamp(1.0));
+		assertExactlyEquals(4.0, RANGE_1_TO_10.clamp(4.0));
+		assertExactlyEquals(10.0, RANGE_1_TO_10.clamp(10.0));
+		assertExactlyEquals(10.0, RANGE_1_TO_10.clamp(11.0));
 		
-		assertExactlyEquals(3.0, RANGE_7_TO_3.limit(2.0));
-		assertExactlyEquals(3.0, RANGE_7_TO_3.limit(3.0));
-		assertExactlyEquals(6.0, RANGE_7_TO_3.limit(6.0));
-		assertExactlyEquals(7.0, RANGE_7_TO_3.limit(7.0));
-		assertExactlyEquals(7.0, RANGE_7_TO_3.limit(8.0));
+		assertExactlyEquals(3.0, RANGE_7_TO_3.clamp(2.0));
+		assertExactlyEquals(3.0, RANGE_7_TO_3.clamp(3.0));
+		assertExactlyEquals(6.0, RANGE_7_TO_3.clamp(6.0));
+		assertExactlyEquals(7.0, RANGE_7_TO_3.clamp(7.0));
+		assertExactlyEquals(7.0, RANGE_7_TO_3.clamp(8.0));
 	}
 
 	@Test
