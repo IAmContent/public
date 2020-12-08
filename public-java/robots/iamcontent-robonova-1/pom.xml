@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.iamcontent.public-java</groupId>
         <artifactId>robots</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>iamcontent-robonova-1</artifactId>
     <licenses>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.iamcontent.public-java.devices</groupId>
             <artifactId>iamcontent-pololu-servo-controllers</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.iamcontent.public-java</groupId>
 		<artifactId>robots</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
     <licenses>
         <license>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.iamcontent.public-java.devices</groupId>
 			<artifactId>iamcontent-owi-motor-controllers</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
         <dependency>
             <groupId>com.iamcontent.public-java.io</groupId>

@@ -43,7 +43,7 @@ public class PololuCommandLineDriver extends ServoCommandLineDriver<Integer> {
 	
 	@Override
 	protected Integer parseChannel(String s) {
-		return new Integer(s);
+		return Integer.parseInt(s);
 	}
 
 	@Override
