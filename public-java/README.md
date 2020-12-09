@@ -3,7 +3,7 @@ Publicly available Java software from Greg Elderfield
 
 IAmContent Public Libraries.
 
-Copyright (C) 2015 Greg Elderfield
+Copyright (C) 2015-2021 Greg Elderfield
 
 @author Greg Elderfield, support@jarchitect.co.uk
 
