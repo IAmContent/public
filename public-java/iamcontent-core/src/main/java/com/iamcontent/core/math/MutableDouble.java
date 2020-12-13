@@ -26,7 +26,7 @@ public interface MutableDouble {
 	void setValue(double v);
 	
 	/**
-	 * Returns a proxy MutableDouble that is two-way calibrated representation of this value.
+	 * Returns a proxy MutableDouble that is a two-way calibrated representation of this value.
 	 */
 	default MutableDouble calibrated(DoubleConverter calibration) {
 		return new CalibratedMutableDouble(this, calibration);

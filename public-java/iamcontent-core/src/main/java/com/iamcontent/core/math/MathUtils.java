@@ -37,7 +37,4 @@ public class MathUtils {
 		final double quotient = (v-from1)/fromRange;
 		return (quotient * toRange) + to1;
 	}
-	
-	private MathUtils() {
-	}
 }
