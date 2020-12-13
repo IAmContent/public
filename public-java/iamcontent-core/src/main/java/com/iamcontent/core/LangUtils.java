@@ -12,8 +12,8 @@ public class LangUtils {
 
 	public static <T> T newInstance(Class<T> clazz) {
 		try {
-			return clazz.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return clazz.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
 	}
