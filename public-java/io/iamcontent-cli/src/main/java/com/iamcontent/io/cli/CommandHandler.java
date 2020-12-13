@@ -19,7 +19,8 @@ package com.iamcontent.io.cli;
 
 import static com.iamcontent.io.cli.CommandLineDriver.tidied;
 
-import com.google.common.base.Predicate;
+import java.util.function.Predicate;
+
 
 /**
  * An abstract class for implementing command handlers (i.e. Predicates which execute any command that they
@@ -29,7 +30,7 @@ import com.google.common.base.Predicate;
 public abstract class CommandHandler implements Predicate<String> {
 
 	@Override
-	public boolean apply(String command) {
+	public boolean test(String command) {
 		try {
 			return executeIfCommandMatches(tidied(command));
 		} catch (Exception e) {

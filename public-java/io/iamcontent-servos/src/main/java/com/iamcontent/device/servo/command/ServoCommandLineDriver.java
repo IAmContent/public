@@ -20,10 +20,10 @@ package com.iamcontent.device.servo.command;
 import static com.iamcontent.device.servo.command.SimpleServoCommandExecutor.executor;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.io.cli.CommandHandler;

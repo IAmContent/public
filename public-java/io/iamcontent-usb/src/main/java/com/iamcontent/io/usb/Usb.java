@@ -21,13 +21,13 @@ import static com.iamcontent.io.usb.UsbDevicePredicates.deviceHasVendorIdAndProd
 import static com.iamcontent.io.usb.topology.UsbDeviceFinder.usbDeviceFinder;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbHostManager;
 import javax.usb.UsbHub;
 import javax.usb.UsbServices;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.io.usb.topology.UsbDeviceFinder;
 
 /**

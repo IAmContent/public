@@ -17,10 +17,10 @@
  */
 package com.iamcontent.io.usb;
 
+import java.util.function.Predicate;
+
 import javax.usb.UsbDevice;
 import javax.usb.UsbDeviceDescriptor;
-
-import com.google.common.base.Predicate;
 
 /**
  * Predicates for testing {@link UsbDevice}s.
@@ -33,7 +33,7 @@ public class UsbDevicePredicates {
 	 */
     public static Predicate<UsbDevice> deviceHasVendorIdAndProductId(final short vendorId, final short productId) {
         return new Predicate<UsbDevice>() {
-			public boolean apply(UsbDevice device) {
+			public boolean test(UsbDevice device) {
 		        return vendorAndProductIdsMatch(vendorId, productId, device);
 		    }
         };

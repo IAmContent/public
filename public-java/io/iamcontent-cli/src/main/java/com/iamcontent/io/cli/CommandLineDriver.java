@@ -17,17 +17,16 @@
  */
 package com.iamcontent.io.cli;
 
-import static com.google.common.base.Predicates.not;
-import static com.google.common.base.Predicates.or;
 import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
 import static com.iamcontent.io.util.Readers.bufferedReader;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.iamcontent.io.license.LicenseWriter;
 import com.iamcontent.io.util.BufferedReaderIterator;
 
@@ -57,9 +56,9 @@ public abstract class CommandLineDriver {
 		return command.trim().toLowerCase();
 	}
 	
-	protected Iterable<String> commandStrings() {
+	protected Stream<String> commandStrings() {
 		licenseWriter.printInteractiveInstructions();
-		return Iterables.filter(inputLines(), commandShouldBeProcessed());
+		return StreamSupport.stream(inputLines().spliterator(), false).filter(commandShouldBeProcessed());
 	}
 	
 	private BufferedReaderIterator inputLines() {
@@ -74,11 +73,11 @@ public abstract class CommandLineDriver {
 	}
 
 	protected Predicate<String> commandShouldBeProcessed() {
-		return not(commandExecutedByAnyHandler());
+		return commandExecutedByAnyHandler().negate();
 	}
 
 	private Predicate<String> commandExecutedByAnyHandler() {
-		return or(commandHandlers);
+		return s -> commandHandlers.stream().anyMatch(p -> p.test(s));
 	}
 	
 	protected void onQuit() {

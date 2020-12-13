@@ -20,12 +20,11 @@ package com.iamcontent.io.usb.topology;
 import static com.iamcontent.io.usb.license.License.displayLicense;
 
 import java.io.IOException;
+import java.util.function.Predicate;
 
 import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.iamcontent.io.usb.UsbRuntimeException;
 
 /**
@@ -34,14 +33,14 @@ import com.iamcontent.io.usb.UsbRuntimeException;
  */
 public class UsbTopologyTreePrinter extends UsbTopologyExplorer {
 
-	private static final Predicate<UsbDevice> ACCEPT_ALL_DEVICES = Predicates.alwaysTrue();
+	private static final Predicate<UsbDevice> VISIT_ALL_DEVICES = x -> true;
 	private static final String TAB = "  ";
 	private static final StringBuilder padding = new StringBuilder();
 	
 	private final Appendable out;
 	
 	public UsbTopologyTreePrinter() {
-		this(ACCEPT_ALL_DEVICES, System.out);
+		this(VISIT_ALL_DEVICES, System.out);
 	}
 
 	public UsbTopologyTreePrinter(Predicate<UsbDevice> shouldVisit, Appendable out) {

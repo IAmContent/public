@@ -17,10 +17,11 @@
  */
 package com.iamcontent.io.usb.topology;
 
+import java.util.function.Predicate;
+
 import javax.usb.UsbDevice;
 import javax.usb.UsbHub;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.io.usb.Usb;
 
 /**
@@ -65,7 +66,7 @@ public abstract class UsbTopologyExplorer {
 	 * false otherwise.
 	 */
 	protected boolean shouldVisit(UsbDevice usbDevice) {
-		return shouldVisit.apply(usbDevice);
+		return shouldVisit.test(usbDevice);
 	}
 	
 	/**

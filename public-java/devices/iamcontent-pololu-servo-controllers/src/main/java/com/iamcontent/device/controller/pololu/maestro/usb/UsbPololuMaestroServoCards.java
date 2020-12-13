@@ -17,9 +17,10 @@
  */
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
+import java.util.function.Predicate;
+
 import javax.usb.UsbDevice;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoCard;
 import com.iamcontent.io.usb.Usb;
 
@@ -52,7 +53,7 @@ public class UsbPololuMaestroServoCards {
 	private static Predicate<UsbDevice> isAMaestroUsbDevice() {
 		return new Predicate<UsbDevice>() {
 			@Override
-			public boolean apply(UsbDevice device) {
+			public boolean test(UsbDevice device) {
 				return UsbMaestroCardType.isAMaestroCard(device);
 			}
 		};

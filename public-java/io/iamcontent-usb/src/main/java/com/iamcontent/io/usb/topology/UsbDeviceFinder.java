@@ -22,10 +22,10 @@ import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.usb.UsbDevice;
 
-import com.google.common.base.Predicate;
 import com.iamcontent.io.usb.EasyUsbDevice;
 
 /**
