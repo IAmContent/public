@@ -17,7 +17,7 @@
  */
 package com.iamcontent.io.cli;
 
-import static com.iamcontent.io.license.LicenseWriter.licenseWriter;
+import static com.iamcontent.io.cli.LicenseWriter.licenseWriter;
 import static com.iamcontent.io.util.Readers.bufferedReader;
 
 import java.io.BufferedReader;
@@ -25,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
-import com.iamcontent.io.license.LicenseWriter;
-import com.iamcontent.io.util.BufferedReaderIterator;
 
 /**
  * Foundation class for Command Line Interface (CLI) drivers.
@@ -58,25 +54,20 @@ public abstract class CommandLineDriver {
 	
 	protected Stream<String> commandStrings() {
 		licenseWriter.printInteractiveInstructions();
-		return StreamSupport.stream(inputLines().spliterator(), false).filter(commandShouldBeProcessed());
+		return inputLines().filter(commandHandled().negate());
 	}
 	
-	private BufferedReaderIterator inputLines() {
-		return new BufferedReaderIterator(in) {
-			@Override
-			public String next() {
-				System.out.print("> ");
-				System.out.flush();
-				return super.next();
-			}
-		};
+	private Stream<String> inputLines() {
+		displayPrompt();
+		return in.lines().peek(l -> displayPrompt());
+	}
+	
+	private void displayPrompt() {
+		System.out.print("> ");
+		System.out.flush();
 	}
 
-	protected Predicate<String> commandShouldBeProcessed() {
-		return commandExecutedByAnyHandler().negate();
-	}
-
-	private Predicate<String> commandExecutedByAnyHandler() {
+	private Predicate<String> commandHandled() {
 		return s -> commandHandlers.stream().anyMatch(p -> p.test(s));
 	}
 	

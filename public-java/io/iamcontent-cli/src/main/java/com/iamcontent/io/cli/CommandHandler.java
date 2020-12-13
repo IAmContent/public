@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 
 /**
  * An abstract class for implementing command handlers (i.e. Predicates which execute any command that they
- * can understand, returning true when a command is executed, false otherwise).
+ * understand (as a side-effect), returning true when a command is executed, false otherwise).
  * @author Greg Elderfield
  */
 public abstract class CommandHandler implements Predicate<String> {

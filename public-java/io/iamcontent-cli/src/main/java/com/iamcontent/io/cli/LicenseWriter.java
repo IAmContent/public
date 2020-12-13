@@ -15,7 +15,7 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.io.license;
+package com.iamcontent.io.cli;
 
 import static com.iamcontent.io.util.ResourceUtils.appendResource;
 
@@ -38,7 +38,7 @@ public class LicenseWriter {
 	protected static final String FOOTER = "-----------------\n";
 	
 	private static final String PRODUCT_NAME = "IAmContent Public Software";
-	private static final String YEARS = "2015";
+	private static final String YEARS = "2015-2021";
 	private static final String COPYRIGHT_HOLDER = "G. Elderfield";
 	
 	static final String[] MINIMAL_TERMS = {
