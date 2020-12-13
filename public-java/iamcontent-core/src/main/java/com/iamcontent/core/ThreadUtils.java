@@ -19,6 +19,8 @@ package com.iamcontent.core;
 
 import static java.lang.System.currentTimeMillis;
 
+import java.util.function.Supplier;
+
 /**
  * Helper functions for Thread usage.
  * @author Greg Elderfield
@@ -46,16 +48,14 @@ public class ThreadUtils {
 	 * @param pollPeriodInMillis The time between polls, in milliseconds.
 	 * @return true if the condition ever returned true, false otherwise.
 	 */
-	public static boolean sleepUntil(BooleanCondition condition, long waitPeriodInMillis, long pollPeriodInMillis) {
+	public static boolean sleepUntil(Supplier<Boolean> condition, long waitPeriodInMillis, long pollPeriodInMillis) {
 		final long finishTime = currentTimeMillis() + waitPeriodInMillis;
 		while (finishTime > currentTimeMillis()) {
-			if (condition.isTrue())
+			if (condition.get())
 				return true;
 			ThreadUtils.sleepQuietly(pollPeriodInMillis);
 		}
-		return condition.isTrue();
+		return condition.get();
 	}
 	
-	private ThreadUtils() {
-	}
 }

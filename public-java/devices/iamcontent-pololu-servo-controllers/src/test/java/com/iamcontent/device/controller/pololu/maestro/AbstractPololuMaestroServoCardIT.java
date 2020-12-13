@@ -19,11 +19,8 @@ package com.iamcontent.device.controller.pololu.maestro;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.logging.Logger;
-
 import org.junit.Test;
 
-import com.iamcontent.core.BooleanCondition;
 import com.iamcontent.core.ThreadUtils;
 
 /**
@@ -32,7 +29,6 @@ import com.iamcontent.core.ThreadUtils;
  */
 public abstract class AbstractPololuMaestroServoCardIT {
 
-	private static final Logger LOGGER = Logger.getLogger(AbstractPololuMaestroServoCardIT.class.getName());
 	private static final int CHANNEL = 0;
 
 	private final double acceleration;
@@ -67,20 +63,9 @@ public abstract class AbstractPololuMaestroServoCardIT {
 	protected abstract void setPosition(int channel, double position);
 	protected abstract double getPosition(int channel);
 
-	private void waitForServoPosition(final int channel, final double position) {
-		ThreadUtils.sleepUntil(servoIsAtPosition(channel, position), 5000, 20);
+	private void waitForServoPosition(int channel, double position) {
+		ThreadUtils.sleepUntil(() -> getPosition(channel) == position, 5000, 20);
 		System.out.println("-----");
-	}
-
-	private BooleanCondition servoIsAtPosition(final int channel, final double position) {
-		return new BooleanCondition() {
-			@Override
-			public boolean isTrue() {
-				final double pos = getPosition(channel);
-				LOGGER.info("Servo " + channel + " is at position " + pos + " waiting for position " + position);
-				return pos == position;
-			}
-		};
 	}
 
 	private void resetDynamics() {
