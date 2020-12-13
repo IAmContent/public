@@ -17,7 +17,11 @@
  */
 package com.iamcontent.io.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Stream;
 
 import com.iamcontent.io.IORuntimeException;
 
@@ -37,5 +41,13 @@ public class IOUtils {
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		}
+	}
+	
+	/**
+	 * Returns a stream of the lines of the given input stream, reading the latter using the default character set.
+	 */
+	public static Stream<String> lineStreamOf(InputStream is) {
+		final InputStreamReader reader = new InputStreamReader(is);
+		return new BufferedReader(reader).lines();
 	}
 }

@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.junit.Test;
 
@@ -33,15 +32,13 @@ public class ResourceUtilsTest {
 	private static final String TEST_RESOURCE = "test-resource.txt";
 	
 	@Test(expected=IORuntimeException.class)
-	public void testGetStreamOrThrow_nonExistentResource() throws FileNotFoundException {
-		ResourceUtils.getStreamOrThrow("NON_EXISTENT_FILE");
+	public void testResourceAsLineStream_nonExistentResource() throws FileNotFoundException {
+		ResourceUtils.resourceAsLineStream("NON_EXISTENT_RESOURCE_FILE");
 	}
 
 	@Test
-	public void testGetStreamOrThrow() throws Exception {
-		try(InputStream in = ResourceUtils.getStreamOrThrow(TEST_RESOURCE)) {
-			assertNotNull(in);
-		}
+	public void testResourceAsLineStream() throws Exception {
+		assertNotNull(ResourceUtils.resourceAsLineStream(TEST_RESOURCE));
 	}
 	
 	@Test

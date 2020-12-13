@@ -16,7 +16,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package com.iamcontent.io.util;
-import static com.google.common.collect.Iterables.elementsEqual;
 import static com.iamcontent.io.util.BufferedReaderIterator.bufferedReaderIterator;
 import static com.iamcontent.io.util.Readers.bufferedReader;
 import static java.util.Arrays.asList;
@@ -34,6 +33,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.junit.Test;
 
@@ -104,7 +105,12 @@ public class BufferedReaderIteratorTest {
 
 	private void checkLines(String input, String... expected) {
 		final List<String> expectedOutput = asList(expected);
-		assertTrue(elementsEqual(expectedOutput, iteratorFor(input)));
+		assertEquals(expectedOutput, listFor(input));
+	}
+
+	private static List<String> listFor(String s) {
+		
+		return StreamSupport.stream(iteratorFor(s).spliterator(), false).collect(Collectors.toList());
 	}
 
 	private static BufferedReaderIterator iteratorFor(String s) {

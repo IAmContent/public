@@ -17,7 +17,6 @@
  */
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
-import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_IN;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_OUT;
@@ -123,7 +122,7 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	}
 	
 	protected short chan(short c) {
-		checkElementIndex(c, channelCount());
+		checkElementIndex(c);
 		return c;
 	}
 	
@@ -152,5 +151,11 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 		}
 
 		private static final long serialVersionUID = 1L;
+	}
+	
+	protected void checkElementIndex(short i) {
+		if (i < 0 || i >= channelCount()) {
+			throw new IndexOutOfBoundsException(i);
+		}
 	}
 }
