@@ -20,15 +20,13 @@ package com.iamcontent.device.channel;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.base.Converter;
-import com.iamcontent.device.io.analog.AnalogIOSourceCalibration;
-
 /**
- * A {@link AnalogIOSourceCalibration} that allows a default {@link Converter} to be set and over-ridden on a per-channel basis.
+ * A {@link PerChannelSource} that allows a default value to be set and over-ridden on a per-channel basis.
  * @author Greg Elderfield
  * 
  * @param <C> The type used to identify a channel. 
  * @param <T> The type that can be returned for each channel. 
+ * @param <SELF> The type of 'this' instance.
  */
 public class DefaultingPerChannelSource<C, T, SELF extends DefaultingPerChannelSource<C, T, SELF>> implements PerChannelSource<C, T> {
 

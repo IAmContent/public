@@ -17,13 +17,12 @@
  */
 package com.iamcontent.device.io.analog.impl;
 
-import com.google.common.base.Converter;
 import com.iamcontent.device.channel.DefaultingPerChannelSource;
 import com.iamcontent.device.io.analog.AnalogIOCalibration;
 import com.iamcontent.device.io.analog.AnalogIOSourceCalibration;
 
 /**
- * A {@link AnalogIOSourceCalibration} that allows a default {@link Converter} to be set and over-ridden on a per-channel basis.
+ * A {@link AnalogIOSourceCalibration} that allows a default calibration to be set and over-ridden on a per-channel basis.
  * @author Greg Elderfield
  * 
  * @param <C> The type used to identify a channel. 
