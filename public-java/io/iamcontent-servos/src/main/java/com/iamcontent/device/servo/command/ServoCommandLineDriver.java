@@ -91,7 +91,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 			}
 
 			private double position(C channel) {
-				return servoSource.forChannel(channel).getValue();
+				return servoSource.forChannel(channel).value().getValue();
 			}
 		};
 	}

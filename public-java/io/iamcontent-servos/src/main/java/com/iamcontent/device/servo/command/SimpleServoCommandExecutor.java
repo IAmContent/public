@@ -47,16 +47,16 @@ public class SimpleServoCommandExecutor<C> implements ServoCommandExecutor<C> {
 
 	private void setAcceleration(C channel, Double acceleration) {
 		if (acceleration!=null)
-			servoSource.forChannel(channel).setAcceleration(acceleration);
+			servoSource.forChannel(channel).acceleration().setValue(acceleration);
 	}
 
 	private void setSpeed(C channel, Double speed) {
 		if (speed!=null)
-			servoSource.forChannel(channel).setSpeed(speed);
+			servoSource.forChannel(channel).speed().setValue(speed);
 	}
 
 	private void setValue(C channel, Double value) {
 		if (value!=null)
-			servoSource.forChannel(channel).setValue(value);
+			servoSource.forChannel(channel).value().setValue(value);
 	}
 }

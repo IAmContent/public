@@ -15,12 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.servo.impl;
+
+import java.util.function.Function;
+
+import com.iamcontent.core.lang.Delegator;
+import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoSource;
 
 /**
- * Represents the operations that can be performed on an analog input channel.
+ * A {@link ServoSource} that has new channel ids, as defined by a mapping function.
+ * 
  * @author Greg Elderfield
  */
-public interface AnalogInput {
-	double getValue();
+public class RemappedServoSource<NewChannelId, DelegateChannelId> extends Delegator<ServoSource<DelegateChannelId>> implements ServoSource<NewChannelId> {
+	
+	protected final Function<NewChannelId, DelegateChannelId> remapping;
+	
+	public RemappedServoSource(ServoSource<DelegateChannelId> target, Function<NewChannelId, DelegateChannelId> remapping) {
+		super(target);
+		this.remapping = remapping;
+	}
+
+	@Override
+	public Servo forChannel(NewChannelId channelId) {
+		return delegate().forChannel(remapping.apply(channelId));
+	}
 }

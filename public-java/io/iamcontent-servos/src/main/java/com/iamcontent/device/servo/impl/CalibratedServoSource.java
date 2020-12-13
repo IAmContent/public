@@ -15,24 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog.calibrate;
+package com.iamcontent.device.servo.impl;
 
-import com.google.common.base.Converter;
+import com.iamcontent.core.lang.Delegator;
+import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.device.servo.ServoSourceCalibration;
 
 /**
- * An immutable {@link AnalogIOCalibrator}.
+ * A ServoSource that returns calibrated proxies of the {@link Servo}s from another (target) {@link ServoSource}.
+ * All {@link Servo}s are calibrated using the same {@link ServoSourceCalibration}
+ * 
  * @author Greg Elderfield
  */
-public class ImmutableAnalogIOCalibrator implements AnalogIOCalibrator {
-
-	private final Converter<Double, Double> valueConverter;
+public class CalibratedServoSource<C> extends Delegator<ServoSource<C>> implements ServoSource<C> {
 	
-	public ImmutableAnalogIOCalibrator(Converter<Double, Double> valueConverter) {
-		this.valueConverter = valueConverter;
+	protected final ServoSourceCalibration<C> calibration;
+	
+	public CalibratedServoSource(ServoSource<C> target, ServoSourceCalibration<C> calibration) {
+		super(target);
+		this.calibration = calibration;
 	}
 
 	@Override
-	public Converter<Double, Double> getValueConverter() {
-		return valueConverter;
+	public Servo forChannel(C channelId) {
+		return delegate().forChannel(channelId).calibrated(calibration.forChannel(channelId));
 	}
 }

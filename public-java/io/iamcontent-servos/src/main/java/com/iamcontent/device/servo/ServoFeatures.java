@@ -15,16 +15,16 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog.calibrate;
+package com.iamcontent.device.servo;
 
-import com.iamcontent.device.channel.PerChannelSource;
-import com.iamcontent.device.io.analog.AnalogIOSource;
+import com.iamcontent.device.io.analog.AnalogIOFeatures;
 
 /**
- * Calibrates an {@link AnalogIOSource}.
+ * Represents the features of a servo.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of an AnalogIO. 
+ * @param <T> the value type of each feature.
  */
-public interface AnalogIOSourceCalibrator<C> extends PerChannelSource<C, AnalogIOCalibrator> {
+public interface ServoFeatures<T> extends AnalogIOFeatures<T> {
+	T speed();
+	T acceleration();
 }

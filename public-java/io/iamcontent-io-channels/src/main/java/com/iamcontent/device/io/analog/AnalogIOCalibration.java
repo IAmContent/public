@@ -15,25 +15,15 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.calibrate;
+package com.iamcontent.device.io.analog;
 
-import com.google.common.base.Function;
-import com.iamcontent.device.io.analog.calibrate.AnalogIOCalibrator;
-import com.iamcontent.device.servo.Servo;
+import com.iamcontent.core.math.DoubleConverter;
+import com.iamcontent.device.io.analog.impl.ImmutableAnalogIOCalibration;
 
 /**
- * Calibrates a single {@link Servo}.
+ * Defines the calibration of an analog input/output channel.
  * @author Greg Elderfield
  */
-public interface ServoCalibrator extends AnalogIOCalibrator {
-
-	/**
-	 * @return A function that converts from input speed to output speed.
-	 */
-	Function<Double, Double> getSpeedConverter();
-
-	/**
-	 * @return A function that converts from input acceleration to output acceleration.
-	 */
-	Function<Double, Double> getAccelerationConverter();
+public interface AnalogIOCalibration extends AnalogIOFeatures<DoubleConverter> {
+	static AnalogIOCalibration IDENTITY = new ImmutableAnalogIOCalibration(DoubleConverter.IDENTITY);
 }

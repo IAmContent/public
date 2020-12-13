@@ -15,23 +15,16 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.servo;
 
-import com.iamcontent.core.math.MutableDouble;
-import com.iamcontent.device.io.analog.impl.CalibratedAnalogIO;
+import com.iamcontent.core.math.DoubleConverter;
+import com.iamcontent.device.io.analog.AnalogIOCalibration;
+import com.iamcontent.device.servo.impl.ImmutableServoCalibration;
 
 /**
- * Represents an analog input/output channel.
- * 
+ * Defines the calibration of a {@link Servo}.
  * @author Greg Elderfield
  */
-public interface AnalogIO extends AnalogIOFeatures<MutableDouble> {
-	
-	/**
-	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
-	 */
-	default AnalogIO calibrated(AnalogIOCalibration calibration) {
-		return new CalibratedAnalogIO(this, calibration);
-	}
-
+public interface ServoCalibration extends AnalogIOCalibration, ServoFeatures<DoubleConverter> {
+	static ServoCalibration IDENTITY = new ImmutableServoCalibration(DoubleConverter.IDENTITY);
 }

@@ -17,8 +17,8 @@
  */
 package com.iamcontent.core.math;
 
-import static com.iamcontent.core.math.InterRangeDoubleConverter.ClampingMode.UNCLAMPED;
 import static com.iamcontent.core.math.InterRangeDoubleConverter.ClampingMode.CLAMPED;
+import static com.iamcontent.core.math.InterRangeDoubleConverter.ClampingMode.UNCLAMPED;
 import static com.iamcontent.core.math.MathUtilsTest.assertCloseEnough;
 
 import org.junit.Test;
@@ -29,42 +29,42 @@ public class InterRangeDoubleConverterTest {
 	private static final DoubleRange RANGE_2 = new DoubleRange(-20, -30);
 	
 	@Test
-	public void testDoForward_clamped() {
+	public void testApplyForward_clamped() {
 		final InterRangeDoubleConverter c = new InterRangeDoubleConverter(RANGE_1, RANGE_2, CLAMPED);
-		assertCloseEnough(-20.0, c.convert(1.0));
-		assertCloseEnough(-20.0, c.convert(2.0));
-		assertCloseEnough(-25.0, c.convert(2.5));
-		assertCloseEnough(-30.0, c.convert(3.0));
-		assertCloseEnough(-30.0, c.convert(4.0));
+		assertCloseEnough(-20.0, c.applyForward(1.0));
+		assertCloseEnough(-20.0, c.applyForward(2.0));
+		assertCloseEnough(-25.0, c.applyForward(2.5));
+		assertCloseEnough(-30.0, c.applyForward(3.0));
+		assertCloseEnough(-30.0, c.applyForward(4.0));
 	}
 	
 	@Test
-	public void testDoForward_unclamped() {
+	public void testApplyForward_unclamped() {
 		final InterRangeDoubleConverter c = new InterRangeDoubleConverter(RANGE_1, RANGE_2, UNCLAMPED);
-		assertCloseEnough(-10.0, c.convert(1.0));
-		assertCloseEnough(-20.0, c.convert(2.0));
-		assertCloseEnough(-25.0, c.convert(2.5));
-		assertCloseEnough(-30.0, c.convert(3.0));
-		assertCloseEnough(-40.0, c.convert(4.0));
+		assertCloseEnough(-10.0, c.applyForward(1.0));
+		assertCloseEnough(-20.0, c.applyForward(2.0));
+		assertCloseEnough(-25.0, c.applyForward(2.5));
+		assertCloseEnough(-30.0, c.applyForward(3.0));
+		assertCloseEnough(-40.0, c.applyForward(4.0));
 	}
 	
 	@Test
-	public void testDoBackward_clamped() {
+	public void testApplyBackward_clamped() {
 		final InterRangeDoubleConverter c = new InterRangeDoubleConverter(RANGE_1, RANGE_2, CLAMPED);
-		assertCloseEnough(2.0, c.doBackward(-10.0));
-		assertCloseEnough(2.0, c.doBackward(-20.0));
-		assertCloseEnough(2.5, c.doBackward(-25.0));
-		assertCloseEnough(3.0, c.doBackward(-30.0));
-		assertCloseEnough(3.0, c.doBackward(-40.0));
+		assertCloseEnough(2.0, c.applyBackward(-10.0));
+		assertCloseEnough(2.0, c.applyBackward(-20.0));
+		assertCloseEnough(2.5, c.applyBackward(-25.0));
+		assertCloseEnough(3.0, c.applyBackward(-30.0));
+		assertCloseEnough(3.0, c.applyBackward(-40.0));
 	}
 	
 	@Test
-	public void testDoBackward_unclamped() {
+	public void testApplyBackward_unclamped() {
 		final InterRangeDoubleConverter c = new InterRangeDoubleConverter(RANGE_1, RANGE_2, UNCLAMPED);
-		assertCloseEnough(-1.0, c.doBackward(10.0));
-		assertCloseEnough(-2.0, c.doBackward(20.0));
-		assertCloseEnough(-2.5, c.doBackward(25.0));
-		assertCloseEnough(-3.0, c.doBackward(30.0));
-		assertCloseEnough(-4.0, c.doBackward(40.0));
+		assertCloseEnough(-1.0, c.applyBackward(10.0));
+		assertCloseEnough(-2.0, c.applyBackward(20.0));
+		assertCloseEnough(-2.5, c.applyBackward(25.0));
+		assertCloseEnough(-3.0, c.applyBackward(30.0));
+		assertCloseEnough(-4.0, c.applyBackward(40.0));
 	}
 }

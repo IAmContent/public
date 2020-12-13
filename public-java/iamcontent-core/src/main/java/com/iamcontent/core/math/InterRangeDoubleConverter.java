@@ -21,19 +21,15 @@ import static com.iamcontent.core.math.DoubleRange.NORMAL_RANGE;
 import static com.iamcontent.core.math.DoubleRange.REVERSE_NORMAL_RANGE;
 import static com.iamcontent.core.math.DoubleRange.range;
 
-import com.google.common.base.Converter;
-import com.google.common.base.Function;
-import com.google.common.base.Functions;
 
 /**
  * Converts Double objects linearly according to two corresponding {@link Range} objects.
  * @author Greg Elderfield
  */
-public class InterRangeDoubleConverter extends Converter<Double, Double> {
+public class InterRangeDoubleConverter implements DoubleConverter {
 
-	public static final Function<Double, Double> IDENTITY_FUNCTION = Functions.identity();
 	public static final ClampingMode DEFAULT_MODE = ClampingMode.CLAMPED;
-	public static final InterRangeDoubleConverter REVERSE_NORMAL_CONVERTER = rangeFromNormalTo(REVERSE_NORMAL_RANGE);
+	public static final InterRangeDoubleConverter REVERSE_NORMAL_CONVERTER = converterFromNormalTo(REVERSE_NORMAL_RANGE);
 	
 	/**
 	 * Indicates whether a converted value should be clamped to its target range or not.
@@ -67,15 +63,15 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 		this.clampingMode = clampingMode;
 	}
 
-	public static InterRangeDoubleConverter rangeFromNormalTo(double toLimit1, double toLimit2) {
-		return rangeFromNormalTo(range(toLimit1, toLimit2));
+	public static InterRangeDoubleConverter converterFromNormalTo(double toLimit1, double toLimit2) {
+		return converterFromNormalTo(range(toLimit1, toLimit2));
 	}
 	
-	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange) {
+	public static InterRangeDoubleConverter converterFromNormalTo(DoubleRange toRange) {
 		return interRangeConverter(NORMAL_RANGE, toRange, DEFAULT_MODE);
 	}
 
-	public static InterRangeDoubleConverter rangeFromNormalTo(DoubleRange toRange, ClampingMode clampingMode) {
+	public static InterRangeDoubleConverter converterFromNormalTo(DoubleRange toRange, ClampingMode clampingMode) {
 		return interRangeConverter(NORMAL_RANGE, toRange, clampingMode);
 	}
 
@@ -88,12 +84,12 @@ public class InterRangeDoubleConverter extends Converter<Double, Double> {
 	}
 	
 	@Override
-	protected Double doForward(Double v) {
+	public double applyForward(double v) {
 		return convertAndClamp(v, fromRange, toRange);
 	}
 
 	@Override
-	protected Double doBackward(Double v) {
+	public double applyBackward(double v) {
 		return convertAndClamp(v, toRange, fromRange);
 	}
 

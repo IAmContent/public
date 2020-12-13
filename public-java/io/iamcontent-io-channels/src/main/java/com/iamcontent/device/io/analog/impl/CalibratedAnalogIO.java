@@ -15,17 +15,32 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.calibrate;
+package com.iamcontent.device.io.analog.impl;
 
-import com.iamcontent.device.channel.PerChannelSource;
-import com.iamcontent.device.servo.Servo;
-import com.iamcontent.device.servo.ServoSource;
+import com.iamcontent.core.lang.Delegator;
+import com.iamcontent.core.math.MutableDouble;
+import com.iamcontent.device.io.analog.AnalogIO;
+import com.iamcontent.device.io.analog.AnalogIOCalibration;
 
 /**
- * Calibrates a single {@link ServoSource}.
+ * A {@link AnalogIO} that is a calibrated proxy for another (target) {@link AnalogIO}.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
-public interface ServoSourceCalibrator<C> extends PerChannelSource<C, ServoCalibrator> {
+public class CalibratedAnalogIO extends Delegator<AnalogIO> implements AnalogIO {
+	
+	private final AnalogIOCalibration calibration;
+	
+	public CalibratedAnalogIO(AnalogIO target, AnalogIOCalibration calibration) {
+		super(target);
+		this.calibration = calibration;
+	}
+	
+	@Override
+	public MutableDouble value() {
+		return delegate().value().calibrated(calibration().value());
+	}
+
+	protected AnalogIOCalibration calibration() {
+		return calibration;
+	}
 }

@@ -17,7 +17,7 @@
  */
 package com.iamcontent.core.lang;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Base class for a class that delegates to another instance.
@@ -29,11 +29,11 @@ public abstract class Delegator<D> {
 	private final D delegate;
 
 	public Delegator(D delegate) {
-		checkNotNull(delegate, "Delegate cannot be null.");
+		requireNonNull(delegate, "Delegate cannot be null.");
 		this.delegate = delegate;
 	}
 
 	protected D delegate() {
 		return delegate;
-	}
+	} 
 }

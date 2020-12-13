@@ -17,7 +17,8 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
-import com.iamcontent.device.servo.raw.ServoController;
+import com.iamcontent.core.math.MutableDouble;
+import com.iamcontent.device.servo.ServoController;
 
 /**
  * Wraps a {@link PololuMaestroServoCard}, presenting it as a {@link ServoController}.
@@ -36,25 +37,47 @@ public class PololuMaestroServoController implements ServoController<Integer> {
 	}
 
 	@Override
-	public void setValue(Integer channel, double value) {
-		card.setPosition(asShort(channel), (short)value);
+	public MutableDouble value(Integer channelId) {
+		return new MutableDouble() {
+			@Override
+			public void setValue(double value) {
+				card.setPosition(asShort(channelId), (short)value);
+			}
+			
+			public double getValue() {
+				return card.getPosition(asShort(channelId));
+			}
+		};
 	}
 
 	@Override
-	public double getValue(Integer channel) {
-		return card.getPosition(asShort(channel));
+	public MutableDouble speed(Integer channelId) {
+		return new MutableDouble() {
+			@Override
+			public void setValue(double value) {
+				card.setSpeed(asShort(channelId), (short)value);
+			}
+			
+			public double getValue() {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
 	@Override
-	public void setSpeed(Integer channel, double speed) {
-		card.setSpeed(asShort(channel), (short)speed);
+	public MutableDouble acceleration(Integer channelId) {
+		return new MutableDouble() {
+			@Override
+			public void setValue(double value) {
+				card.setAcceleration(asShort(channelId), (short)value);
+			}
+			
+			public double getValue() {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
-	@Override
-	public void setAcceleration(Integer channel, double acceleration) {
-		card.setAcceleration(asShort(channel), (short)acceleration);
-	}
-	
 	private static short asShort(Integer i) {
 		return (short) i.intValue();
 	}

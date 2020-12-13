@@ -17,30 +17,20 @@
  */
 package com.iamcontent.device.io.analog;
 
+import com.iamcontent.device.channel.PerChannelSource;
+import com.iamcontent.device.io.analog.impl.DefaultingAnalogIOSourceCalibration;
+
 /**
- * An {@link AnalogIO} that directly delegates its operations to an {@link AnalogIOController} without altering the
- * results of the operations.
+ * Defines the calibration of the {@link AnalogIO}s of a {@link AnalogIOSource}.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of an {@link AnalogIO}. 
  */
-public class RawAnalogIO<C> implements AnalogIO {
-	
-	protected final AnalogIOController<C> controller;
-	protected final C channelId;
-	
-	public RawAnalogIO(AnalogIOController<C> controller, C channelId) {
-		this.controller = controller;
-		this.channelId = channelId;
+public interface AnalogIOSourceCalibration<C> extends PerChannelSource<C, AnalogIOCalibration> {
+
+	public static <C> DefaultingAnalogIOSourceCalibration<C> analogIOSourceCalibration(AnalogIOCalibration calibration) {
+		return new DefaultingAnalogIOSourceCalibration<C>(calibration);
 	}
 
-	@Override
-	public double getValue() {
-		return controller.getValue(channelId);
-	}
-	
-	@Override
-	public void setValue(double v) {
-		controller.setValue(channelId, v);
+	public static <C> DefaultingAnalogIOSourceCalibration<C> analogIOSourceCalibration() {
+		return analogIOSourceCalibration(AnalogIOCalibration.IDENTITY);
 	}
 }

@@ -15,20 +15,31 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog.calibrate;
+package com.iamcontent.device.io.analog.impl;
 
-import com.google.common.base.Converter;
+import com.iamcontent.core.math.MutableDouble;
 import com.iamcontent.device.io.analog.AnalogIO;
+import com.iamcontent.device.io.analog.AnalogIOController;
 
 /**
- * Calibrates a single {@link AnalogIO}.
+ * An {@link AnalogIO} that directly delegates its operations to an {@link AnalogIOController} without altering the
+ * results of the operations.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of an {@link AnalogIO}. 
  */
-public interface AnalogIOCalibrator {
+public class RawAnalogIO<C> implements AnalogIO {
+	
+	protected final AnalogIOController<C> controller;
+	protected final C channelId;
+	
+	public RawAnalogIO(AnalogIOController<C> controller, C channelId) {
+		this.controller = controller;
+		this.channelId = channelId;
+	}
 
-	/**
-	 * @return A converter that calibrates output values (the forward conversion) and input values (the reverse conversion).
-	 */
-	Converter<Double, Double> getValueConverter();
-
+	@Override
+	public MutableDouble value() {
+		return controller.value(channelId);
+	}
 }

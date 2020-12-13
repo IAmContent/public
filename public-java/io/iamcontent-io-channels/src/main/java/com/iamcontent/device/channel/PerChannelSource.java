@@ -17,6 +17,8 @@
  */
 package com.iamcontent.device.channel;
 
+import java.util.function.Function;
+
 /**
  * Represents a source of objects that are returned per channel.
  * @author Greg Elderfield
@@ -24,6 +26,11 @@ package com.iamcontent.device.channel;
  * @param <C> The type used to identify a channel. 
  * @param <T> The type of object being returned per channel. 
  */
-public interface PerChannelSource<C, T> {
+public interface PerChannelSource<C, T> extends Function<C, T> {
 	T forChannel(C channelId);
+
+	@Override
+	default T apply(C channelId) {
+		return forChannel(channelId);
+	}
 }

@@ -17,21 +17,11 @@
  */
 package com.iamcontent.device.io.analog;
 
-import com.iamcontent.core.math.MutableDouble;
-import com.iamcontent.device.io.analog.impl.CalibratedAnalogIO;
-
 /**
- * Represents an analog input/output channel.
- * 
+ * Represents the features of an analog input/output channel.
  * @author Greg Elderfield
+ * @param <T> the value type of each feature.
  */
-public interface AnalogIO extends AnalogIOFeatures<MutableDouble> {
-	
-	/**
-	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
-	 */
-	default AnalogIO calibrated(AnalogIOCalibration calibration) {
-		return new CalibratedAnalogIO(this, calibration);
-	}
-
+public interface AnalogIOFeatures<T> {
+	T value();
 }

@@ -15,23 +15,18 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.servo;
 
 import com.iamcontent.core.math.MutableDouble;
-import com.iamcontent.device.io.analog.impl.CalibratedAnalogIO;
+import com.iamcontent.device.io.analog.AnalogIOController;
 
 /**
- * Represents an analog input/output channel.
- * 
+ * Defines a Servo controller that deals in 'raw' (i.e. non-normalized) values.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of a servo. 
  */
-public interface AnalogIO extends AnalogIOFeatures<MutableDouble> {
-	
-	/**
-	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
-	 */
-	default AnalogIO calibrated(AnalogIOCalibration calibration) {
-		return new CalibratedAnalogIO(this, calibration);
-	}
-
+public interface ServoController<C> extends AnalogIOController<C> {
+	MutableDouble speed(C channelId);
+	MutableDouble acceleration(C channelId);
 }

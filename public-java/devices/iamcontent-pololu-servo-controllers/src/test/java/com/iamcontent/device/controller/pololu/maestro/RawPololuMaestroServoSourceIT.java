@@ -23,9 +23,8 @@ import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaest
 import org.junit.Before;
 
 import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoController;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.ServoSources;
-import com.iamcontent.device.servo.raw.ServoController;
 
 /**
  * A simple integration test, which doubles as an example of how to drive a Pololu Maestro card as a raw {@link ServoSource}.
@@ -51,22 +50,22 @@ public class RawPololuMaestroServoSourceIT extends AbstractPololuMaestroServoCar
 
 	@Override
 	protected void setAcceleration(int channel, double acceleration) {
-		getServo(channel).setAcceleration(acceleration);
+		getServo(channel).acceleration().setValue(acceleration);
 	}
 
 	@Override
 	protected void setSpeed(int channel, double speed) {
-		getServo(channel).setSpeed(speed);
+		getServo(channel).speed().setValue(speed);
 	}
 
 	@Override
 	protected void setPosition(int channel, double position) {
-		getServo(channel).setValue(position);
+		getServo(channel).value().setValue(position);
 	}
 
 	@Override
 	protected double getPosition(int channel) {
-		return getServo(channel).getValue();
+		return getServo(channel).value().getValue();
 	}
 	
 	private Servo getServo(int channel) {
@@ -74,7 +73,7 @@ public class RawPololuMaestroServoSourceIT extends AbstractPololuMaestroServoCar
 	}
 
 	protected static ServoSource<Integer> rawServoSource() {
-		return ServoSources.rawServoSource(defaultServoController());
+		return ServoSource.rawServoSource(defaultServoController());
 	}
 
 	private static ServoController<Integer> defaultServoController() {

@@ -46,22 +46,22 @@ public class CalibratedPololuMaestroServoSourceIT extends AbstractPololuMaestroS
 
 	@Override
 	protected void setAcceleration(int channel, double acceleration) {
-		getServo(channel).setAcceleration(acceleration);
+		getServo(channel).acceleration().setValue(acceleration);
 	}
 
 	@Override
 	protected void setSpeed(int channel, double speed) {
-		getServo(channel).setSpeed(speed);
+		getServo(channel).speed().setValue(speed);
 	}
 
 	@Override
 	protected void setPosition(int channel, double position) {
-		getServo(channel).setValue(position);
+		getServo(channel).value().setValue(position);
 	}
 
 	@Override
 	protected double getPosition(int channel) {
-		return getServo(channel).getValue();
+		return getServo(channel).value().getValue();
 	}
 	
 	private Servo getServo(int channel) {

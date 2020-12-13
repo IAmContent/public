@@ -15,12 +15,20 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.core.math;
 
 /**
- * Represents the operations that can be performed on an analog output channel.
+ * A mutable double value.
  * @author Greg Elderfield
  */
-public interface AnalogOutput {
+public interface MutableDouble {
+	double getValue();
 	void setValue(double v);
+	
+	/**
+	 * Returns a proxy MutableDouble that is two-way calibrated representation of this value.
+	 */
+	default MutableDouble calibrated(DoubleConverter calibration) {
+		return new CalibratedMutableDouble(this, calibration);
+	}
 }

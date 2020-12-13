@@ -17,21 +17,11 @@
  */
 package com.iamcontent.robot.robonova1.custom1;
 
-import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
-import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
-
 import com.iamcontent.core.geom.Geometry.ThreeDimension;
-import com.iamcontent.device.io.analog.AnalogIOController;
 import com.iamcontent.device.io.analog.AnalogIOSource;
-import com.iamcontent.device.io.analog.calibrate.AnalogIOSourceCalibrator;
-import com.iamcontent.device.io.analog.config.AnalogIOConfiguration;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.config.ServoConfigFunctions;
-import com.iamcontent.device.servo.config.ServoConfiguration;
-import com.iamcontent.device.servo.raw.ServoController;
 import com.iamcontent.robot.robonova1.Robonova;
 import com.iamcontent.robot.robonova1.ServoId;
-import com.iamcontent.robot.robonova1.custom1.servo.ServoConfig;
 
 /**
  * A specific implementation of Greg Elderfield's Robonova-1.
@@ -39,38 +29,13 @@ import com.iamcontent.robot.robonova1.custom1.servo.ServoConfig;
  */
 public class CustomRobonova implements Robonova {
 
-	private final ServoController<Integer> controller = defaultServoController();
-	private final ServoConfiguration<Integer, ServoId> servoConfiguration = servoConfiguration(controller);
-	private final AnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig = accelerometerConfig(controller);
-	
 	@Override
 	public ServoSource<ServoId> servos() {
-		return servoConfiguration.getTunedRechanneledServos();
+		return CustomRobonovaServos.servoSource();
 	}
 
 	@Override
 	public AnalogIOSource<ThreeDimension> accelerometer() {
-		return accelerometerConfig.getTunedRechanneledIOs();
-	}
-	
-	protected ServoConfiguration<Integer, ServoId> servoConfiguration(ServoController<Integer> servoController) {
-		return new ServoConfiguration<Integer, ServoId>(servoController, servoConfigFunctions());
-	}
-
-
-	private static ServoConfigFunctions<Integer, ServoId> servoConfigFunctions() {
-		return new ServoConfig();
-	}
-
-	private AnalogIOConfiguration<Integer, ThreeDimension> accelerometerConfig(AnalogIOController<Integer> ioController) {
-		return new AnalogIOConfiguration<Integer, ThreeDimension>(ioController, normalizingIOCalibrator());
-	}
-	
-	protected ServoController<Integer> defaultServoController() {
-		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
-	}
-	
-	private AnalogIOSourceCalibrator<Integer> normalizingIOCalibrator() {
-		return null;
+		return CustomRobonovaAccelerometer.accelerometer();
 	}
 }

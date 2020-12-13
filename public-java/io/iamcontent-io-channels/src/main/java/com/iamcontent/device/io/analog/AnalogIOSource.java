@@ -17,7 +17,12 @@
  */
 package com.iamcontent.device.io.analog;
 
+import java.util.function.Function;
+
 import com.iamcontent.device.channel.PerChannelSource;
+import com.iamcontent.device.io.analog.impl.CalibratedAnalogIOSource;
+import com.iamcontent.device.io.analog.impl.RawAnalogIO;
+import com.iamcontent.device.io.analog.impl.RemappedAnalogIOSource;
 
 /**
  * Represents a source of {@link AnalogIO}s.
@@ -26,4 +31,27 @@ import com.iamcontent.device.channel.PerChannelSource;
  * @param <C> The type used to identify an analog input/output channel. 
  */
 public interface AnalogIOSource<C> extends PerChannelSource<C, AnalogIO> {
+	
+	/**
+	 * Returns a AnalogIOSource that has new channel ids, as defined by the given function.
+	 */
+	default <NewChannelId> AnalogIOSource<NewChannelId> remapped(Function<NewChannelId, C> remapping) {
+		return new RemappedAnalogIOSource<NewChannelId, C>(this, remapping);
+	}
+
+	/**
+	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
+	 */
+	default AnalogIOSource<C> calibrated(AnalogIOSourceCalibration<C> calibration) {
+		return new CalibratedAnalogIOSource<C>(this, calibration);
+	}
+
+	public static <C> AnalogIOSource<C> rawAnalogIOSource(final AnalogIOController<C> controller) {
+		return new AnalogIOSource<C>() {
+			@Override
+			public AnalogIO forChannel(C channelId) {
+				return new RawAnalogIO<C>(controller, channelId);
+			}
+		};
+	}
 }

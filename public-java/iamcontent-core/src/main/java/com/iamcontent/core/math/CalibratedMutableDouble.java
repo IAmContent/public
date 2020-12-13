@@ -15,17 +15,31 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.raw;
+package com.iamcontent.core.math;
 
-import com.iamcontent.device.io.analog.AnalogIOController;
+import com.iamcontent.core.lang.Delegator;
 
 /**
- * Defines a Servo controller that accepts 'raw' (i.e. non-normalized) values.
+ * A MutableDouble that is a calibrated proxy for another (target) MutableDouble.
  * @author Greg Elderfield
- * 
- * @param <C> The type used to identify the channel of a servo. 
  */
-public interface ServoController<C> extends AnalogIOController<C> {
-	void setSpeed(C channelId, double speed);
-	void setAcceleration(C channelId, double acceleration);
+public class CalibratedMutableDouble extends Delegator<MutableDouble> implements MutableDouble {
+	
+	private final DoubleConverter converter;
+	
+	public CalibratedMutableDouble(MutableDouble target, DoubleConverter converter) {
+		super(target);
+		this.converter = converter;
+	}
+	
+	@Override
+	public double getValue() {
+		return converter.applyBackward(delegate().getValue());
+	}
+
+	@Override
+	public void setValue(double v) {
+		delegate().setValue(converter.applyForward(v));
+	}
+
 }

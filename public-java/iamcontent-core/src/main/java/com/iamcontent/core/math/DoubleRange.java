@@ -17,13 +17,11 @@
  */
 package com.iamcontent.core.math;
 
-import java.io.Serializable;
-
 /**
  * A limited numerical range.
  * @author Greg Elderfield
  */
-public class DoubleRange implements Serializable {
+public class DoubleRange {
 	private final double limit1, limit2, min, max;
 	
 	public static final DoubleRange NORMAL_RANGE = range(0.0, 1.0);
@@ -64,6 +62,4 @@ public class DoubleRange implements Serializable {
 	public String toString() {
 		return limit1 + ".." + limit2;
 	}
-
-	private static final long serialVersionUID = 1L;
 }

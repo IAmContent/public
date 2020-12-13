@@ -17,6 +17,7 @@
  */
 package com.iamcontent.device.io.analog;
 
+import com.iamcontent.core.math.MutableDouble;
 
 /**
  * Defines an analog I/O controller that deals with 'raw' (i.e. non-normalized, device-specific) values.
@@ -25,6 +26,5 @@ package com.iamcontent.device.io.analog;
  * @param <C> The type used to identify the channel of an analog input/output. 
  */
 public interface AnalogIOController<C> {
-	double getValue(C channel);
-	void setValue(C channel, double value);
+	MutableDouble value(C channel);
 }

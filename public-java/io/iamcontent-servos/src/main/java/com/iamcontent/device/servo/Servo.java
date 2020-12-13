@@ -17,13 +17,23 @@
  */
 package com.iamcontent.device.servo;
 
+import com.iamcontent.core.math.MutableDouble;
 import com.iamcontent.device.io.analog.AnalogIO;
+import com.iamcontent.device.servo.impl.CalibratedServo;
 
 /**
- * Represents the operations that can be performed on a Servo.
+ * Represents a Servo.
  * @author Greg Elderfield
  */
-public interface Servo extends AnalogIO {
-	void setSpeed(double speed);
-	void setAcceleration(double acceleration);
+public interface Servo extends AnalogIO, ServoFeatures<MutableDouble> {
+	MutableDouble speed();
+	MutableDouble acceleration();
+
+	/**
+	 * Returns a proxy {@link Servo} that is two-way calibrated representation of this instance.
+	 */
+	default Servo calibrated(ServoCalibration calibration) {
+		return new CalibratedServo(this, calibration);
+	}
+
 }

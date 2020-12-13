@@ -15,23 +15,45 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.servo.impl;
 
 import com.iamcontent.core.math.MutableDouble;
 import com.iamcontent.device.io.analog.impl.CalibratedAnalogIO;
+import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoCalibration;
 
 /**
- * Represents an analog input/output channel.
- * 
+ * A MutableDouble that is a calibrated proxy for another (target) MutableDouble.
  * @author Greg Elderfield
  */
-public interface AnalogIO extends AnalogIOFeatures<MutableDouble> {
+public class CalibratedServo extends CalibratedAnalogIO implements Servo {
 	
-	/**
-	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
-	 */
-	default AnalogIO calibrated(AnalogIOCalibration calibration) {
-		return new CalibratedAnalogIO(this, calibration);
+	public CalibratedServo(Servo target, ServoCalibration calibration) {
+		super(target, calibration);
+	}
+	
+	@Override
+	public MutableDouble value() {
+		return delegate().value().calibrated(calibration().value());
 	}
 
+	@Override
+	public MutableDouble speed() {
+		return delegate().speed().calibrated(calibration().speed());
+	}
+
+	@Override
+	public MutableDouble acceleration() {
+		return delegate().acceleration().calibrated(calibration().acceleration());
+	}
+
+	@Override
+	protected ServoCalibration calibration() {
+		return (ServoCalibration) super.calibration();
+	}
+
+	@Override
+	protected Servo delegate() {
+		return (Servo) super.delegate();
+	}
 }

@@ -15,23 +15,42 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.io.analog;
+package com.iamcontent.device.servo.impl;
 
 import com.iamcontent.core.math.MutableDouble;
-import com.iamcontent.device.io.analog.impl.CalibratedAnalogIO;
+import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoController;
 
 /**
- * Represents an analog input/output channel.
- * 
+ * A {@link Servo} that directly delegates its operations to a {@link ServoController} without altering the
+ * arguments of the operations.
  * @author Greg Elderfield
+ * 
+ * @param <C> The type used to identify the channel of a {@link Servo}. 
  */
-public interface AnalogIO extends AnalogIOFeatures<MutableDouble> {
+public class RawServo<C> implements Servo {
 	
-	/**
-	 * Returns a proxy AnalogIO that is two-way calibrated representation of this instance.
-	 */
-	default AnalogIO calibrated(AnalogIOCalibration calibration) {
-		return new CalibratedAnalogIO(this, calibration);
+	protected final ServoController<C> controller;
+	protected final C channelId;
+	
+	public RawServo(ServoController<C> controller, C channelId) {
+		this.controller = controller;
+		this.channelId = channelId;
 	}
 
+
+	@Override
+	public MutableDouble value() {
+		return controller.value(channelId);
+	}
+
+	@Override
+	public MutableDouble speed() {
+		return controller.speed(channelId);
+	}
+
+	@Override
+	public MutableDouble acceleration() {
+		return controller.acceleration(channelId);
+	}
 }

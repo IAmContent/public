@@ -17,18 +17,20 @@
  */
 package com.iamcontent.device.controller.pololu.maestro;
 
+import static com.iamcontent.core.math.InterRangeDoubleConverter.converterFromNormalTo;
 import static com.iamcontent.device.controller.pololu.maestro.PololuMaestroServoController.pololuMaestroServoController;
 import static com.iamcontent.device.controller.pololu.maestro.usb.UsbPololuMaestroServoCards.defaultUsbPololuMaestroServoCard;
+import static com.iamcontent.device.servo.ServoSourceCalibration.servoSourceCalibration;
 
 import javax.usb.UsbDevice;
 
-import com.google.common.base.Function;
+import com.iamcontent.device.io.analog.AnalogIOSource;
 import com.iamcontent.device.servo.Servo;
+import com.iamcontent.device.servo.ServoCalibration;
+import com.iamcontent.device.servo.ServoController;
 import com.iamcontent.device.servo.ServoSource;
-import com.iamcontent.device.servo.calibrate.ServoSourceCalibrator;
-import com.iamcontent.device.servo.config.ServoConfigFunctions;
-import com.iamcontent.device.servo.config.ServoConfiguration;
-import com.iamcontent.device.servo.raw.ServoController;
+import com.iamcontent.device.servo.ServoSourceCalibration;
+import com.iamcontent.device.servo.impl.ImmutableServoCalibration;
 
 /**
  * A helper for creating a default configuration of {@link Servo}s of the {@link PololuMaestroServoController},
@@ -38,33 +40,27 @@ import com.iamcontent.device.servo.raw.ServoController;
 public class DefaultPololuServoConfig {
 
 	public static ServoSource<Integer> normalServos() {
-		return normalizingConfiguration().getNormalServos();
+		return rawServoSource().calibrated(servoSourceNormalization());
 	}
 	
-	public static ServoConfiguration<Integer, Void> normalizingConfiguration() {
-		return new ServoConfiguration<Integer, Void>(servoController(), configFunctions());
+	public static ServoSource<Integer> rawServoSource() {
+		return ServoSource.rawServoSource(servoController());
+	}
+
+	public static AnalogIOSource<Integer> rawAnalogIOSource() {
+		return AnalogIOSource.rawAnalogIOSource(servoController());
 	}
 
 	public static ServoController<Integer> servoController() {
 		return pololuMaestroServoController(defaultUsbPololuMaestroServoCard());
 	}
-
-	public static ServoConfigFunctions<Integer, Void> configFunctions() {
-		return new ServoConfigFunctions<Integer, Void>() {
-			@Override
-			public ServoSourceCalibrator<Integer> normalizingCalibrator() {
-				return new DefaultPololuMaestroServoNormalization();
-			}
-
-			@Override
-			public Function<Void, Integer> channelTranslation() {
-				return null;
-			}
-
-			@Override
-			public ServoSourceCalibrator<Void> tuningCalibrator() {
-				return null;
-			}
-		};
+	
+	public static ServoSourceCalibration<Integer> servoSourceNormalization() {
+		return servoSourceCalibration(pololuMaestroServoNormalization());
 	}
+	
+	public static ServoCalibration pololuMaestroServoNormalization() {
+		return new ImmutableServoCalibration(converterFromNormalTo(4000.0, 8000.0), converterFromNormalTo(4000.0, 8000.0), converterFromNormalTo(4000.0, 8000.0));
+	}
+	
 }

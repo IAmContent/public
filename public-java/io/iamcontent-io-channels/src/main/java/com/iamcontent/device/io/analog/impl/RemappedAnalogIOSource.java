@@ -15,35 +15,30 @@
   if not, write to the Free Software Foundation, Inc., 
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.iamcontent.device.servo.raw;
+package com.iamcontent.device.io.analog.impl;
 
-import com.iamcontent.device.io.analog.RawAnalogIO;
-import com.iamcontent.device.servo.Servo;
+import java.util.function.Function;
+
+import com.iamcontent.core.lang.Delegator;
+import com.iamcontent.device.io.analog.AnalogIO;
+import com.iamcontent.device.io.analog.AnalogIOSource;
 
 /**
- * A {@link Servo} that directly delegates its operations to a {@link ServoController} without altering the
- * arguments of the operations.
- * @author Greg Elderfield
+ * A {@link AnalogIOSource} that has new channel ids, as defined by a mapping function.
  * 
- * @param <C> The type used to identify the channel of a {@link Servo}. 
+ * @author Greg Elderfield
  */
-public class RawServo<C> extends RawAnalogIO<C> implements Servo {
+public class RemappedAnalogIOSource<NewChannelId, DelegateChannelId> extends Delegator<AnalogIOSource<DelegateChannelId>> implements AnalogIOSource<NewChannelId> {
 	
-	public RawServo(ServoController<C> controller, C channelId) {
-		super(controller, channelId);
+	protected final Function<NewChannelId, DelegateChannelId> remapping;
+	
+	public RemappedAnalogIOSource(AnalogIOSource<DelegateChannelId> target, Function<NewChannelId, DelegateChannelId> remapping) {
+		super(target);
+		this.remapping = remapping;
 	}
 
 	@Override
-	public void setSpeed(double speed) {
-		servoController().setSpeed(channelId, speed);
-	}
-
-	@Override
-	public void setAcceleration(double acceleration) {
-		servoController().setAcceleration(channelId, acceleration);
-	}
-	
-	private ServoController<C> servoController() {
-		return (ServoController<C>) controller;
+	public AnalogIO forChannel(NewChannelId channelId) {
+		return delegate().forChannel(remapping.apply(channelId));
 	}
 }
