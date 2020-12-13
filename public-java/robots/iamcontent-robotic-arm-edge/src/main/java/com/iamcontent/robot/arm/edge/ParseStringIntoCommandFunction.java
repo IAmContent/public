@@ -19,7 +19,8 @@ package com.iamcontent.robot.arm.edge;
 
 import static com.iamcontent.io.cli.CommandLineDriver.tidied;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
+
 import com.iamcontent.io.cli.UnknownCommandException;
 import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
 

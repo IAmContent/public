@@ -17,12 +17,13 @@
  */
 package com.iamcontent.robot.arm.edge;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.function.Function;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.iamcontent.device.controller.owi.Owi535UsbMotorController;
 
 /**
@@ -152,7 +153,7 @@ public class RoboticEdgeArm {
 	}
 
 	protected Collection<Owi535UsbMotorController.Command> translated(Collection<? extends Command> commands) {
-		return Collections2.transform(commands, commandTranslation);
+		return commands.stream().map(commandTranslation).collect(toList());
 	}
 
 	protected Command reverseTranslated(Owi535UsbMotorController.Command c) {

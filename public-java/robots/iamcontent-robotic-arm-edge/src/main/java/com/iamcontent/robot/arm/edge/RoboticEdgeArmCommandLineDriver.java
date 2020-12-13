@@ -17,8 +17,10 @@
  */
 package com.iamcontent.robot.arm.edge;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import com.iamcontent.io.cli.CommandLineDriver;
 import com.iamcontent.io.cli.UnknownCommandException;
 import com.iamcontent.robot.arm.edge.RoboticEdgeArm.Command;
@@ -39,8 +41,7 @@ public class RoboticEdgeArmCommandLineDriver extends CommandLineDriver implement
 	
 	@Override
 	public void run() {
-		for (Command c : commands())
-			execute(c);
+		commands().forEach(this::execute);
 		turnOffEverything();
 	}
 
@@ -49,8 +50,8 @@ public class RoboticEdgeArmCommandLineDriver extends CommandLineDriver implement
 		turnOffEverything();
 	}
 
-	private Iterable<Command> commands() {
-		return Iterables.transform(commandStrings(), parsingFunction);
+	private Stream<Command> commands() {
+		return StreamSupport.stream(commandStrings().spliterator(), false).map(parsingFunction);
 	}
 
 	private void execute(Command c) {

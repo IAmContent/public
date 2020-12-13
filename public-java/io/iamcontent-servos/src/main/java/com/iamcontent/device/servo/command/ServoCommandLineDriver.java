@@ -20,9 +20,10 @@ package com.iamcontent.device.servo.command;
 import static com.iamcontent.device.servo.command.SimpleServoCommandExecutor.executor;
 
 import java.util.Collection;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
 import com.iamcontent.io.cli.CommandHandler;
@@ -49,8 +50,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 	public void run() {
 		servoSource = servoSource();
 		executor = executor(servoSource);
-		for (ServoCommand<C> c : commands())
-			execute(c);
+		commands().forEach(this::execute);
 	}
 	
 	private void execute(ServoCommand<C> c) {
@@ -58,8 +58,8 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 			executor.execute(c);
 	}
 
-	private Iterable<ServoCommand<C>> commands() {
-		return Iterables.transform(commandStrings(), parsingFunction);
+	private Stream<ServoCommand<C>> commands() {
+		return StreamSupport.stream(commandStrings().spliterator(), false).map(parsingFunction);
 	}
 
 	private final ParseStringIntoServoCommand<C> parsingFunction = new ParseStringIntoServoCommand<C>() {

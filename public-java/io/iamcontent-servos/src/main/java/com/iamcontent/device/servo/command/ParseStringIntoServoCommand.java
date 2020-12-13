@@ -17,7 +17,8 @@
  */
 package com.iamcontent.device.servo.command;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
+
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.io.cli.UnknownCommandException;
 
