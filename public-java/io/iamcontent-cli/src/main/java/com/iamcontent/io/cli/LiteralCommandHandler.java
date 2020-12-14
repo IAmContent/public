@@ -17,7 +17,8 @@
  */
 package com.iamcontent.io.cli;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+
 import java.util.Collection;
 
 /**
@@ -28,7 +29,7 @@ public abstract class LiteralCommandHandler extends CommandHandler {
 	private final Collection<String> commands;
 	
 	public LiteralCommandHandler(String... commands) {
-		this.commands = Arrays.asList(commands);
+		this.commands = asList(commands);
 	}
 	
 	@Override
