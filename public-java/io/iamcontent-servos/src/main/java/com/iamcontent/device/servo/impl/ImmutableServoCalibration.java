@@ -14,7 +14,7 @@ public class ImmutableServoCalibration implements ServoCalibration {
 
 	private final DoubleConverter value, speed, acceleration;
 
-	public static final ImmutableServoCalibration REVERSE_NORMAL_SERVO_CALIBRATION = new ImmutableServoCalibration(REVERSE_NORMAL_CONVERTER);
+	public static final ServoCalibration REVERSE_NORMAL_SERVO_CALIBRATION = new ImmutableServoCalibration(REVERSE_NORMAL_CONVERTER);
 
 	public ImmutableServoCalibration(DoubleConverter value, DoubleConverter speed, DoubleConverter acceleration) {
 		this.value = value;

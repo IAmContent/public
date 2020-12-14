@@ -38,7 +38,6 @@ public class RawServo<C> implements Servo {
 		this.channelId = channelId;
 	}
 
-
 	@Override
 	public MutableDouble value() {
 		return controller.value(channelId);

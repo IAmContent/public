@@ -26,8 +26,6 @@ import com.iamcontent.device.servo.impl.CalibratedServo;
  * @author Greg Elderfield
  */
 public interface Servo extends AnalogIO, ServoFeatures<MutableDouble> {
-	MutableDouble speed();
-	MutableDouble acceleration();
 
 	/**
 	 * Returns a proxy {@link Servo} that is two-way calibrated representation of this instance.
@@ -35,5 +33,4 @@ public interface Servo extends AnalogIO, ServoFeatures<MutableDouble> {
 	default Servo calibrated(ServoCalibration calibration) {
 		return new CalibratedServo(this, calibration);
 	}
-
 }
