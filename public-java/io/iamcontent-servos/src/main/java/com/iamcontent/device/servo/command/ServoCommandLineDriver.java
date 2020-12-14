@@ -22,7 +22,6 @@ import static com.iamcontent.device.servo.command.SimpleServoCommandExecutor.exe
 import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import com.iamcontent.device.servo.Servo;
 import com.iamcontent.device.servo.ServoSource;
@@ -59,7 +58,7 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 	}
 
 	private Stream<ServoCommand<C>> commands() {
-		return StreamSupport.stream(commandStrings().spliterator(), false).map(parsingFunction);
+		return commandStrings().map(parsingFunction);
 	}
 
 	private final ParseStringIntoServoCommand<C> parsingFunction = new ParseStringIntoServoCommand<C>() {
