@@ -24,7 +24,7 @@ package com.iamcontent.io.usb.license;
 public class License {
 	
 	private static final String[] MINIMAL_TERMS = {
-		"IAmContent Public Software, Copyright (C) 2015 G. Elderfield.",
+		"IAmContent Public Software, Copyright (C) 2015-2021 G. Elderfield.",
 		"This software comes with ABSOLUTELY NO WARRANTY.",
 		"This is free software, and you are welcome to redistribute it",
 		"under the terms of the GNU GENERAL PUBLIC LICENSE Version 2.",
