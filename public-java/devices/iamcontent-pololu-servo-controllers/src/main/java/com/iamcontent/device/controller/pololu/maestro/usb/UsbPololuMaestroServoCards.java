@@ -41,7 +41,7 @@ public class UsbPololuMaestroServoCards {
 	 * Creates an instance with the given UsbDevice.
 	 */
 	public static PololuMaestroServoCard usbPololuMaestroServoCard(UsbDevice device) {
-		final UsbMaestroCardType cardType = UsbMaestroCardType.forUsbDeviceOrThrow(device);
+		final UsbMaestroCardType cardType = UsbMaestroCardType.cardTypeForUsbDeviceOrThrow(device);
 		switch (cardType) {
 		case USB_MICRO_MAESTRO_6:
 			return new UsbPololuMicroMaestroServoCard(device);

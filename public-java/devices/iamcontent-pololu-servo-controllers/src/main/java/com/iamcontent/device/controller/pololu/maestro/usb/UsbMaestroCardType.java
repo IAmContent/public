@@ -23,6 +23,9 @@ import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MI
 import static com.iamcontent.device.controller.pololu.maestro.MaestroCardType.MINI_MAESTRO_24;
 import static com.iamcontent.io.usb.UsbDevicePredicates.vendorAndProductIdsMatch;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import javax.usb.UsbDevice;
 
 import com.iamcontent.device.controller.pololu.maestro.MaestroCardType;
@@ -61,22 +64,15 @@ public enum UsbMaestroCardType {
 		return productId;
 	}
 
-	public static UsbMaestroCardType forUsbDeviceOrThrow(UsbDevice device) {
-		final UsbMaestroCardType result = forUsbDeviceOrNull(device);
-		if (result!=null)
-			return result;
-		else
-			throw new UsbRuntimeException("USB Device is not a Usb Maestro Card");
-	}
-
-	public static UsbMaestroCardType forUsbDeviceOrNull(UsbDevice device) {
-		for (UsbMaestroCardType c : values())
-			if (vendorAndProductIdsMatch(VENDOR_ID, c.getProductId(), device))
-				return c;
-		return null;
+	public static UsbMaestroCardType cardTypeForUsbDeviceOrThrow(UsbDevice device) {
+		return cardTypeForUsbDevice(device).orElseThrow(() -> new UsbRuntimeException("USB Device is not a Usb Maestro Card"));
 	}
 
 	public static boolean isAMaestroCard(UsbDevice device) {
-		return forUsbDeviceOrNull(device) !=null;
+		return cardTypeForUsbDevice(device).isPresent();
+	}
+	
+	public static Optional<UsbMaestroCardType> cardTypeForUsbDevice(UsbDevice device) {
+		return Stream.of(values()).filter(c -> vendorAndProductIdsMatch(VENDOR_ID, c.getProductId(), device)).findFirst();
 	}
 }

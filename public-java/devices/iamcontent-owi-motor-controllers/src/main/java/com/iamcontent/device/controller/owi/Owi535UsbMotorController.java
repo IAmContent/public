@@ -18,6 +18,7 @@
 package com.iamcontent.device.controller.owi;
 
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
+import static java.util.Arrays.asList;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -128,7 +129,7 @@ public class Owi535UsbMotorController {
 		return execute(STOP_ALL_MOTORS);
 	}
 
-	private static final List<Command> TURN_OFF_EVERYTHING = Arrays.asList(Command.MOTOR_1_STOP, Command.MOTOR_2_STOP, Command.MOTOR_3_STOP, Command.MOTOR_4_STOP, Command.MOTOR_5_STOP, Command.LED_OFF);
+	private static final List<Command> TURN_OFF_EVERYTHING = asList(Command.MOTOR_1_STOP, Command.MOTOR_2_STOP, Command.MOTOR_3_STOP, Command.MOTOR_4_STOP, Command.MOTOR_5_STOP, Command.LED_OFF);
 	public boolean turnOffEverything() {
 		return execute(TURN_OFF_EVERYTHING);
 	}

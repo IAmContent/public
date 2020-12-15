@@ -18,11 +18,13 @@
 package com.iamcontent.device.controller.pololu.maestro.usb;
 
 import static com.iamcontent.io.usb.EasedUsbDevice.eased;
+import static java.util.stream.Collectors.joining;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_IN;
 import static javax.usb.UsbConst.REQUESTTYPE_DIRECTION_OUT;
 import static javax.usb.UsbConst.REQUESTTYPE_TYPE_VENDOR;
 
 import java.io.Serializable;
+import java.util.stream.IntStream;
 
 import javax.usb.UsbControlIrp;
 import javax.usb.UsbDevice;
@@ -58,7 +60,7 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	 */
 	public AbstractUsbPololuMaestroServoCard(UsbDevice device, byte inRequestCode, int offsetOfFirstServoStatusBlock) {
 		this.device = eased(device);
-		this.type = UsbMaestroCardType.forUsbDeviceOrThrow(device);
+		this.type = UsbMaestroCardType.cardTypeForUsbDeviceOrThrow(device);
 		this.inRequestCode = inRequestCode;
 		this.offsetOfFirstServoStatusBlock = offsetOfFirstServoStatusBlock;
 		this.dataIn = new byte[offsetOfFirstServoStatusBlock + sizeOfAllServoStatusBlocks()];
@@ -141,13 +143,10 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 		
 		@Override
 		public String toString() {
-			final short lastIndex = (short)(channelCount() - 1);
-			final StringBuilder builder = new StringBuilder();
-			builder.append("PololuState [positions=[");
-			for (short i=0; i < lastIndex; i++)
-				builder.append(getPosition(i)).append(", ");
-			builder.append(getPosition(lastIndex)).append("]]");
-			return builder.toString();
+			final String prefix = "PololuState [positions=[";
+			final String channelDelimiter = ", ";
+			final String suffix = "PololuState [positions=[";
+			return IntStream.range(0, channelCount()).mapToObj(c -> "" + getPosition((short) c)).collect(joining(channelDelimiter, prefix, suffix));
 		}
 
 		private static final long serialVersionUID = 1L;
