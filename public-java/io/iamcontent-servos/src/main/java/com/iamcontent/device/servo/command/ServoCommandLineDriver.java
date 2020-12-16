@@ -54,7 +54,11 @@ public abstract class ServoCommandLineDriver<C> extends CommandLineDriver implem
 	
 	private void execute(ServoCommand<C> c) {
 		if (c!=null)
-			executor.execute(c);
+			try {
+				executor.execute(c);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 	}
 
 	private Stream<ServoCommand<C>> commands() {
