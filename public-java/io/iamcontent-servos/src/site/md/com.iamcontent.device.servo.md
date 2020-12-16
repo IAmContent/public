@@ -2,11 +2,11 @@
 
 A _ServoController_ sets the position, speed and acceleration values of a group of servos, using raw values that are specific to the firmware of a physical servo controller. The _RawServo_ class is a _Servo_ that directly delegates its operations to a _ServoController_ without altering the values of the operations.
 
-A _RawServo_ can be used 'as is' but it is often more convenient to wrap it in a [CalibratedServo](com.iamcontent.device.servo.calibrate.md).
+A _RawServo_ can be used 'as is' but it is often more convenient to wrap it in a _CalibratedServo._
 
 A _ServoSource_  allows _Servo_  objects to be obtained by their channel ids.
 
-The _ServosSource_  interface has convenient factory methods for creating [raw](com.iamcontent.device.servo.raw.md) _ServoSources,_ which present a _ServoController_  as a _ServoSource._
+The _ServosSource_  interface has convenient factory methods for creating a _ServoSource,_ of _RawServos,_ which interact with a _ServoController._
 
 _Servos_ and _ServoSources_ have _calibrated()_ methods that can be used to obtain calibrated proxies. 
 
