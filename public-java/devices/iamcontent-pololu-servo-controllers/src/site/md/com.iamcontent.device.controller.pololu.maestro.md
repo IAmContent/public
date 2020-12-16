@@ -8,7 +8,7 @@ _MaestroCardType_ enumerates the different types of Pololu Maestro cards.
 
 _PololuMaestroServoCard_ defines a minimal set of functions that are required of a Pololu Maestro card.
 
-_PololuMaestroServoController_ wraps a _PololuMaestroServoCard_ as a [ServoController](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.raw.md).
+_PololuMaestroServoController_ wraps a _PololuMaestroServoCard_ as a [ServoController](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.md).
 
 The _PololuCommandLineDriver_ provides an example usage and can be run from the command line for testing purposes. It supports the following commands:
 
@@ -19,12 +19,12 @@ The _PololuCommandLineDriver_ provides an example usage and can be run from the 
 | Set position, speed & acceleration | _channel position speed acceleration_ | 1 0.34 0.2 0.15 | For the servo on channel 1: set its acceleration to 0.15, then set its speed to 0.2 and then set its position to 0.34. |
 | Get position | ? _position_ | ?3 | Get the position of the servo on channel 3. |
 
-Note that the _PololuCommandLineDriver_ uses a [ServoSourceCalibrator](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.calibrate.md) so that the input position, speed and acceleration values are all in the range 0.0..1.0.
+Note that the _PololuCommandLineDriver_ uses a [ServoSourceCalibrator](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.md) so that the input position, speed and acceleration values are all in the range 0.0..1.0.
 
 
-Examine [RawPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/RawPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a [raw ServoSource](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.raw.md).
+Examine [RawPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/RawPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a raw _ServoSource._
 
-Examine [CalibratedPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/CalibratedPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a [calibrated ServoSource](../../../../../io/iamcontent-servos/src/site/md/com.iamcontent.device.servo.calibrate.md).
+Examine [CalibratedPololuMaestroServoSourceIT.java](../../test/java/com/iamcontent/device/controller/pololu/maestro/CalibratedPololuMaestroServoSourceIT.java) for a simple example of how to drive a Pololu Maestro servo as a calibrated _ServoSource._
 
 ---
 
