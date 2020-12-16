@@ -3,9 +3,9 @@
 
 This jar contains three main packages of interest:
 
-* the [servo](src/site/md/com.iamcontent.device.servo.md) package - A simple model for handling servos.
-* the [servo.raw](src/site/md/com.iamcontent.device.servo.raw.md) package - A model for servo controllers and a bridge between this and the servo model. 
-* the [servo.calibrate](src/site/md/com.iamcontent.device.servo.calibrate.md) package - A mechanism for calibrating servos and defining their input ranges.
+* the _servo_ package - A simple model for handling servos.
+* the _servo.impl_ package - An implementation of this model. 
+* the _servo.command_ package - A CLI for testing servos from the command line.
 
 ---
 

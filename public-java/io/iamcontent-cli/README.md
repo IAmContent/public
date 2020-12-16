@@ -1,7 +1,7 @@
-# iamcontent-io-core.jar
+# iamcontent-cli.jar
 ## A publicly available I/O library from Greg Elderfield.
 
-This jar contains common utility functions and classes to support other packages.
+This jar supports the implementation of CLIs (command-line interfaces).
 
 ---
 

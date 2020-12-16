@@ -1,7 +1,7 @@
-# iamcontent-io-core.jar
+# iamcontent-io-channels.jar
 ## A publicly available I/O library from Greg Elderfield.
 
-This jar contains common utility functions and classes to support other packages.
+This jar defines a simple model for analog I/O channels and a mechanism for calibrating them.
 
 ---
 
