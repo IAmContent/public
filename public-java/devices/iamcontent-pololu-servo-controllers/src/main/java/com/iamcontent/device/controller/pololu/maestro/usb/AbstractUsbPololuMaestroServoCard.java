@@ -124,7 +124,7 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 	}
 	
 	protected short chan(short c) {
-		checkElementIndex(c);
+		checkChannelIndex(c);
 		return c;
 	}
 	
@@ -152,9 +152,9 @@ public abstract class AbstractUsbPololuMaestroServoCard implements PololuMaestro
 		private static final long serialVersionUID = 1L;
 	}
 	
-	protected void checkElementIndex(short i) {
+	protected void checkChannelIndex(short i) {
 		if (i < 0 || i >= channelCount()) {
-			throw new IndexOutOfBoundsException(i);
+			throw new IndexOutOfBoundsException("Invalid channel index: " + i);
 		}
 	}
 }
